@@ -10,7 +10,8 @@
  * This is the base class for all Constraints
  */
 
- exports.Constraint = Constraint
+module.exports.Constraint = Constraint
+module.exports.SameAsConstraint = SameAsConstraint
 
 // Constructor
 function Constraint(left, right) {
@@ -47,4 +48,32 @@ Constraint.prototype = {
 			}
 		}
 	}
+}
+
+// From http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/
+//
+// Allows use of Parasitic Combination Inheritance pattern
+function inheritPrototype(childObject, parentObject) {
+  var copyOfParent = Object.create(parentObject.prototype);
+  copyOfParent.constructor = childObject;
+  childObject.prototype = copyOfParent;
+}
+
+/*
+ * Constrains values so that the left value is always the same as the right 
+ * value.
+ */
+
+function SameAsConstraint(left, right) { 
+	Constraint.call(this, left, right)
+}
+  
+inheritPrototype(SameAsConstraint, Constraint)
+
+SameAsConstraint.prototype.isSatisfied = function() {
+	return this.left.value() == this.right.value()
+}
+
+SameAsConstraint.prototype.applyConstraint = function() {
+	this.left.setValue(this.right.value())
 }
