@@ -1,4 +1,6 @@
 /*
+ * author: Daniel Patterson
+ *
  * Tests all individual Constraint types
  */
 var should = require("should")
@@ -110,6 +112,58 @@ describe('ScaledByConstantConstraint', function() {
 		constraint = new constraints.ScaledByConstantConstraint(leftValue, 
 			                                                      rightValue, 
 			                                                      1.5)
+		constraint.isSatisfied().should.be.false
+	})
+})
+
+describe('ScaleByConstrainableConstraint', function() {
+	var factor
+
+	beforeEach(function() {
+		factor = new ConstrainableValue()
+	})
+
+	it('should constrain a dependent value to be a constrainable factor larger ' 
+		 + 'than the independent value', function() {
+		new constraints.ScaledByConstrainableConstraint(leftValue, 
+			                                              rightValue, 
+			                                              factor)
+		rightValue.setValue(10)
+		leftValue.getValue().should.equal(rightValue.getValue() * factor.getValue())
+	})
+
+	it('should not be satisfied if the left value is not set', function() {
+		constraint = new constraints.ScaledByConstrainableConstraint(leftValue, 
+			                                                           rightValue, 
+			                                                           factor)
+		constraint.isSatisfied().should.be.false
+	})
+})
+
+describe('FunctionOfConstrainableConstraint', function() {
+	var factor
+
+	function cos(theta) {
+		return Math.cos(theta)
+	}
+
+	beforeEach(function() {
+		factor = new ConstrainableValue()
+	})
+
+	it('should constrain a dependent value to be a function of the independent ' 
+		 + 'value', function() {
+		new constraints.FunctionOfConstrainableConstraint(leftValue, 
+			                                                rightValue, 
+			                                                cos)
+		rightValue.setValue(10)
+		leftValue.getValue().should.equal(cos(rightValue.getValue()))
+	})
+
+	it('should not be satisfied if the left value is not set', function() {
+		constraint = new constraints.FunctionOfConstrainableConstraint(leftValue, 
+			                                                             rightValue, 
+			                                                             cos)
 		constraint.isSatisfied().should.be.false
 	})
 })

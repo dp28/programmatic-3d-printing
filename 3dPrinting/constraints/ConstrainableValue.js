@@ -1,4 +1,9 @@
 /*
+ * author: Daniel Patterson
+ *
+ * This is a Node.js port of Simon Dobson's version in solid-py, with 
+ * convenience methods for creating Constraints
+ *
  * A constrainted value
  * 
  * Constraints form a network that can be solved (or not) to find

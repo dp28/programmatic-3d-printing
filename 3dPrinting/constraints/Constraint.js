@@ -1,4 +1,9 @@
 /*
+ * author: Daniel Patterson
+ *
+ * Constraint, SameAs, OffsetByConstant, OffsetByConstrainable and 
+ * ScaleByConstant are all ports of Simon Dobson's versions in solid-py
+ *
  * Constraints are binary relations between constrained values. A constraint
  * is read right to left, so a constraint like:
  *
@@ -15,6 +20,8 @@ module.exports.SameAsConstraint = SameAsConstraint
 module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
 module.exports.OffsetByConstrainableConstraint = OffsetByConstrainableConstraint
 module.exports.ScaledByConstantConstraint = ScaledByConstantConstraint
+module.exports.ScaledByConstrainableConstraint = ScaledByConstrainableConstraint
+module.exports.FunctionOfConstrainableConstraint = FunctionOfConstrainableConstraint
 
 // Constructor
 function Constraint(l, r) {
@@ -148,6 +155,47 @@ ScaledByConstantConstraint.prototype.isSatisfied = function() {
 
 ScaledByConstantConstraint.prototype.applyConstraint = function() {
 	this.getLeft().setValue(this.getRight().getValue() * this.factor)
+}
+
+/*
+ * Constrains values so that the left value is always a constrainable factor 
+ * larger than the right value.
+ */
+function ScaledByConstrainableConstraint(left, right, constrainableFactor) {
+	Constraint.call(this, left, right)
+	this.factor = constrainableFactor
+}
+
+inheritPrototype(ScaledByConstrainableConstraint, Constraint)
+
+ScaledByConstrainableConstraint.prototype.isSatisfied = function() {
+	var leftAndFactorSet = this.getLeft().isSet() && this.factor.isSet()
+	var rightTimesFactor = this.getRight().getValue() * this.factor.getValue()
+	return leftAndFactorSet && left.getValue() == rightTimesFactor
+}
+
+ScaledByConstrainableConstraint.prototype.applyConstraint = function() {
+	this.getLeft().setValue(this.getRight().getValue() * this.factor.getValue())
+}
+
+/*
+ * Constrains values so that the left value is always a specific function of the
+ * right value.
+ */
+function FunctionOfConstrainableConstraint(left, right, func) {
+	Constraint.call(this, left, right)
+	this.func = func
+}
+
+inheritPrototype(FunctionOfConstrainableConstraint, Constraint)
+
+FunctionOfConstrainableConstraint.prototype.isSatisfied = function() {
+	return this.getLeft().isSet() &&
+	       this.getLeft().getValue() == this.func(this.getRight().getValue())
+}
+
+FunctionOfConstrainableConstraint.prototype.applyConstraint = function() {
+	this.getLeft().setValue(this.func(this.getRight().getValue()))
 }
 
 

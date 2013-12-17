@@ -1,4 +1,8 @@
 /*
+ * author: Daniel Patterson
+ *
+ * This is a Node.js port of Simon Dobson's version in solid-py.
+ *
  * Tests progressively more complex constraint networks
  */
 var should = require("should")

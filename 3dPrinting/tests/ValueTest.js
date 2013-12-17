@@ -1,3 +1,11 @@
+/*
+ * author: Daniel Patterson
+ *
+ * This is a Node.js port of Simon Dobson's version in solid-py, with 
+ * convenience methods for creating Constraints
+ *
+ * Tests of ConstrainableValues
+ */
 var should = require("should")
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue 
 
@@ -146,7 +154,5 @@ describe('Value', function() {
         value.getValue().should.equal(anotherValue.getValue() * 1.5)
 			})
 		})
-	})
-
-	
+	})	
 })
