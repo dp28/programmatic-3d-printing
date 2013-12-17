@@ -53,7 +53,7 @@ describe('OffsetByConstantConstraint', function() {
 	})
 })
 
-describe('OffsetByConstrainableValueConstraint', function() {
+describe('OffsetByConstrainableConstraint', function() {
 	var offset
 
 	beforeEach(function() {
@@ -62,7 +62,7 @@ describe('OffsetByConstrainableValueConstraint', function() {
 
 	it('should constrain a dependent value to be a constrainable distance from ' 
 		 + 'the independent value', function() {
-		new constraints.OffsetByConstrainableValueConstraint(leftValue, 
+		new constraints.OffsetByConstrainableConstraint(leftValue, 
 			                                                   rightValue, 
 			                                                   offset)
 		offset.setValue(15)
@@ -73,7 +73,7 @@ describe('OffsetByConstrainableValueConstraint', function() {
 	it.skip('should constrain a dependent value to be a constrainable distance from ' 
 		 + 'the independent value even if the offset is set after the independent ' 
 		 + 'value', function() {
-		new constraints.OffsetByConstrainableValueConstraint(leftValue, 
+		new constraints.OffsetByConstrainableConstraint(leftValue, 
 			                                                   rightValue, 
 			                                                   offset)
 		rightValue.setValue(10)
@@ -82,17 +82,17 @@ describe('OffsetByConstrainableValueConstraint', function() {
 	})
 
 	it('should not be satisfied if the left value is not set', function() {
-		constraint = new constraints.OffsetByConstrainableValueConstraint(leftValue, 
-			                                                                rightValue, 
-			                                                                offset)
+		constraint = new constraints.OffsetByConstrainableConstraint(leftValue, 
+			                                                           rightValue, 
+			                                                           offset)
 		offset.setValue(15)
 		constraint.isSatisfied().should.be.false
 	})
 
 	it('should not be satisfied if the offset value is not set', function() {
-		constraint = new constraints.OffsetByConstrainableValueConstraint(leftValue, 
-			                                                                rightValue, 
-			                                                                offset)
+		constraint = new constraints.OffsetByConstrainableConstraint(leftValue, 
+			                                                           rightValue, 
+			                                                           offset)
 		leftValue.setValue(10)
 		constraint.isSatisfied().should.be.false
 	})

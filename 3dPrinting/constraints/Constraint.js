@@ -13,7 +13,7 @@
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint
 module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
-module.exports.OffsetByConstrainableValueConstraint = OffsetByConstrainableValueConstraint
+module.exports.OffsetByConstrainableConstraint = OffsetByConstrainableConstraint
 module.exports.ScaledByConstantConstraint = ScaledByConstantConstraint
 
 // Constructor
@@ -112,20 +112,20 @@ OffsetByConstantConstraint.prototype.applyConstraint = function() {
  * Constrains values so that the left value is constrainable value from the
  * right value.
  */
-function OffsetByConstrainableValueConstraint(left, right, value) {
+function OffsetByConstrainableConstraint(left, right, value) {
 	Constraint.call(this, left, right)
 	this.offset = value
 }
 
-inheritPrototype(OffsetByConstrainableValueConstraint, Constraint)
+inheritPrototype(OffsetByConstrainableConstraint, Constraint)
 
-OffsetByConstrainableValueConstraint.prototype.isSatisfied = function() {
+OffsetByConstrainableConstraint.prototype.isSatisfied = function() {
 	var leftAndOffsetSet = this.getLeft().isSet() && this.offset.isSet()
 	var rightPlusOffset = this.getRight().getValue() + this.offset.getValue()
 	return leftAndOffsetSet && this.getLeft().getValue() == rightPlusOffset
 }
 
-OffsetByConstrainableValueConstraint.prototype.applyConstraint = function() {
+OffsetByConstrainableConstraint.prototype.applyConstraint = function() {
 	var rightPlusOffset = this.getRight().getValue() + this.offset.getValue()
 	this.getLeft().setValue(rightPlusOffset)
 }

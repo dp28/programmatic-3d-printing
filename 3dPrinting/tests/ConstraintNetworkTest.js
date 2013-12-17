@@ -54,7 +54,7 @@ describe('A chain of dependencies, an equality and a constrainable offset',
 
   it('should set the second value to be equal to the first and the third to be '
   	 + 'a the offset from the second', function() {  	  
-		new constraints.OffsetByConstrainableValueConstraint(thirdValue,
+		new constraints.OffsetByConstrainableConstraint(thirdValue,
 		                                                     secondValue,
 		                                                     offset)
 		new constraints.SameAsConstraint(secondValue, firstValue)
