@@ -85,9 +85,37 @@ function ConstrainableValue () {
  		visited.pop()
  	}
 
- 	// A convenience method for adding a new SameAsConstraint to this ConstrainableValue 
+ 	// A convenience method for adding a new SameAsConstraint to this 
+ 	// ConstrainableValue 
  	this.sameAs = function(otherValue) {
  		constraint = new ConstraintModule.SameAsConstraint(this, otherValue)
+ 		this.addConstraint(constraint)
+ 	}
+
+ 	// A convenience method for adding a new OffsetByConstantConstraint to this 
+ 	// ConstrainableValue 
+ 	this.offsetByConstant = function(otherValue, constantOffset) {
+ 		constraint = new ConstraintModule.OffsetByConstantConstraint(this, 
+ 			                                                           otherValue,
+ 			                                                           constantOffset)
+ 		this.addConstraint(constraint)
+ 	}
+
+ 	// A convenience method for adding a new OffsetByConstrainableConstraint to  
+ 	// this ConstrainableValue 
+ 	this.offsetByConstrainable = function(otherValue, offset) {
+ 		constraint = new ConstraintModule.OffsetByConstrainableConstraint(this, 
+ 			                                                                otherValue,
+ 			                                                                offset)
+ 		this.addConstraint(constraint)
+ 	}
+
+ 	// A convenience method for adding a new ScaledByConstantConstraint to this 
+ 	// ConstrainableValue 
+ 	this.scaledByConstant = function(otherValue, constantFactor) {
+ 		constraint = new ConstraintModule.ScaledByConstantConstraint(this, 
+ 			                                                           otherValue,
+ 			                                                           constantFactor)
  		this.addConstraint(constraint)
  	}
 }

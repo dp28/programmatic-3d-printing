@@ -87,10 +87,64 @@ describe('Value', function() {
 				value.sameAs(anotherValue)
 				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
 			})
+
+			it('should constrain this value to the same value as the other value',
+				 function() {
+        value.sameAs(anotherValue)
+        anotherValue.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue())
+			})
 		})
 
-		describe('#offsetBy', function() {
-			
+		describe('#offsetByConstant', function() {
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.offsetByConstant(anotherValue, 15)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+
+			it('should constrain this value to be a constant offset from the other '
+				 + 'value', function() {
+				value.offsetByConstant(anotherValue, 15)
+				anotherValue.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue() + 15)
+			})
+		})
+
+		describe('#offsetByConstrainable', function() {
+
+			var constrainableOffset = new ConstrainableValue()
+
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.offsetByConstrainable(anotherValue, constrainableOffset)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+
+			it('should constrain this value to be a constrainable offset from the '
+				 + 'other value', function() {
+				value.offsetByConstrainable(anotherValue, constrainableOffset)
+				constrainableOffset.setValue(15)
+				anotherValue.setValue(10)
+				var expected = anotherValue.getValue() + constrainableOffset.getValue()
+        value.getValue().should.equal(expected)
+			})
+		})
+
+		describe('#scaledByConstant', function() {
+
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.scaledByConstant(anotherValue, 1.5)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+
+			it('should constrain this value to be a constant factor larger than the '
+				 + 'other value', function() {
+				value.scaledByConstant(anotherValue, 1.5)
+				anotherValue.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue() * 1.5)
+			})
 		})
 	})
 
