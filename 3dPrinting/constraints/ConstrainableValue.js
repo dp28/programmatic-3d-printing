@@ -13,9 +13,10 @@
  * value doesn't fit. Flexible values will change as constrained
  *
  */
-module.exports.Value = Value
+var ConstraintModule = require('./Constraint.js')
+module.exports.ConstrainableValue = ConstrainableValue 
 
-function Value() {
+function ConstrainableValue () {
  	var value = null
  	var rigid = false
  	var constraints = []
@@ -23,7 +24,7 @@ function Value() {
 
  	this.setValue = function(val) {
  		if (rigid)
-		  throw("Cannot set rigid Value")
+		  throw("Cannot set rigid ConstrainableValue ")
 	  else
 	  	setValueEvenIfRigid(val)
  	}
@@ -35,6 +36,10 @@ function Value() {
 
  	this.getValue = function() {
  		return value
+ 	}
+
+ 	this.getConstraints = function() {
+ 		return constraints
  	}
 
  	this.fixValue = function(val) {
@@ -78,5 +83,11 @@ function Value() {
  			}
  		})
  		visited.pop()
+ 	}
+
+ 	// A convenience method for adding a new SameAsConstraint to this ConstrainableValue 
+ 	this.sameAs = function(otherValue) {
+ 		constraint = new ConstraintModule.SameAsConstraint(this, otherValue)
+ 		this.addConstraint(constraint)
  	}
 }

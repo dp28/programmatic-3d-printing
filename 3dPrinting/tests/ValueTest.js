@@ -1,12 +1,11 @@
 var should = require("should")
-var Value = require('../constraints/Value.js').Value
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue 
 
 describe('Value', function() {
-
 	var value
 
 	beforeEach(function() {
-		value = new Value()
+		value = new ConstrainableValue()
 	})
 
 	describe('#setValue', function() {
@@ -74,4 +73,26 @@ describe('Value', function() {
 			value.isFlexible().should.be.false
 		})
 	})
+
+	describe('Constraint convenience functions', function() {
+		var anotherValue
+
+		beforeEach(function() {
+			anotherValue = new ConstrainableValue()
+		})
+
+		describe('#sameAs', function() {
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.sameAs(anotherValue)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+		})
+
+		describe('#offsetBy', function() {
+			
+		})
+	})
+
+	
 })

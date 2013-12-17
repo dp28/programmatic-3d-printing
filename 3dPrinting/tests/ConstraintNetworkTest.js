@@ -3,16 +3,16 @@
  */
 var should = require("should")
 var constraints = require('../constraints/Constraint.js')
-var Value = require('../constraints/Value.js').Value
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue 
 
-var firstValue = new Value()
-var secondValue = new Value()
-var thirdValue = new Value()
+var firstValue = new ConstrainableValue()
+var secondValue = new ConstrainableValue()
+var thirdValue = new ConstrainableValue()
 
 beforeEach(function() {
-	firstValue = new Value()
-	secondValue = new Value()
-	thirdValue = new Value()
+	firstValue = new ConstrainableValue()
+	secondValue = new ConstrainableValue()
+	thirdValue = new ConstrainableValue()
 })
 
 describe('Two values depending on the same value', function() {
@@ -50,7 +50,7 @@ describe('A chain of dependencies, an equality and a constant offset',
 
 describe('A chain of dependencies, an equality and a constrainable offset', 
 	       function() {
-	var offset = new Value()
+	var offset = new ConstrainableValue()
 
   it('should set the second value to be equal to the first and the third to be '
   	 + 'a the offset from the second', function() {  	  

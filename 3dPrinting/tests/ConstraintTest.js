@@ -3,13 +3,13 @@
  */
 var should = require("should")
 var constraints = require('../constraints/Constraint.js')
-var Value = require('../constraints/Value.js').Value
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 
 var rightValue, leftValue
 
 beforeEach(function() {
- 	rightValue = new Value()
-  leftValue = new Value()
+ 	rightValue = new ConstrainableValue()
+  leftValue = new ConstrainableValue()
 })
 
 describe('SameAsConstraint', function(){ 
@@ -57,7 +57,7 @@ describe('OffsetByConstrainableValueConstraint', function() {
 	var offset
 
 	beforeEach(function() {
-		offset = new Value()
+		offset = new ConstrainableValue()
 	})
 
 	it('should constrain a dependent value to be a constrainable distance from ' 
