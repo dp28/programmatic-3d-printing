@@ -13,47 +13,70 @@
  * value doesn't fit. Flexible values will change as constrained
  *
  */
- 
 module.exports.Value = Value
 
 function Value() {
- 	this.value = null
- 	this.rigid = false
- 	this.constraints = []
-
- 	this._setValueEvenIfRigid = function(val) {
-    this.value = val
- 	}
+ 	var value = null
+ 	var rigid = false
+ 	var constraints = []
+ 	var self = this // Allows public methods to be called inside private methods
 
  	this.setValue = function(val) {
- 		if (this.rigid)
+ 		if (rigid)
 		  throw("Cannot set rigid Value")
 	  else
-	  	this._setValueEvenIfRigid(val)
+	  	setValueEvenIfRigid(val)
+ 	}
+
+ 	var setValueEvenIfRigid = function(val) {
+    value = val
+    self.valueChanged()
  	}
 
  	this.getValue = function() {
- 		return this.value
+ 		return value
  	}
 
  	this.fixValue = function(val) {
- 		this.rigid = true
- 		this._setValueEvenIfRigid(val)
+ 		rigid = true
+ 		setValueEvenIfRigid(val)
  	}
 
  	this.isRigid = function() {
- 		return this.rigid
+ 		return rigid
  	}
 
  	this.unfixValue = function() {
- 		this.rigid = false
+ 		rigid = false
  	}
 
  	this.isSet = function() {
- 		return this.value !== null
+ 		return value !== null
  	}
 
  	this.isFlexible = function() {
- 		return ! this.rigid
+ 		return ! rigid
+ 	}
+
+ 	this.addConstraint = function(constraint) {
+ 		constraints.push(constraint)
+ 	}
+
+ 	this.valueChanged = function() {
+ 		this.visit([])
+ 	}
+
+ 	// Visit this node, applying constraints
+ 	this.visit = function(visited) {
+ 		// Constrain all those values constrained by this value
+ 		visited.push(this)
+ 		constraints.forEach(function(constraint) {
+ 			l = constraint.getLeft()
+ 			changed = constraint.constrain()
+ 			if (changed) {
+ 				l.visit(visited)
+ 			}
+ 		})
+ 		visited.pop()
  	}
 }

@@ -17,7 +17,7 @@ describe('Value', function() {
 
 		it('should throw an exception if the value is rigid', function() {
 			(function() { 
-				value.rigid = true
+				value.fixValue(0)
 				value.setValue(10)
 			}).should.throw()
 		})

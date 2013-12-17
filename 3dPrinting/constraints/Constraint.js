@@ -12,17 +12,28 @@
 
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint
+module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
+module.exports.OffsetByConstrainableValueConstraint = OffsetByConstrainableValueConstraint
+module.exports.ScaledByConstantConstraint = ScaledByConstantConstraint
 
 // Constructor
-function Constraint(left, right) {
-	this.left = left
-	this.right = right
-	right.addConstraint(this)
+function Constraint(l, r) {
+	this.left = l
+	this.right = r
+	this.right.addConstraint(this)
 }
 
 Constraint.prototype = {
 
 	constructor: Constraint,
+
+	getLeft: function() {
+		return this.left
+	},
+
+	getRight: function() {
+		return this.right
+	},
 
 	isSatisfied: function() {
 		throw "#isSatisfied() not implemented in this instance"
@@ -35,15 +46,15 @@ Constraint.prototype = {
 
 	// Enforce the constraint, returning true if left's value changes as a result
 	constrain: function() {
-		if (isSatisfied()) {
+		if (this.isSatisfied()) {
 			return false
 		}
 		else {
-			if (left.isRigid()) {
+			if (this.left.isRigid()) {
 				throw "Cannot change rigid value " + left.value()
 			}
 			else {
-				applyConstraint()
+				this.applyConstraint()
 				return true
 			}
 		}
@@ -63,7 +74,6 @@ function inheritPrototype(childObject, parentObject) {
  * Constrains values so that the left value is always the same as the right 
  * value.
  */
-
 function SameAsConstraint(left, right) { 
 	Constraint.call(this, left, right)
 }
@@ -71,9 +81,74 @@ function SameAsConstraint(left, right) {
 inheritPrototype(SameAsConstraint, Constraint)
 
 SameAsConstraint.prototype.isSatisfied = function() {
-	return this.left.value() == this.right.value()
+	return this.getLeft().getValue() == this.getRight().getValue()
 }
 
 SameAsConstraint.prototype.applyConstraint = function() {
-	this.left.setValue(this.right.value())
+	this.getLeft().setValue(this.getRight().getValue())
 }
+
+/*
+ * Constrains values so that the left value is always a constant distance from
+ * the right value.
+ */
+function OffsetByConstantConstraint(left, right, constant) {
+	Constraint.call(this, left, right)
+	this.offset = constant
+}
+
+inheritPrototype(OffsetByConstantConstraint, Constraint)
+
+OffsetByConstantConstraint.prototype.isSatisfied = function() {
+	return this.getLeft().isSet() &&
+	       this.getLeft().getValue() == this.getRight().getValue() + this.offset
+}
+
+OffsetByConstantConstraint.prototype.applyConstraint = function() {
+	this.getLeft().setValue(this.getRight().getValue() + this.offset)
+}
+
+/*
+ * Constrains values so that the left value is constrainable value from the
+ * right value.
+ */
+function OffsetByConstrainableValueConstraint(left, right, value) {
+	Constraint.call(this, left, right)
+	this.offset = value
+}
+
+inheritPrototype(OffsetByConstrainableValueConstraint, Constraint)
+
+OffsetByConstrainableValueConstraint.prototype.isSatisfied = function() {
+	var leftAndOffsetSet = this.getLeft().isSet() && this.offset.isSet()
+	var rightPlusOffset = this.getRight().getValue() + this.offset.getValue()
+	return leftAndOffsetSet && this.getLeft().getValue() == rightPlusOffset
+}
+
+OffsetByConstrainableValueConstraint.prototype.applyConstraint = function() {
+	var rightPlusOffset = this.getRight().getValue() + this.offset.getValue()
+	this.getLeft().setValue(rightPlusOffset)
+}
+
+/*
+ * Constrains values so that the left value is always a constant factor larger
+ * than the right value.
+ */
+function ScaledByConstantConstraint(left, right, constant) {
+	Constraint.call(this, left, right)
+	this.factor = constant
+}
+
+inheritPrototype(ScaledByConstantConstraint, Constraint)
+
+ScaledByConstantConstraint.prototype.isSatisfied = function() {
+	return this.getLeft().isSet() &&
+	       this.getLeft().getValue() == this.getRight().getValue() * this.factor
+}
+
+ScaledByConstantConstraint.prototype.applyConstraint = function() {
+	this.getLeft().setValue(this.getRight().getValue() * this.factor)
+}
+
+
+
