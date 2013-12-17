@@ -28,5 +28,23 @@ describe('Point', function() {
   		point.getZ().getValue().should.equal(30)
   		point.getZ().isRigid().should.be.true
   	})
+  })
+
+  describe('#createPoint', function() {
+  	beforeEach(function() {  		
+  	  point = Point.createPoint()
+  	})
+
+  	it('should have an unfixed x coordinate', function() {
+  		point.getX().isRigid().should.be.false
+  	})
+
+  	it('should have an unfixed y coordinate', function() {
+  		point.getY().isRigid().should.be.false
+  	})
+
+  	it('should have an unfixed z coordinate', function() {
+  		point.getZ().isRigid().should.be.false
+  	})
   }) 
 })

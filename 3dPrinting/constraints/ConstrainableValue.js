@@ -123,4 +123,22 @@ function ConstrainableValue () {
  			                                                           constantFactor)
  		this.addConstraint(constraint)
  	}
+
+ 	// A convenience method for adding a new ScaledByConstrainableConstraint to  
+ 	// this ConstrainableValue 
+ 	this.scaledByConstrainable = function(otherValue, factor) {
+ 		constraint = new ConstraintModule.ScaledByConstrainableConstraint(this, 
+ 			                                                                otherValue,
+ 			                                                                factor)
+ 		this.addConstraint(constraint)
+ 	}
+
+	// A convenience method for adding a new FunctionOfConstrainablesConstraint to  
+ 	// this ConstrainableValue 
+ 	this.functionOfConstrainables = function(argumentValues, func) {
+ 		constraint = new ConstraintModule.FunctionOfConstrainablesConstraint(this, 
+ 			                                                                   argumentValues,
+ 			                                                                   func)
+ 		this.addConstraint(constraint)
+ 	}
 }

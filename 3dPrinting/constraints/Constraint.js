@@ -21,7 +21,7 @@ module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
 module.exports.OffsetByConstrainableConstraint = OffsetByConstrainableConstraint
 module.exports.ScaledByConstantConstraint = ScaledByConstantConstraint
 module.exports.ScaledByConstrainableConstraint = ScaledByConstrainableConstraint
-module.exports.FunctionOfConstrainableConstraint = FunctionOfConstrainableConstraint
+module.exports.FunctionOfConstrainablesConstraint = FunctionOfConstrainablesConstraint
 
 // Constructor
 function Constraint(l, r) {
@@ -171,7 +171,7 @@ inheritPrototype(ScaledByConstrainableConstraint, Constraint)
 ScaledByConstrainableConstraint.prototype.isSatisfied = function() {
 	var leftAndFactorSet = this.getLeft().isSet() && this.factor.isSet()
 	var rightTimesFactor = this.getRight().getValue() * this.factor.getValue()
-	return leftAndFactorSet && left.getValue() == rightTimesFactor
+	return leftAndFactorSet && this.getLeft().getValue() == rightTimesFactor
 }
 
 ScaledByConstrainableConstraint.prototype.applyConstraint = function() {
@@ -182,20 +182,28 @@ ScaledByConstrainableConstraint.prototype.applyConstraint = function() {
  * Constrains values so that the left value is always a specific function of the
  * right value.
  */
-function FunctionOfConstrainableConstraint(left, right, func) {
-	Constraint.call(this, left, right)
+function FunctionOfConstrainablesConstraint(left, argumentValues, func) {
+	Constraint.call(this, left, argumentValues[0])
+	this.argumentValues = argumentValues
 	this.func = func
 }
 
-inheritPrototype(FunctionOfConstrainableConstraint, Constraint)
+inheritPrototype(FunctionOfConstrainablesConstraint, Constraint)
 
-FunctionOfConstrainableConstraint.prototype.isSatisfied = function() {
-	return this.getLeft().isSet() &&
-	       this.getLeft().getValue() == this.func(this.getRight().getValue())
+FunctionOfConstrainablesConstraint.prototype.applyFunction = function() {
+	return this.func.apply(this, this.argumentValues)
 }
 
-FunctionOfConstrainableConstraint.prototype.applyConstraint = function() {
-	this.getLeft().setValue(this.func(this.getRight().getValue()))
+FunctionOfConstrainablesConstraint.prototype.isSatisfied = function() {
+	var allAreSet = this.getLeft().isSet()
+	this.argumentValues.forEach(function(value) {
+		allAreSet = allAreSet && value.isSet()
+	})
+	return allAreSet && this.getLeft().getValue() == this.applyFunction()
+}
+
+FunctionOfConstrainablesConstraint.prototype.applyConstraint = function() {
+	this.getLeft().setValue(this.applyFunction())
 }
 
 

@@ -154,5 +154,50 @@ describe('Value', function() {
         value.getValue().should.equal(anotherValue.getValue() * 1.5)
 			})
 		})
+
+		describe('#scaledByConstrainable', function() {
+
+			var constrainableFactor = new ConstrainableValue()
+
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.scaledByConstrainable(anotherValue, constrainableFactor)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+
+			it('should constrain this value to be a constrainable factor larger than '
+				 + 'the other value', function() {
+				value.scaledByConstrainable(anotherValue, constrainableFactor)
+				constrainableFactor.fixValue(1.5)
+				anotherValue.setValue(10)
+				var scaledValue = anotherValue.getValue() 
+				                  * constrainableFactor.getValue()
+        value.getValue().should.equal(scaledValue)
+			})
+		})
+
+		describe('#functionOfConstrainables', function() {
+
+			var first = new ConstrainableValue()
+			var second = new ConstrainableValue()
+
+			function division(a, b) {
+				return a.getValue() / b.getValue()
+			}
+
+			it('should add a new Constraint to the ConstrainableValue ', function() {
+				var numberOfConstraintsBefore = value.getConstraints().length
+				value.functionOfConstrainables([first, second], division)
+				value.getConstraints().length.should.equal(numberOfConstraintsBefore + 1)
+			})
+
+			it('should constrain this value to be a function of the argument values',
+			   function() {
+				value.functionOfConstrainables([first, second], division)
+				second.fixValue(1.5)
+				first.setValue(10)
+        value.getValue().should.equal(division(first, second))
+			})
+		})
 	})	
 })

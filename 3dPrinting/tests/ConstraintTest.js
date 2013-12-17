@@ -4,6 +4,7 @@
  * Tests all individual Constraint types
  */
 var should = require("should")
+var util = require('util')
 var constraints = require('../constraints/Constraint.js')
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 
@@ -128,6 +129,7 @@ describe('ScaleByConstrainableConstraint', function() {
 		new constraints.ScaledByConstrainableConstraint(leftValue, 
 			                                              rightValue, 
 			                                              factor)
+		factor.setValue(1.5)
 		rightValue.setValue(10)
 		leftValue.getValue().should.equal(rightValue.getValue() * factor.getValue())
 	})
@@ -140,30 +142,39 @@ describe('ScaleByConstrainableConstraint', function() {
 	})
 })
 
-describe('FunctionOfConstrainableConstraint', function() {
-	var factor
+describe('FunctionOfConstrainablesConstraint', function() {
 
-	function cos(theta) {
-		return Math.cos(theta)
+	function cosine(theta) {
+		return Math.cos(theta.getValue())
 	}
-
-	beforeEach(function() {
-		factor = new ConstrainableValue()
-	})
 
 	it('should constrain a dependent value to be a function of the independent ' 
 		 + 'value', function() {
-		new constraints.FunctionOfConstrainableConstraint(leftValue, 
-			                                                rightValue, 
-			                                                cos)
+		new constraints.FunctionOfConstrainablesConstraint(leftValue, 
+			                                                [rightValue], 
+			                                                cosine)
 		rightValue.setValue(10)
-		leftValue.getValue().should.equal(cos(rightValue.getValue()))
+		leftValue.getValue().should.equal(cosine(rightValue))
 	})
 
 	it('should not be satisfied if the left value is not set', function() {
-		constraint = new constraints.FunctionOfConstrainableConstraint(leftValue, 
-			                                                             rightValue, 
-			                                                             cos)
+		constraint = new constraints.FunctionOfConstrainablesConstraint(leftValue, 
+			                                                             [rightValue], 
+			                                                             cosine)
 		constraint.isSatisfied().should.be.false
 	})
+
+	it('should work with functions that require multiple ConstrainableValues', 
+		 function() {
+		var anotherValue = new ConstrainableValue
+		function findOpposite(angle, hypotenuse) {
+			return cosine(angle) * hypotenuse.getValue()
+		}
+		new constraints.FunctionOfConstrainablesConstraint(leftValue, 
+			                                                [rightValue, anotherValue],
+			                                                findOpposite)
+		anotherValue.setValue(20)
+		rightValue.setValue(10)
+		leftValue.getValue().should.equal(findOpposite(rightValue, anotherValue))
+  })
 })

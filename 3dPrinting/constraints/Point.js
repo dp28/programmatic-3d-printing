@@ -17,6 +17,10 @@ Point.createFixedPoint = function(x, y, z) {
 	return point
 }
 
+Point.createPoint = function() {
+	return new Point()
+}
+
 function Point() {
 	var x = new ConstrainableValue()
 	var y = new ConstrainableValue()
