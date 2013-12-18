@@ -47,4 +47,26 @@ describe('Point', function() {
   		point.getZ().isRigid().should.be.false
   	})
   }) 
+
+  describe('#fixAt', function() {
+  	beforeEach(function() {
+  		point = new Point()
+  		point.fixAt(1, 2, 3)
+  	})
+
+  	it('should have a fixed x coordinate of 1', function() {
+  		point.getX().getValue().should.equal(1)
+  		point.getX().isRigid().should.be.true
+  	})
+
+  	it('should have a fixed y coordinate of 2', function() {
+  		point.getY().getValue().should.equal(2)
+  		point.getY().isRigid().should.be.true
+  	})
+
+  	it('should have a fixed z coordinate of 3', function() {
+  		point.getZ().getValue().should.equal(3)
+  		point.getZ().isRigid().should.be.true
+  	})
+  })
 })

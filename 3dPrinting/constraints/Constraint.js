@@ -14,7 +14,6 @@
  *
  * This is the base class for all Constraints
  */
-
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint
 module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint

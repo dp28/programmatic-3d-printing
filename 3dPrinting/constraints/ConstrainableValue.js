@@ -19,6 +19,7 @@
  *
  */
 var ConstraintModule = require('./Constraint.js')
+
 module.exports.ConstrainableValue = ConstrainableValue 
 
 function ConstrainableValue () {
