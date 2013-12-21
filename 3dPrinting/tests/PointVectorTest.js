@@ -4,6 +4,7 @@
  * Tests different interactions between Points and Vectors 
  */
 var should = require('should')
+var util = require('util')
 var Point = require('../constraints/Point.js').Point
 var Vector = require('../constraints/Vector.js').Vector
 
@@ -111,7 +112,7 @@ describe('Creating a right-angled triangle from three Points and two Vectors',
 		thirdPoint = new Point()
 		firstVector = new Vector()
 		secondVector = new Vector()		
-		firstVector.fixXandY(0, 3)
+		firstVector.fixXandY(3, 0)
 		secondVector.fixDirectionAndMagnitude(Math.PI / 2, 4)
 	}
 
@@ -145,8 +146,36 @@ describe('Creating a right-angled triangle from three Points and two Vectors',
 		thirdPoint.getZ().getValue().should.equal(secondPoint.getZ().getValue())
   })
 
-  it('should produce a hypotenuse of magnitude 5', function() {
+  it('should produce a hypotenuse of magnitude 5', function() { 
   	hypotenuse.getMagnitude().getValue().should.be.approximately(5, 0.001)
+  })
+
+  describe('moving the first Point move', function() {
+  	beforeEach(function() {
+  		firstPoint.fixAt(4, 2, 1)
+  	})
+
+		it('should still have a Point which depends on the first Vector and the '
+			 + 'first Point', function() {
+			secondPoint.getX().getValue().should.equal(firstPoint.getX().getValue() 
+				                                         + firstVector.getX().getValue())
+			secondPoint.getY().getValue().should.equal(firstPoint.getY().getValue() 
+				                                         + firstVector.getY().getValue())
+			secondPoint.getZ().getValue().should.equal(firstPoint.getZ().getValue())
+	  })
+
+		it('should still have a Point which depends on the second Vector and the  ' 
+			 + 'second Point', function() {
+			thirdPoint.getX().getValue().should.equal(secondPoint.getX().getValue() 
+				                                        + secondVector.getX().getValue())
+			thirdPoint.getY().getValue().should.equal(secondPoint.getY().getValue() 
+				                                        + secondVector.getY().getValue())
+			thirdPoint.getZ().getValue().should.equal(secondPoint.getZ().getValue())
+	  })
+
+	  it('should still produce a hypotenuse of magnitude 5', function() { 
+	  	hypotenuse.getMagnitude().getValue().should.be.approximately(5, 0.001)
+	  })
   })
 })
 

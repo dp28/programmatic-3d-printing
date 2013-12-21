@@ -73,4 +73,8 @@ function Point() {
 		vector.fixXandY(vectorX, vectorY)
 		return vector
 	}
+
+	this.toString = function() {
+		return '(' + x.getValue() +', ' + y.getValue() + ', ' + z.getValue() + ')'
+	}
 } 
