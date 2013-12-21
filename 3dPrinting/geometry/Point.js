@@ -4,7 +4,7 @@
  * A point in a 3D coordinate system where each value on an axis is represented
  * by a ConstrainableValue
  */
-var ConstrainableValue = require('./ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Vector = require('./Vector.js').Vector
 
 module.exports.Point = Point

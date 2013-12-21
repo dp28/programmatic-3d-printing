@@ -4,7 +4,7 @@
  * Tests individual Vectors and their creation
  */
 var should = require('should')
-var Vector = require('../constraints/Vector.js').Vector
+var Vector = require('../geometry/Vector.js').Vector
 
 describe('Vector', function() {
   var vector

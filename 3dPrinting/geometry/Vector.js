@@ -6,7 +6,7 @@
  * ConstrainableValues. Angles (ie direction) are in radians with 0 radians 
  * defined as the positive X direction
  */
-var ConstrainableValue = require('./ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 
 module.exports.Vector = Vector
 

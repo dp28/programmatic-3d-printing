@@ -4,7 +4,7 @@
  * Tests individual Points and their creation
  */
 var should = require('should')
-var Point = require('../constraints/Point.js').Point
+var Point = require('../geometry/Point.js').Point
 
 describe('Point', function() {
   var point

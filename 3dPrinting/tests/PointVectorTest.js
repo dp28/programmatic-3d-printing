@@ -5,8 +5,8 @@
  */
 var should = require('should')
 var util = require('util')
-var Point = require('../constraints/Point.js').Point
-var Vector = require('../constraints/Vector.js').Vector
+var Point = require('../geometry/Point.js').Point
+var Vector = require('../geometry/Vector.js').Vector
 
 describe('Offsetting one Point from another by a Vector', function() {
 	var firstPoint, secondPoint, vector
