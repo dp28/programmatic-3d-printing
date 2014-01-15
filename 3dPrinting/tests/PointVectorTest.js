@@ -62,7 +62,6 @@ describe('Offsetting one Point from another by a Vector', function() {
 		})
 	})
 
-	// Has a time dependency
 	describe.skip('When the first Point and Vector are fixed beforehand', function() {
 		beforeEach(function() {
 			firstPoint.fixAt(1, 2, 0)
@@ -151,7 +150,7 @@ describe('Creating a right-angled triangle from three Points and two Vectors',
   	hypotenuse.getMagnitude().getValue().should.be.approximately(5, 0.001)
   })
 
-  describe('moving the first Point', function() {
+  describe('moving the first Point move', function() {
   	beforeEach(function() {
   		firstPoint.fixAt(4, 2, 1)
   	})
