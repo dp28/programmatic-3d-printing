@@ -8,6 +8,8 @@
  */
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 
+var util = require('util')
+
 module.exports.Vector = Vector
 
 function Vector() {
@@ -67,5 +69,21 @@ function Vector() {
 		var xVal = xConstrainable.getValue()
 		var yVal = yConstrainable.getValue()
 		return Math.atan2(yVal, xVal)
+	}
+
+	this.constructFromPoints = function(start, end) {
+		util.puts('here')
+		var constrainables = [start.getX(), start.getY(), end.getX(), end.getY()]
+		x.functionOfConstrainables(constrainables, createXFromPoints)
+		y.functionOfConstrainables(constrainables, createYFromPoints)
+	}
+
+	var createXFromPoints = function(startX, startY, endX, endY) {
+		util.puts(startX +', ' + startY +', ' + endX +', ' + endY)
+		return endX.getValue() - startX.getValue()
+	}
+
+	var createYFromPoints = function(startX, startY, endX, endY) {
+		return endY.getValue() - startY.getValue()
 	}
 }

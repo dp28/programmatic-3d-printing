@@ -5,6 +5,8 @@
  */
 var should = require('should')
 var Vector = require('../geometry/Vector.js').Vector
+var Point = require('../geometry/Point.js').Point
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 
 describe('Vector', function() {
   var vector
@@ -79,6 +81,23 @@ describe('Vector', function() {
 
   	it('should have a fixed magnitude of 5', function() {
   		vector.getMagnitude().getValue().should.be.approximately(5, 0.001)
+  	})
+  })
+
+  describe('#constructFromPoints', function() {
+  	var start, end
+
+  	beforeEach(function() {
+  		start = new Point()
+  		end = new Point()
+  		vector.constructFromPoints(start, end)
+  		end.fixAt(2, 3, 3)
+  		start.fixAt(1, 2, 3)
+  	})
+
+  	it('should create a vector with x and y values of 1', function() {
+  		vector.getX().getValue().should.be.approximately(1, .001)
+  		vector.getY().getValue().should.be.approximately(1, .001)
   	})
   })
 })
