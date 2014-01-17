@@ -52,17 +52,13 @@ describe('A chain of dependencies, an equality and a constant offset',
   })
 })
 
-describe('A chain of dependencies, an equality and a constrainable offset', 
+describe('A chain of dependencies, an equality and a constant offset', 
 	       function() {
-	var offset = new ConstrainableValue()
 
   it('should set the second value to be equal to the first and the third to be '
   	 + 'a the offset from the second', function() {  	  
-		new constraints.OffsetByConstrainableConstraint(thirdValue,
-		                                                     secondValue,
-		                                                     offset)
+		new constraints.OffsetByConstantConstraint(thirdValue, secondValue, 15)
 		new constraints.SameAsConstraint(secondValue, firstValue)
-		offset.setValue(15)
 		firstValue.setValue(10)
 		secondValue.getValue().should.equal(firstValue.getValue())
 		thirdValue.getValue().should.equal(10 + 15)

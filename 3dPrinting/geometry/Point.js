@@ -5,7 +5,6 @@
  * by a ConstrainableValue
  */
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var Vector = require('./Vector.js').Vector
 
 module.exports.Point = Point
 
@@ -55,23 +54,18 @@ function Point() {
 		this.fixZ(zValue)		
 	}
 
-	this.offsetFrom = function(otherPoint, vector) {
-		x.offsetByConstrainable(otherPoint.getX(), vector.getX())
-		y.offsetByConstrainable(otherPoint.getY(), vector.getY())
-		z.sameAs(otherPoint.getZ())
+	this.setAt = function(xValue, yValue, zValue) {
+		x.setValue(xValue)
+		y.setValue(yValue)
+		z.setValue(zValue)
 	}
 
-	/*
-	 * Creates a Vector from this Point to another Point. This does NOT remain 
-	 * dependent on the coordinates of either Point, so this Vector will not 
-	 * change if the Points do
-	 */
-	this.getCurrentVectorTo = function(otherPoint) {
-		var vector = new Vector()
-		var vectorX = otherPoint.getX().getValue() - x.getValue()
-		var vectorY = otherPoint.getY().getValue() - y.getValue() 
-		vector.fixXandY(vectorX, vectorY)
-		return vector
+	// Offsets one Point from another by a set of offests, one for each of the x, 
+	// y and z components of this Point.
+	this.offsetFrom = function(otherPoint, offsets) {
+		x.offsetByConstant(otherPoint.getX(), offsets[0])
+		y.offsetByConstant(otherPoint.getY(), offsets[1])
+		z.offsetByConstant(otherPoint.getZ(), offsets[2])
 	}
 
 	this.toString = function() {

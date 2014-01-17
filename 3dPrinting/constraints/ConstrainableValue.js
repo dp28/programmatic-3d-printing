@@ -107,39 +107,12 @@ function ConstrainableValue () {
  		this.addConstraint(constraint)
  	}
 
- 	// A convenience method for adding a new OffsetByConstrainableConstraint to  
- 	// this ConstrainableValue 
- 	this.offsetByConstrainable = function(otherValue, offset) {
- 		constraint = new ConstraintModule.OffsetByConstrainableConstraint(this, 
- 			                                                                otherValue,
- 			                                                                offset)
- 		this.addConstraint(constraint)
- 	}
-
  	// A convenience method for adding a new ScaledByConstantConstraint to this 
  	// ConstrainableValue 
  	this.scaledByConstant = function(otherValue, constantFactor) {
  		constraint = new ConstraintModule.ScaledByConstantConstraint(this, 
  			                                                           otherValue,
  			                                                           constantFactor)
- 		this.addConstraint(constraint)
- 	}
-
- 	// A convenience method for adding a new ScaledByConstrainableConstraint to  
- 	// this ConstrainableValue 
- 	this.scaledByConstrainable = function(otherValue, factor) {
- 		constraint = new ConstraintModule.ScaledByConstrainableConstraint(this, 
- 			                                                                otherValue,
- 			                                                                factor)
- 		this.addConstraint(constraint)
- 	}
-
-	// A convenience method for adding a new FunctionOfConstrainablesConstraint to  
- 	// this ConstrainableValue 
- 	this.functionOfConstrainables = function(argumentValues, func) {
- 		constraint = new ConstraintModule.FunctionOfConstrainablesConstraint(this, 
- 			                                                                   argumentValues,
- 			                                                                   func)
  		this.addConstraint(constraint)
  	}
 }

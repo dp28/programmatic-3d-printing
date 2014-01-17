@@ -69,4 +69,56 @@ describe('Point', function() {
   		point.getZ().isRigid().should.be.true
   	})
   })
+
+  describe('#setAt', function() {
+  	beforeEach(function() {
+  		point = new Point()
+  		point.setAt(1, 2, 3)
+  	})
+
+  	it('should have an unfixed x coordinate of 1', function() {
+  		point.getX().getValue().should.equal(1)
+  		point.getX().isRigid().should.be.false
+  	})
+
+  	it('should have an unfixed y coordinate of 2', function() {
+  		point.getY().getValue().should.equal(2)
+  		point.getY().isRigid().should.be.false
+  	})
+
+  	it('should have an unfixed z coordinate of 3', function() {
+  		point.getZ().getValue().should.equal(3)
+  		point.getZ().isRigid().should.be.false
+  	})
+  })
+
+  describe('#offsetFrom', function() {
+  	var otherPoint, offsets
+
+  	beforeEach(function() {
+  		point = new Point()
+  		otherPoint = new Point()
+  		offsets = [1, 2, 3]
+  		point.offsetFrom(otherPoint, offsets)
+  		otherPoint.setAt(1, 2, 3)
+  	})
+
+  	it('should set the x coordinate of the dependent point to the combination' 
+  		 + ' of the x offset and the indpendent x coordinate', function() {
+  		point.getX().getValue().should.equal(offsets[0] 
+  			                                   + otherPoint.getX().getValue())
+  	})
+
+  	it('should set the y coordinate of the dependent point to the combination' 
+  		 + ' of the y offset and the indpendent y coordinate', function() {
+  		point.getY().getValue().should.equal(offsets[1] 
+  			                                   + otherPoint.getY().getValue())
+  	})
+
+  	it('should set the z coordinate of the dependent point to the combination' 
+  		 + ' of the z offset and the indpendent z coordinate', function() {
+  		point.getZ().getValue().should.equal(offsets[2] 
+  			                                   + otherPoint.getZ().getValue())
+  	})
+  })
 })

@@ -56,51 +56,6 @@ describe('OffsetByConstantConstraint', function() {
 	})
 })
 
-describe('OffsetByConstrainableConstraint', function() {
-	var offset
-
-	beforeEach(function() {
-		offset = new ConstrainableValue()
-	})
-
-	it('should constrain a dependent value to be a constrainable distance from ' 
-		 + 'the independent value', function() {
-		new constraints.OffsetByConstrainableConstraint(leftValue, 
-			                                                   rightValue, 
-			                                                   offset)
-		offset.setValue(15)
-		rightValue.setValue(10)
-		leftValue.getValue().should.equal(rightValue.getValue() + offset.getValue())
-	})
-
-	it.skip('should constrain a dependent value to be a constrainable distance from ' 
-		 + 'the independent value even if the offset is set after the independent ' 
-		 + 'value', function() {
-		new constraints.OffsetByConstrainableConstraint(leftValue, 
-			                                                   rightValue, 
-			                                                   offset)
-		rightValue.setValue(10)
-		offset.setValue(15)
-		leftValue.getValue().should.equal(rightValue.getValue() + offset.getValue())
-	})
-
-	it('should not be satisfied if the left value is not set', function() {
-		constraint = new constraints.OffsetByConstrainableConstraint(leftValue, 
-			                                                           rightValue, 
-			                                                           offset)
-		offset.setValue(15)
-		constraint.isSatisfied().should.be.false
-	})
-
-	it('should not be satisfied if the offset value is not set', function() {
-		constraint = new constraints.OffsetByConstrainableConstraint(leftValue, 
-			                                                           rightValue, 
-			                                                           offset)
-		leftValue.setValue(10)
-		constraint.isSatisfied().should.be.false
-	})
-})
-
 describe('ScaledByConstantConstraint', function() {
 	it('should constrain a dependent value to be a constant factor larger than ' 
 		 + 'the independent value', function() {
@@ -115,66 +70,4 @@ describe('ScaledByConstantConstraint', function() {
 			                                                      1.5)
 		constraint.isSatisfied().should.be.false
 	})
-})
-
-describe('ScaleByConstrainableConstraint', function() {
-	var factor
-
-	beforeEach(function() {
-		factor = new ConstrainableValue()
-	})
-
-	it('should constrain a dependent value to be a constrainable factor larger ' 
-		 + 'than the independent value', function() {
-		new constraints.ScaledByConstrainableConstraint(leftValue, 
-			                                              rightValue, 
-			                                              factor)
-		factor.setValue(1.5)
-		rightValue.setValue(10)
-		leftValue.getValue().should.equal(rightValue.getValue() * factor.getValue())
-	})
-
-	it('should not be satisfied if the left value is not set', function() {
-		constraint = new constraints.ScaledByConstrainableConstraint(leftValue, 
-			                                                           rightValue, 
-			                                                           factor)
-		constraint.isSatisfied().should.be.false
-	})
-})
-
-describe('FunctionOfConstrainablesConstraint', function() {
-
-	function cosine(theta) {
-		return Math.cos(theta.getValue())
-	}
-
-	it('should constrain a dependent value to be a function of the independent ' 
-		 + 'value', function() {
-		new constraints.FunctionOfConstrainablesConstraint(leftValue, 
-			                                                [rightValue], 
-			                                                cosine)
-		rightValue.setValue(10)
-		leftValue.getValue().should.equal(cosine(rightValue))
-	})
-
-	it('should not be satisfied if the left value is not set', function() {
-		constraint = new constraints.FunctionOfConstrainablesConstraint(leftValue, 
-			                                                             [rightValue], 
-			                                                             cosine)
-		constraint.isSatisfied().should.be.false
-	})
-
-	it('should work with functions that require multiple ConstrainableValues', 
-		 function() {
-		var anotherValue = new ConstrainableValue
-		function findOpposite(angle, hypotenuse) {
-			return cosine(angle) * hypotenuse.getValue()
-		}
-		new constraints.FunctionOfConstrainablesConstraint(leftValue, 
-			                                                [rightValue, anotherValue],
-			                                                findOpposite)
-		anotherValue.setValue(20)
-		rightValue.setValue(10)
-		leftValue.getValue().should.equal(findOpposite(rightValue, anotherValue))
-  })
 })
