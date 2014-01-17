@@ -4,10 +4,11 @@
  * Tests the Gear class
  */
 var should = require('should')
-var Gear = require('../components/Gear.js').Gear 
 var Component = require('../components/Component.js').Component
+var Gear = require('../components/Gear.js').Gear 
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Circle = require('../geometry/Circle.js').Circle
+var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 
 describe('Gear', function() {
 	var gear
@@ -72,14 +73,16 @@ describe('Gear', function() {
 		})
 	})
 
-	describe('#getCircularPitch', function() {
-		var diameter = 20
-		var numTeeth = 5
 
-		function setBoth() {
-			gear.setNumberOfTeeth(numTeeth) 
-			gear.setPitchCircleRadius(diameter / 2)	
-		}
+	var exampleDiameter = 20
+	var exampleNumTeeth = 5
+
+  function setExampleNumTeethAndPitchRadius() {
+		gear.setNumberOfTeeth(exampleNumTeeth) 
+		gear.setPitchCircleRadius(exampleDiameter / 2)	
+	}
+
+	describe('#getCircularPitch', function() {
 
 		it('should not be calculable if neither the number of teeth nor the pitch '
 			 + ' radius has been set', function() {
@@ -100,15 +103,78 @@ describe('Gear', function() {
 
 		it('should be calculable if both the number of teeth and pitch radius are '
 			 + 'set', function() {
-			setBoth()
+			setExampleNumTeethAndPitchRadius()
 			gear.getCircularPitch.should.not.throw()
  		})
 
  		it('should be PI times the pitch diameter divided by the number of teeth', 
  			 function() {
- 			setBoth()
- 			gear.getCircularPitch().should.be.approximately(Math.PI * 
- 																											diameter / numTeeth, .001)
+ 			setExampleNumTeethAndPitchRadius()
+ 			gear.getCircularPitch().should.be.approximately(Math.PI * exampleDiameter/
+ 			                                                exampleNumTeeth, .001)
  		})
+	})
+
+	describe('#toSpecification', function() {
+		it('should not be possible if neither the number of teeth nor the pitch '
+			 + ' radius has been set', function() {
+			gear.toSpecification.should.throw()
+		})
+
+		it('should not be possible if the number of teeth has been set even if '
+			 + ' the pitch radius has been', function() {
+			gear.setPitchCircleRadius(10)
+			gear.toSpecification.should.throw()
+		})
+
+		it('should not be possible if the pitch radius has been set even if '
+			 + ' the number of teeth has been', function() {
+			gear.setNumberOfTeeth(5)
+			gear.toSpecification.should.throw()
+		})
+
+		it('should be possible if both the number of teeth and pitch radius are '
+			 + 'set', function() {
+			setExampleNumTeethAndPitchRadius()
+			gear.toSpecification.should.not.throw()
+ 		})
+
+		it('should return a GearSpecification Object', function() {
+			setExampleNumTeethAndPitchRadius()
+			gear.toSpecification().should.be.an.instanceOf(GearSpecification)
+		})
+
+		describe('the returned GearSpecification', function() {
+			var gearSpec
+
+			beforeEach(function() {
+				setExampleNumTeethAndPitchRadius()			
+				gearSpec = gear.toSpecification()				
+			})
+
+			it('should have the same number of teeth as the Gear', function() {
+				gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())
+			})
+
+			it('should have the same circular pitch as the Gear', function() {
+				gearSpec.circularPitch.should.equal(gear.getCircularPitch())
+			})
+
+			it('should have the same pressure angle as the Gear', function() {
+				gearSpec.pressureAngle.should.equal(gear.getPressureAngle().getValue())
+			})
+
+			it('should have the same clearance as the Gear', function() {
+				gearSpec.clearance.should.equal(gear.getClearance().getValue())
+			})
+
+			it('should have the same thickness as the Gear', function() {
+				gearSpec.thickness.should.equal(gear.getThickness().getValue())
+			})
+
+			it('should have the same centre hole radius as the Gear', function() {
+				gearSpec.centreHoleRadius.should.equal(gear.getCentreHoleRadius().getValue())
+			})
+		})
 	})
 })

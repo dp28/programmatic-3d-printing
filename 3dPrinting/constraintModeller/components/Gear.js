@@ -5,8 +5,9 @@
  */
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var Utilities = require('../Utilities.js')
 var Circle = require('../geometry/Circle.js').Circle
+var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
+var Utilities = require('../Utilities.js')
 
 // Default clearance to 2 to give space during printing
 var DEFAULT_CLEARANCE = 2
@@ -66,10 +67,28 @@ function Gear() {
 	}
 
 	this.getCircularPitch = function() {
+		checkIfCanCalculateCircularPitch()
+		return calculateCircularPitch()
+	}
+
+	var checkIfCanCalculateCircularPitch = function() {		
 		if (numTeeth.getValue() == undefined) throw "Number of teeth not set"
 		if (pitchCircleRadius.getValue() == undefined)
 			throw "Pitch radius not set"
-		return Math.PI * pitchCircleRadius.getValue() * 2 / numTeeth.getValue()
+	}
 
+	var calculateCircularPitch = function() {
+		return Math.PI * pitchCircleRadius.getValue() * 2 / numTeeth.getValue()
+	}
+
+	this.toSpecification = function() {
+		checkIfCanCalculateCircularPitch()
+		var circularPitch = calculateCircularPitch()
+		return new GearSpecification(numTeeth.getValue(),
+		                             circularPitch, 
+			                           pressureAngle.getValue(),
+			                           clearance.getValue(),
+			                           thickness.getValue(),
+			                           centreHoleRadius.getValue())
 	}
 }
