@@ -40,7 +40,19 @@ describe('Circle', function() {
 		})
 
 		it('should set the radius of the circle', function() {
-			circle.getRadius().should.equal(10)
+			circle.getRadius().getValue().should.equal(10)
+		})
+	})
+
+	describe('#getDiameter', function() {
+		var radius = 10
+
+		beforeEach(function() {
+			circle.setRadius(radius)
+		})
+
+		it('should be twice the radius', function() {
+			circle.getDiameter().getValue().should.equal(2 * radius)
 		})
 	})
 })

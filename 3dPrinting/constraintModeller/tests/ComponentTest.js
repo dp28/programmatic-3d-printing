@@ -5,6 +5,8 @@
  */
 var should = require('should')
 var Component = require('../components/Component.js').Component 
+var Point = require('../geometry/Point.js').Point
+var Circle = require('../geometry/Circle.js').Circle
 
 describe('Component', function() {
 	var component
@@ -15,8 +17,13 @@ describe('Component', function() {
 
 	describe('#getBoundingCircle', function() {
 		it('should return a circle', function() {
-			component.getBoundingCircle().should.have.property('getRadius')
-			component.getBoundingCircle().should.have.property('getCentre')
+			component.getBoundingCircle().should.be.an.instanceOf(Circle)
+		})
+	})
+
+	describe('#getCentre', function() {
+		it('should return a Point', function() {
+			component.getCentre().should.be.an.instanceOf(Point)
 		})
 	})
 })

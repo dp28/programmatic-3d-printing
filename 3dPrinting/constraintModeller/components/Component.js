@@ -9,11 +9,19 @@ var Circle = require('../geometry/Circle.js').Circle
 module.exports.Component = Component
 
 function Component() {
-	var centre = new Point()
-	var boundingCircle = new Circle()
+	this.centre = new Point()
+	this.boundingCircle = new Circle()
+}
 
-	this.getBoundingCircle = function() {
-		return boundingCircle
+Component.prototype = {
+
+	constructor: Component,
+
+	getBoundingCircle: function() {
+		return this.boundingCircle
+	},
+
+	getCentre: function() {
+		return this.centre
 	}
-
 }

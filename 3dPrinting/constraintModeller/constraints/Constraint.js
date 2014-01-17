@@ -14,6 +14,9 @@
  *
  * This is the base class for all Constraints
  */
+
+var Utilities = require('../Utilities.js')
+
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint
 module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
@@ -64,15 +67,6 @@ Constraint.prototype = {
 	}
 }
 
-// From http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/
-//
-// Allows use of Parasitic Combination Inheritance pattern
-function inheritPrototype(childObject, parentObject) {
-  var copyOfParent = Object.create(parentObject.prototype);
-  copyOfParent.constructor = childObject;
-  childObject.prototype = copyOfParent;
-}
-
 /*
  * Constrains values so that the left value is always the same as the right 
  * value.
@@ -81,7 +75,7 @@ function SameAsConstraint(left, right) {
 	Constraint.call(this, left, right)
 }
   
-inheritPrototype(SameAsConstraint, Constraint)
+Utilities.inheritPrototype(SameAsConstraint, Constraint)
 
 SameAsConstraint.prototype.isSatisfied = function() {
 	return this.getLeft().getValue() == this.getRight().getValue()
@@ -100,7 +94,7 @@ function OffsetByConstantConstraint(left, right, constant) {
 	this.offset = constant
 }
 
-inheritPrototype(OffsetByConstantConstraint, Constraint)
+Utilities.inheritPrototype(OffsetByConstantConstraint, Constraint)
 
 OffsetByConstantConstraint.prototype.isSatisfied = function() {
 	return this.getLeft().isSet() &&
@@ -120,7 +114,7 @@ function ScaledByConstantConstraint(left, right, constant) {
 	this.factor = constant
 }
 
-inheritPrototype(ScaledByConstantConstraint, Constraint)
+Utilities.inheritPrototype(ScaledByConstantConstraint, Constraint)
 
 ScaledByConstantConstraint.prototype.isSatisfied = function() {
 	return this.getLeft().isSet() &&
