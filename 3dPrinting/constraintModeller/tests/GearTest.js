@@ -21,6 +21,11 @@ describe('Gear', function() {
 		gear.should.be.an.instanceOf(Component)
 	})
 
+	it('should have the same methods as a Component', function() {
+		gear.should.have.property('getCentre')
+		gear.should.have.property('getBoundingCircle')
+	})
+
 	describe('#getNumberOfTeeth', function() {
 		it('should return a ConstrainableValue', function() {
 			gear.getNumberOfTeeth().should.be.an.instanceOf(ConstrainableValue)

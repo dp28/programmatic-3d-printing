@@ -9,10 +9,10 @@ var ConstrainableValue = require('../constraints/ConstrainableValue.js').Constra
 module.exports.Circle = Circle
 
 function Circle() {
-	var centre
-	var radius = new ConstrainableValue()
+	var centre = new Point()
+	var radius = new ConstrainableValue() 
 	var diameter = new ConstrainableValue()
-	diameter.scaledByConstant(radius, 2)
+	diameter.scaledByConstant(radius, 2)     
 
 	this.setCentre = function(point) {
 		centre = point

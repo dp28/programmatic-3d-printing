@@ -5,6 +5,7 @@
  * Constraint Modelling aspect and the 3D Drawing aspect
  */
 var should = require('should')
+var Point = require('../geometry/Point.js').Point
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 
 describe('GearSpecification', function() {
@@ -15,10 +16,16 @@ describe('GearSpecification', function() {
 	var clearance = 2
 	var thickness = 4  
 	var centreHoleRadius = 1.5
+	var centreX = 0
+	var centreY = 10
+	var centreZ = 100
+	var centre = new Point()
+	centre.fixAt(centreX, centreY, centreZ)
 
 	beforeEach(function() {
 		gearSpec = new GearSpecification(numTeeth, circularPitch, pressureAngle,
-			                               clearance, thickness, centreHoleRadius)
+			                               clearance, thickness, centreHoleRadius,
+			                               centre)
 	})
 
 	describe('#numTeeth', function() {

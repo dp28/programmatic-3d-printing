@@ -44,10 +44,6 @@ function SpecificationWriter() {
 		var string = COMMENT_HEADER + LIBRARY_HEADER + GEAR_PREFIX
 		string += JSON.stringify(gears, null, 2)
 		string += GEAR_SUFFIX
-		fs.writeFile(SPECIFICATION_FILE_NAME, string, function(err) {
-			if (err)
-				console.log('Failed to write to Specification file: ' 
-					          + SPECIFICATION_FILE_NAME)
-		})
+		fs.writeFileSync(SPECIFICATION_FILE_NAME, string)
 	}
 }
