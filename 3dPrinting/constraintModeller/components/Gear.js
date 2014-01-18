@@ -10,13 +10,13 @@ var GearSpecification = require('../interface/GearSpecification.js').GearSpecifi
 var Utilities = require('../Utilities.js')
 
 // Default clearance to 2 to give space during printing
-var DEFAULT_CLEARANCE = 2
+const DEFAULT_CLEARANCE = 2
 
 // Default to 20 - see http://www.astronomiainumbria.org/advanced_internet_files/meccanica/easyweb.easynet.co.uk/_chrish/geardata.htm
-var DEFAULT_PRESSURE_ANGLE = 20
+const DEFAULT_PRESSURE_ANGLE = 20
 
-var DEFAULT_THICKNESS = 5
-var DEFAULT_CENTRE_HOLE_RADIUS = 4
+const DEFAULT_THICKNESS = 5
+const DEFAULT_CENTRE_HOLE_RADIUS = 4
 
 module.exports.Gear = Gear
 

@@ -2,9 +2,13 @@ include("Gear.jscad");
 include("Specification.jscad")
 
 function main() {
-	var params = Specification.gears[0]
-  var gear = makeGear(params, 0, 0);
-  return gear;   
+	var gears = [] 
+	var gear
+	for (var i = 0; i < Specification.gears.length; i++) {
+		gear = makeGear(Specification.gears[i], 0, 0)
+		gears.push(gear)
+	}
+  return gears;   
 }
 
 function makeGear(params, centreX, centreY) {    
