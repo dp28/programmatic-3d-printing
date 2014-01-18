@@ -4,7 +4,6 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect
  */
-
 module.exports.GearSpecification = GearSpecification
 
 function GearSpecification(p_numTeeth, p_circularPitch, p_pressureAngle,

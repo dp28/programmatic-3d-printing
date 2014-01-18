@@ -4,11 +4,10 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for abstract Components.
  */
-
 module.exports.ComponentSpecification = ComponentSpecification
 
-function ComponentSpecification(p_centreX, p_centreY, p_centreZ) {
-	this.centreX = p_centreX
-	this.centreY = p_centreY
-	this.centreZ = p_centreZ
+function ComponentSpecification(centre) {
+	this.centreX = centre.getX().getValue()
+	this.centreY = centre.getY().getValue()
+	this.centreZ = centre.getZ().getValue()
 }

@@ -5,6 +5,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var Circle = require('../geometry/Circle.js').Circle
+var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 
 module.exports.Component = Component
 
@@ -22,5 +23,12 @@ Component.prototype = {
 
 	getCentre: function() {
 		return this.boundingCircle.getCentre()
+	},
+
+	toCompleteSpecification: function() {
+		if (this.getCentre().isNotFullyDefined()) 
+			throw "Point not fully defined"
+		return new ComponentSpecification(this.getCentre())
 	}
+
 }

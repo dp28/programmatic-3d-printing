@@ -13,9 +13,11 @@ describe('ComponentSpecification', function() {
 	var centreX = 1
 	var centreY = 2
 	var centreZ = 3
+	var centre = new Point()
+	centre.fixAt(centreX, centreY, centreZ)
 
 	before(function() {
-		componentSpec = new ComponentSpecification(centreX, centreY, centreZ)
+		componentSpec = new ComponentSpecification(centre)
 	})
 
 	describe('#centreX', function() {

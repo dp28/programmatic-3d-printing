@@ -71,4 +71,12 @@ function Point() {
 	this.toString = function() {
 		return '(' + x.getValue() +', ' + y.getValue() + ', ' + z.getValue() + ')'
 	}
+
+	this.isNotFullyDefined = function() {
+		return !this.isFullyDefined()
+	}
+
+	this.isFullyDefined = function() {
+		return x.isSet() && y.isSet() && z.isSet()
+	}
 } 
