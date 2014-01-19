@@ -26,7 +26,6 @@ describe('ComponentSpecification', function() {
 	it('should behave like a ComponentSpecification', function() {
 		testComponentSpecification(componentSpec, component)
 	})
-
 })
 
 function testComponentSpecification(componentSpec, component) {	

@@ -11,7 +11,10 @@ var Gear = require('../components/Gear.js').Gear
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
+
+var GearTest = require('../tests/GearTest.js')
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
+var ComponentTest = require('../tests/ComponentTest.js')
 var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
 describe('SpecificationComposer', function() {
@@ -19,21 +22,9 @@ describe('SpecificationComposer', function() {
 
 	beforeEach(function() {
 		composer = new SpecificationComposer()
-		gear = new Gear()
-		fullyConstrainGear()
-		component = new Component()
-		fullyConstrainComponent()
+		gear = GearTest.createFullySpecifiedTestGear()
+		component = ComponentTest.createFullySpecifiedTestComponent()
 	})
-
-	function fullyConstrainGear() {		
-		gear.setNumberOfTeeth(4) 
-		gear.setPitchCircleRadius(3)	
-		gear.getCentre().fixAt(1, 2, 3)
-	}
-
-	function fullyConstrainComponent() {
-		component.getCentre().fixAt(1, 3, 5)
-	}
 
 	describe('#makeSpecification', function() {
 

@@ -8,6 +8,13 @@ var Component = require('../components/Component.js').Component
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 var Point = require('../geometry/Point.js').Point
 var Circle = require('../geometry/Circle.js').Circle
+var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
+
+module.exports.createFullySpecifiedTestComponent = function() {
+	var component = new Component() 
+	component.getCentre().fixAt(1, 3, 4)
+	return component
+}
 
 describe('Component', function() {
 	var component
@@ -74,20 +81,10 @@ describe('Component', function() {
 				componentSpec = component.toComponentSpecification()				
 			})
 
-			it('should have the same centre x coordinate as the Component', function() {
-				componentSpec.centreX.should.equal(centreX)
-			})
-
-			it('should have the same centre y coordinate as the Component', function() {
-				componentSpec.centreY.should.equal(centreY)
-			})
-
-			it('should have the same centre z coordinate as the Component', function() {
-				componentSpec.centreZ.should.equal(centreZ)
-			})
-
-			it('should have the type "Component', function() {
-				componentSpec.type.should.equal('Component')
+			it('should behave like a ComponentSpecification derived from the '
+				 + 'Component', function() {
+				ComponentSpecificationTest.testComponentSpecification(componentSpec,
+					                                                    component)
 			})
 		})
 	})
