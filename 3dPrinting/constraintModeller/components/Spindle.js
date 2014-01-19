@@ -5,6 +5,7 @@
  */
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var SpindleSpecification = require('../interface/SpindleSpecification.js').SpindleSpecification
 var Utilities = require('../Utilities.js')
 
 module.exports.Spindle = Spindle
@@ -17,5 +18,9 @@ function Spindle() {
 
 	this.getHeight = function() {
 		return height
+	}
+
+	this.toSpecification = function() {
+		return new SpindleSpecification(height.getValue())
 	}
 }

@@ -10,6 +10,13 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var ComponentTest = require('../tests/ComponentTest.js')
 
+module.exports.createFullySpecifiedTestSpindle = function() {
+	var spindle = new Spindle()
+	spindle.getCentre().fixAt(1, 2, 3)
+	spindle.getHeight().fixValue(5)
+	return spindle
+}
+
 describe('Spindle', function() {
 	var spindle 
 

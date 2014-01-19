@@ -5,7 +5,6 @@
  */
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var Utilities = require('../Utilities.js')
 
