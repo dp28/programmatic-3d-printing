@@ -8,6 +8,7 @@ var fs = require('fs')
 var console = require('console')
 var util = require('util')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
+var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 
 module.exports.SpecificationWriter = SpecificationWriter
 
@@ -30,19 +31,20 @@ const GEAR_PREFIX = 'Specification.gears = '
 const GEAR_SUFFIX = ';'
 
 function SpecificationWriter() {
-	var gears = []
+	var specifications = []
+	var composer = new SpecificationComposer()
  
-	this.getGears = function() {
-		return gears
+	this.getSpecifications = function() {
+		return specifications
 	}
 
-	this.addGearSpecification = function(gearSpec) {
-		gears.push(gearSpec)
+	this.addComponent = function(component) {
+		specifications.push(composer.makeSpecification(component))
 	}
 
 	this.writeSpecificationToFile = function() {
 		var string = COMMENT_HEADER + LIBRARY_HEADER + GEAR_PREFIX
-		string += JSON.stringify(gears, null, 2)
+		string += JSON.stringify(specifications, null, 2)
 		string += GEAR_SUFFIX
 		fs.writeFileSync(SPECIFICATION_FILE_NAME, string)
 	}

@@ -7,21 +7,25 @@
 var should = require('should')
 var fs = require('fs')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
+var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
+var GearTest = require('../tests/GearTest.js')
 
 describe('SpecificationWriter', function() {
-	var writer, gearSpec
+	var writer, gear, composer
 
 	beforeEach(function(){
+		composer = new SpecificationComposer()
 		writer = new SpecificationWriter()
-		gearSpec = new GearSpecification(4, 5, 4, 3, 2, 1)
+		gear = GearTest.createFullySpecifiedTestGear()
 	})
 
-	describe('#addGearSpecification', function() {
-		it('should add a new GearSpecification to the writer', function() {
-			writer.getGears().length.should.equal(0)
-			writer.addGearSpecification(gearSpec)
-			writer.getGears().length.should.equal(1)
+	describe('#addComponent', function() {
+		it('should add a new ComponentSpecification to the writer', function() {
+			writer.getSpecifications().length.should.equal(0)
+			writer.addComponent(gear)
+			writer.getSpecifications().length.should.equal(1)
+			writer.getSpecifications()[0].should.eql(composer.makeSpecification(gear))
 		})
 	})
 
@@ -72,18 +76,19 @@ describe('SpecificationWriter', function() {
 		})
 
 		describe('with two GearSpecifications added', function() {
-			var otherGearSpec
+			var otherGear
 
 			beforeEach(function(done) { 
-				otherGearSpec = new GearSpecification(5, 6, 7, 8, 9, 2)
-				writer.addGearSpecification(gearSpec)
-				writer.addGearSpecification(otherGearSpec)
+				otherGear = GearTest.createSecondFullySpecifiedTestGear()
+				writer.addComponent(gear)
+				writer.addComponent(otherGear)
 				writeToFileAndGetContents(done)
 			})
 
 			it('should contain a pretty-printed JSON String for both '
 				 + 'GearSpecifications in an array', function() {
-				 	var array = [gearSpec, otherGearSpec]
+				var array = [composer.makeSpecification(gear), 
+				 	           composer.makeSpecification(otherGear)]
 				fileContents.should.contain(JSON.stringify(array, null, 2))
 			})
 		}) 

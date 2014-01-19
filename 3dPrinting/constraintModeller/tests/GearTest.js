@@ -19,6 +19,15 @@ module.exports.createFullySpecifiedTestGear = function() {
 	return gear
 }
 
+module.exports.createSecondFullySpecifiedTestGear = function() {
+	var gear = new Gear()
+	gear.getCentre().fixAt(4, 5, 6)
+	gear.setNumberOfTeeth(50) 
+	gear.setPitchCircleRadius(20)		
+	return gear
+}
+
+
 describe('Gear', function() {
 	var gear
 
