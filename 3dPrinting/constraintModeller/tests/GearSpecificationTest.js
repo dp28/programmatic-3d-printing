@@ -21,8 +21,7 @@ describe('GearSpecification', function() {
 
 	it('should behave like a GearSpecification', function() {
 		testGearSpecification(gearSpec, gear)
-	})
-	
+	})	
 })
 
 function testGearSpecification(gearSpec, gear) {

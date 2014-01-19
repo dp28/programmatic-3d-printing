@@ -12,6 +12,7 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
+var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
 describe('SpecificationComposer', function() {
 	var composer, gear
@@ -48,11 +49,9 @@ describe('SpecificationComposer', function() {
 					specification = composer.makeSpecification(componentToTest)
 				})
 
-				it('should have all the properties of a ComponentSpecification',
-					 function() {
-					for (key in ComponentSpecification) {
-						specification.should.have.property(key)
-					}
+				it('should behave like a ComponentSpecification', function() {
+					ComponentSpecificationTest.testComponentSpecification(specification, 
+						                                                    componentToTest)
 				})
 			})
 		}
