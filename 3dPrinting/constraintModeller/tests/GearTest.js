@@ -10,19 +10,20 @@ var ConstrainableValue = require('../constraints/ConstrainableValue.js').Constra
 var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
+var ComponentTest = require('../tests/ComponentTest.js')
 
 module.exports.createFullySpecifiedTestGear = function() {
 	var gear = new Gear()
-	gear.getCentre().fixAt(1, 2, 3)
-	gear.setNumberOfTeeth(5) 
-	gear.setPitchCircleRadius(2)		
+	gear.getCentre().fixAt(50, 20, 8)
+	gear.setNumberOfTeeth(15) 
+	gear.setPitchCircleRadius(20)		
 	return gear
 }
 
 module.exports.createSecondFullySpecifiedTestGear = function() {
 	var gear = new Gear()
 	gear.getCentre().fixAt(4, 5, 6)
-	gear.setNumberOfTeeth(50) 
+	gear.setNumberOfTeeth(10) 
 	gear.setPitchCircleRadius(20)		
 	return gear
 }
@@ -35,14 +36,8 @@ describe('Gear', function() {
 		gear = new Gear()
 	})
 
-	it('should inherit from Component', function() {
-		gear.should.be.an.instanceOf(Component)
-	})
-
-	it('should have the same methods as a Component', function() {
-		gear.should.have.property('getCentre')
-		gear.should.have.property('getBoundingCircle')
-		gear.should.have.property('toComponentSpecification')
+	it('should behave like a Component', function() {
+		ComponentTest.shouldBehaveLikeComponent(gear)
 	})
 
 	describe('#toComponentSpecification', function() {

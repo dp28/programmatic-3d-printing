@@ -16,6 +16,18 @@ module.exports.createFullySpecifiedTestComponent = function() {
 	return component
 }
 
+module.exports.shouldBehaveLikeComponent = function(component) {
+	it('should inherit from Component', function() {
+		component.should.be.an.instanceOf(Component)
+	})
+
+	it('should have the same methods as a Component', function() {
+		component.should.have.property('getCentre')
+		component.should.have.property('getBoundingCircle')
+		component.should.have.property('toComponentSpecification')
+	})
+}
+
 describe('Component', function() {
 	var component
 

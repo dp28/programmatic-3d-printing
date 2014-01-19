@@ -1,0 +1,21 @@
+/*
+ * author: Daniel Patterson
+ *
+ * A representation of a spindle for an involute gear
+ */
+var Component = require('../components/Component.js').Component
+var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var Utilities = require('../Utilities.js')
+
+module.exports.Spindle = Spindle
+
+Utilities.inheritPrototype(Spindle, Component)
+
+function Spindle() {
+	Component.call(this)
+	var height = new ConstrainableValue()
+
+	this.getHeight = function() {
+		return height
+	}
+}
