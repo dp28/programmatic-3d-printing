@@ -28,4 +28,8 @@ function Spindle() {
 	this.getTypeName = function() {
 		return "Spindle"
 	}
+
+	this.setHeight = function(h) {
+		height.setValue(h)
+	}
 }

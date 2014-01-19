@@ -3,10 +3,12 @@
  *
  * A representation of an involute gear
  */
+var util = require('util')
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var Utilities = require('../Utilities.js')
+var Spindle = require('../components/Spindle.js').Spindle
 
 // Default clearance to 2 to give space during printing
 const DEFAULT_CLEARANCE = 2
@@ -93,5 +95,13 @@ function Gear() {
 
 	this.getTypeName = function() {
 		return "Gear"
+	}
+
+	this.generateSpindle = function() {
+		if (this.getCentre().isNotFullyDefined()) throw "Point not fully defined"
+		if (this.getThickness().isNotSet()) throw "Thickness not set"
+		var spindle = new Spindle()
+		spindle.setHeight(thickness.getValue())
+		return spindle
 	}
 }

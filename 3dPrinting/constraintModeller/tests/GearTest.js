@@ -6,6 +6,7 @@
 var should = require('should')
 var Component = require('../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
+var Spindle = require('../components/Spindle.js').Spindle
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
@@ -14,7 +15,9 @@ var ComponentTest = require('../tests/ComponentTest.js')
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
 var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
-module.exports.createFullySpecifiedTestGear = function() {
+module.exports.createFullySpecifiedTestGear = createFullySpecifiedTestGear
+
+function createFullySpecifiedTestGear() {
 	var gear = new Gear()
 	gear.getCentre().fixAt(50, 20, 8)
 	gear.setNumberOfTeeth(15) 
@@ -182,6 +185,52 @@ describe('Gear', function() {
 			it('should behave like a GearSpecification created by the Gear',
 			   function() {
 				GearSpecificationTest.testGearSpecification(gearSpec, gear)
+			})
+		})
+	})
+
+	describe('#generateSpindle', function() {
+		beforeEach(function() {
+			gear = new Gear()
+		})
+
+		it('should not be possible if the centre of the gear is not defined',
+			 function() {
+				try {
+					gear.generateSpindle().should.throw("Point not fully defined")
+				}
+				catch(err) {
+					err.should.equal("Point not fully defined")
+				}
+		})
+
+		it.skip('should not be possible if the thickness of the gear is not defined',
+			 function() {
+			 	gear.getCentre().fixAt(0, 0, 0)
+				try {
+					gear.generateSpindle().should.throw("Thickness not defined")
+				}
+				catch(err) {
+					err.should.equal("Thickness not defined")
+				} 
+		})
+
+		it('should produce a Spindle', function() {
+			gear = createFullySpecifiedTestGear()
+			gear.generateSpindle().should.be.an.instanceof(Spindle)
+		})
+
+		describe('the produced Spindle', function() {
+			var spindle
+
+			beforeEach(function() {
+				gear = createFullySpecifiedTestGear()
+				spindle = gear.generateSpindle()
+			})
+
+			it('should have a height at least as large as the thickness of the gear',
+				 function() {
+				spindle.getHeight().getValue().should.not.be.lessThan(gear.getThickness().getValue())
 			})
 		})
 	})

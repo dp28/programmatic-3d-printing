@@ -63,6 +63,10 @@ function ConstrainableValue () {
 
  	this.isSet = function() {
  		return value !== null
+ 	}	
+
+ 	this.isNotSet = function() {
+ 		return value == null
  	}
 
  	this.isFlexible = function() {

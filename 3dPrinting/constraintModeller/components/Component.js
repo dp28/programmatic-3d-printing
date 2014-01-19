@@ -25,9 +25,13 @@ Component.prototype = {
 		return this.boundingCircle.getCentre()
 	},
 
-	toComponentSpecification: function() {
+	checkCentreFullyDefined: function() {
 		if (this.getCentre().isNotFullyDefined()) 
 			throw "Point not fully defined"
+	},
+
+	toComponentSpecification: function() {
+		this.checkCentreFullyDefined()
 		return new ComponentSpecification(this.getCentre(), this.getTypeName())
 	},
 
