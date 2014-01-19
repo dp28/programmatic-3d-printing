@@ -24,11 +24,11 @@ const COMMENT_HEADER = '/*\n * [GENERATED FILE]\n *\n * This is a full '
 const LIBRARY_HEADER = 'Specification = function() {};\n\n'
 
 // A prefix to allow OpenJSCAD access to the GearSpecifications
-const GEAR_PREFIX = 'Specification.gears = '
+const COMPONENT_PREFIX = 'Specification.components = '
 
 // A suffix to make sure that the GearSpecification array is well-formed 
 //OpenJSCAD
-const GEAR_SUFFIX = ';'
+const COMPONENT_SUFFIX = ';'
 
 function SpecificationWriter() {
 	var specifications = []
@@ -43,9 +43,9 @@ function SpecificationWriter() {
 	}
 
 	this.writeSpecificationToFile = function() {
-		var string = COMMENT_HEADER + LIBRARY_HEADER + GEAR_PREFIX
+		var string = COMMENT_HEADER + LIBRARY_HEADER + COMPONENT_PREFIX
 		string += JSON.stringify(specifications, null, 2)
-		string += GEAR_SUFFIX
+		string += COMPONENT_SUFFIX
 		fs.writeFileSync(SPECIFICATION_FILE_NAME, string)
 	}
 }

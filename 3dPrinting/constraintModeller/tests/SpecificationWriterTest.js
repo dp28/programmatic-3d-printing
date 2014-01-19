@@ -65,9 +65,9 @@ describe('SpecificationWriter', function() {
 		})
 
 		it('should contain a prefix to allow OpenJSCAD access to the array of '
-			 + 'GearSpecifications', function() {
-			var gearPrefix = 'Specification.gears = ['
-			fileContents.should.contain(gearPrefix)
+			 + 'Specifications', function() {
+			var componentsPrefix = 'Specification.components = ['
+			fileContents.should.contain(componentsPrefix)
 		})
 
 		it('should contain a suffix for the array of GearSpecifications so that it '
