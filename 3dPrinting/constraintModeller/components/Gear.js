@@ -72,9 +72,8 @@ function Gear() {
 	}
 
 	var checkIfCanCalculateCircularPitch = function() {		
-		if (numTeeth.getValue() == undefined) throw "Number of teeth not set"
-		if (pitchCircleRadius.getValue() == undefined)
-			throw "Pitch radius not set"
+		if (!numTeeth.isSet()) throw new Error("Number of teeth not set")
+		if (!pitchCircleRadius.isSet())	throw new Error("Pitch radius not set")
 	}
 
 	var calculateCircularPitch = function() {

@@ -10,22 +10,11 @@ var Point = require('../geometry/Point.js').Point
 var Circle = require('../geometry/Circle.js').Circle
 var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
+module.exports.shouldBehaveLikeComponent = shouldBehaveLikeComponent
 module.exports.createFullySpecifiedTestComponent = function() {
 	var component = new Component() 
 	component.getCentre().fixAt(1, 3, 4)
 	return component
-}
-
-module.exports.shouldBehaveLikeComponent = function(component) {
-	it('should inherit from Component', function() {
-		component.should.be.an.instanceOf(Component)
-	})
-
-	it('should have the same methods as a Component', function() {
-		component.should.have.property('getCentre')
-		component.should.have.property('getBoundingCircle')
-		component.should.have.property('toComponentSpecification')
-	})
 }
 
 describe('Component', function() {
@@ -35,7 +24,31 @@ describe('Component', function() {
 		component = new Component()
 	})
 
-	describe('#getBoundingCircle', function() {
+	it('should behave like a Component', function() {
+		shouldBehaveLikeComponent(component)
+	})
+
+	// Overidden by subclasses
+	describe('#toSpecification', function() {
+		it('should return null', function() {
+			should(component.toSpecification()).be.null
+		})
+	})
+
+	// Overidden by subclasses
+	describe('#getTypeName', function() {
+		it('should return "Component"', function() {
+			component.getTypeName().should.equal('Component')
+		})
+	})
+})
+
+function shouldBehaveLikeComponent(component) {
+	it('should inherit from Component', function() {
+		component.should.be.an.instanceOf(Component)
+	})
+
+		describe('#getBoundingCircle', function() {
 		it('should return a circle', function() {
 			component.getBoundingCircle().should.be.an.instanceOf(Circle)
 		})
@@ -44,18 +57,6 @@ describe('Component', function() {
 	describe('#getCentre', function() {
 		it('should return a Point', function() {
 			component.getCentre().should.be.an.instanceOf(Point)
-		})
-	})
-
-	describe('#toSpecification', function() {
-		it('should return null', function() {
-			should(component.toSpecification()).be.null
-		})
-	})
-
-	describe('#getTypeName', function() {
-		it('should return "Component"', function() {
-			component.getTypeName().should.equal('Component')
 		})
 	})
 
@@ -100,4 +101,4 @@ describe('Component', function() {
 			})
 		})
 	})
-})
+}

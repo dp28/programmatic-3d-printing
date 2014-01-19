@@ -42,10 +42,9 @@ describe('Gear', function() {
 		ComponentTest.shouldBehaveLikeComponent(gear)
 	})
 
-	describe('#toComponentSpecification', function() {
-		it('should return an Object when the centre is fixed', function() {
-			gear.getCentre().fixAt(1, 2, 3)
-			gear.toComponentSpecification().should.be.an.instanceof(Object)
+	describe('#getTypeName', function() {
+		it('should return "Gear"', function() {
+			gear.getTypeName().should.equal("Gear")
 		})
 	})
 
@@ -146,19 +145,19 @@ describe('Gear', function() {
 	describe('#toSpecification', function() {
 		it('should not be possible if neither the number of teeth nor the pitch '
 			 + ' radius has been set', function() {
-			gear.toSpecification.should.throw()
+			gear.toSpecification.should.throw("Number of teeth not set")
 		})
 
-		it('should not be possible if the number of teeth has been set even if '
+		it('should not be possible if the number of teeth has not been set even if '
 			 + ' the pitch radius has been', function() {
 			gear.setPitchCircleRadius(10)
-			gear.toSpecification.should.throw()
+			gear.toSpecification.should.throw("Number of teeth not set")
 		})
 
-		it('should not be possible if the pitch radius has been set even if '
+		it('should not be possible if the pitch radius has not been set even if '
 			 + ' the number of teeth has been', function() {
 			gear.setNumberOfTeeth(5)
-			gear.toSpecification.should.throw()
+			gear.toSpecification.should.throw("Pitch radius not set")
 		})
 
 		it('should be possible if both the number of teeth and pitch radius are '
@@ -183,47 +182,6 @@ describe('Gear', function() {
 			it('should behave like a GearSpecification created by the Gear',
 			   function() {
 				GearSpecificationTest.testGearSpecification(gearSpec, gear)
-			})
-		})
-	})
-
-	describe('#toComponentSpecification', function() {
-		var centreX = 1
-		var centreY = 2
-		var centreZ = 3
-
-		function setCentre() {
-			gear.getCentre().fixAt(centreX, centreY, centreZ)
-		}
-
-		it('should not be possible if the centre point is not fully defined',
-			 function() {
-			gear.toComponentSpecification.should.throw()
-		})
-
-		it('should be possible if the centre point is fully defined ', function() {
-			(function() {
-										setCentre()
-										gear.toComponentSpecification()
-									}).should.not.throw()
- 		})
-
-		it('should return a ComponentSpecification Object', function() {
-			setCentre()
-			gear.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
-		})
-
-		describe('the returned ComponentSpecification', function() {
-			var gearSpec
-
-			beforeEach(function() {
-				setCentre()			
-				gearSpec = gear.toComponentSpecification()				
-			})
-
-			it('should behave like a ComponentSpecification created from the Gear',
-			   function() {
-				ComponentSpecificationTest.testComponentSpecification(gearSpec, gear)
 			})
 		})
 	})

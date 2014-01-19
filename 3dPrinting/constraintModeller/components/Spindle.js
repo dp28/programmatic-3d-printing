@@ -21,6 +21,11 @@ function Spindle() {
 	}
 
 	this.toSpecification = function() {
+		if (!height.isSet()) throw new Error("Height not set")
 		return new SpindleSpecification(height.getValue())
+	}
+
+	this.getTypeName = function() {
+		return "Spindle"
 	}
 }
