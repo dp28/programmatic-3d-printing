@@ -23,6 +23,7 @@ module.exports.Gear = Gear
 Utilities.inheritPrototype(Gear, Component)
 
 function Gear() {
+	Component.call(this) 
 	var pitchCircleRadius = new ConstrainableValue()
 	var numTeeth = new ConstrainableValue()
 	var pressureAngle = new ConstrainableValue()
@@ -90,5 +91,9 @@ function Gear() {
 			                           clearance.getValue(),
 			                           thickness.getValue(),
 			                           centreHoleRadius.getValue())
+	}
+
+	this.getTypeName = function() {
+		return "Gear"
 	}
 }

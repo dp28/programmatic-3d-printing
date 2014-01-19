@@ -15,9 +15,10 @@ describe('ComponentSpecification', function() {
 	var centreZ = 3
 	var centre = new Point()
 	centre.fixAt(centreX, centreY, centreZ)
+	var type = 'Component'
 
 	before(function() {
-		componentSpec = new ComponentSpecification(centre)
+		componentSpec = new ComponentSpecification(centre, type)
 	})
 
 	describe('#centreX', function() {
@@ -35,6 +36,12 @@ describe('ComponentSpecification', function() {
 	describe('#centreZ', function() {
 		it('should have the correct value', function() {
 			componentSpec.centreZ.should.equal(centreZ)
+		})
+	})
+
+	describe('#type', function() {
+		it('should have the correct value', function() {
+			componentSpec.type.should.equal(type)
 		})
 	})
 })

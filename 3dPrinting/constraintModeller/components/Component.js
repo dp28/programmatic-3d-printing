@@ -25,10 +25,19 @@ Component.prototype = {
 		return this.boundingCircle.getCentre()
 	},
 
-	toCompleteSpecification: function() {
+	toComponentSpecification: function() {
 		if (this.getCentre().isNotFullyDefined()) 
 			throw "Point not fully defined"
-		return new ComponentSpecification(this.getCentre())
-	}
+		return new ComponentSpecification(this.getCentre(), this.getTypeName())
+	},
 
+	// Should be overriden by any subclass that needs more for its Specification
+	toSpecification: function() {
+		return null
+	},
+
+	// Should be overriden by all subclassed to give their name
+	getTypeName: function() {
+		return "Component"
+	}
 }

@@ -6,8 +6,9 @@
  */
 module.exports.ComponentSpecification = ComponentSpecification
 
-function ComponentSpecification(centre) {
+function ComponentSpecification(centre, t) {
 	this.centreX = centre.getX().getValue()
 	this.centreY = centre.getY().getValue()
 	this.centreZ = centre.getZ().getValue()
+	this.type = t
 }

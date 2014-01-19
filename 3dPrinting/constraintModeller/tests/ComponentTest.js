@@ -28,8 +28,19 @@ describe('Component', function() {
 		})
 	})
 
+	describe('#toSpecification', function() {
+		it('should return null', function() {
+			should(component.toSpecification()).be.null
+		})
+	})
 
-	describe('#toCompleteSpecification', function() {
+	describe('#getTypeName', function() {
+		it('should return "Component"', function() {
+			component.getTypeName().should.equal('Component')
+		})
+	})
+
+	describe('#toComponentSpecification', function() {
 		var centreX = 1
 		var centreY = 2
 		var centreZ = 3
@@ -40,19 +51,19 @@ describe('Component', function() {
 
 		it('should not be possible if the centre point is not fully defined',
 			 function() {
-			component.toCompleteSpecification.should.throw()
+			component.toComponentSpecification.should.throw()
 		})
 
 		it('should be possible if the centre point is fully defined ', function() {
 			(function() {
 										setCentre()
-										component.toCompleteSpecification()
+										component.toComponentSpecification()
 									}).should.not.throw()
  		})
 
 		it('should return a ComponentSpecification Object', function() {
 			setCentre()
-			component.toCompleteSpecification().should.be.an.instanceOf(ComponentSpecification)
+			component.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
 		})
 
 		describe('the returned ComponentSpecification', function() {
@@ -60,7 +71,7 @@ describe('Component', function() {
 
 			beforeEach(function() {
 				setCentre()			
-				componentSpec = component.toCompleteSpecification()				
+				componentSpec = component.toComponentSpecification()				
 			})
 
 			it('should have the same centre x coordinate as the Component', function() {
@@ -73,6 +84,10 @@ describe('Component', function() {
 
 			it('should have the same centre z coordinate as the Component', function() {
 				componentSpec.centreZ.should.equal(centreZ)
+			})
+
+			it('should have the type "Component', function() {
+				componentSpec.type.should.equal('Component')
 			})
 		})
 	})
