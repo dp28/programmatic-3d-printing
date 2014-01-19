@@ -11,6 +11,8 @@ var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 var ComponentTest = require('../tests/ComponentTest.js')
+var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
+var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
 module.exports.createFullySpecifiedTestGear = function() {
 	var gear = new Gear()
@@ -178,28 +180,9 @@ describe('Gear', function() {
 				gearSpec = gear.toSpecification()				
 			})
 
-			it('should have the same number of teeth as the Gear', function() {
-				gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())
-			})
-
-			it('should have the same circular pitch as the Gear', function() {
-				gearSpec.circularPitch.should.equal(gear.getCircularPitch())
-			})
-
-			it('should have the same pressure angle as the Gear', function() {
-				gearSpec.pressureAngle.should.equal(gear.getPressureAngle().getValue())
-			})
-
-			it('should have the same clearance as the Gear', function() {
-				gearSpec.clearance.should.equal(gear.getClearance().getValue())
-			})
-
-			it('should have the same thickness as the Gear', function() {
-				gearSpec.thickness.should.equal(gear.getThickness().getValue())
-			})
-
-			it('should have the same centre hole radius as the Gear', function() {
-				gearSpec.centreHoleRadius.should.equal(gear.getCentreHoleRadius().getValue())
+			it('should behave like a GearSpecification created by the Gear',
+			   function() {
+				GearSpecificationTest.testGearSpecification(gearSpec, gear)
 			})
 		})
 	})
@@ -238,20 +221,9 @@ describe('Gear', function() {
 				gearSpec = gear.toComponentSpecification()				
 			})
 
-			it('should have the same centre x coordinate as the Component', function() {
-				gearSpec.centreX.should.equal(centreX)
-			})
-
-			it('should have the same centre y coordinate as the Component', function() {
-				gearSpec.centreY.should.equal(centreY)
-			})
-
-			it('should have the same centre z coordinate as the Component', function() {
-				gearSpec.centreZ.should.equal(centreZ)
-			})
-
-			it('should have the type "Gear', function() {
-				gearSpec.type.should.equal('Gear')
+			it('should behave like a ComponentSpecification created from the Gear',
+			   function() {
+				ComponentSpecificationTest.testComponentSpecification(gearSpec, gear)
 			})
 		})
 	})

@@ -11,23 +11,6 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 
 module.exports.testComponentSpecification = testComponentSpecification
 
-describe('ComponentSpecification', function() {
-	var componentSpec, component
-	var centreX = 1
-	var centreY = 2
-	var centreZ = 3
-
-	before(function() {
-		component = new Component()
-		component.getCentre().fixAt(centreX, centreY, centreZ)
-		componentSpec = component.toComponentSpecification()
-	})
-
-	it('should behave like a ComponentSpecification', function() {
-		testComponentSpecification(componentSpec, component)
-	})
-})
-
 function testComponentSpecification(componentSpec, component) {	
 	var centre = component.getCentre()
 

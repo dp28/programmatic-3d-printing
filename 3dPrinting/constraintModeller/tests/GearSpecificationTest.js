@@ -11,19 +11,6 @@ var GearTest = require('../tests/GearTest.js')
 
 module.exports.testGearSpecification = testGearSpecification
 
-describe('GearSpecification', function() {
-	var gearSpec, gear	
-
-	beforeEach(function() {
-		gear = GearTest.createFullySpecifiedTestGear()
-		gearSpec = gear.toSpecification()
-	})
-
-	it('should behave like a GearSpecification', function() {
-		testGearSpecification(gearSpec, gear)
-	})	
-})
-
 function testGearSpecification(gearSpec, gear) {
 	describe('#numTeeth', function() {
 		it('should have the correct value', function() {
