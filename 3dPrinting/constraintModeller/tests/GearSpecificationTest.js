@@ -7,60 +7,58 @@
 var should = require('should')
 var Point = require('../geometry/Point.js').Point
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
+var GearTest = require('../tests/GearTest.js')
+
+module.exports.testGearSpecification = testGearSpecification
 
 describe('GearSpecification', function() {
-	var gearSpec
-	var numTeeth = 5
-	var circularPitch = 10
-	var pressureAngle = 20
-	var clearance = 2
-	var thickness = 4  
-	var centreHoleRadius = 1.5
-	var centreX = 0
-	var centreY = 10
-	var centreZ = 100
-	var centre = new Point()
-	centre.fixAt(centreX, centreY, centreZ)
+	var gearSpec, gear	
 
 	beforeEach(function() {
-		gearSpec = new GearSpecification(numTeeth, circularPitch, pressureAngle,
-			                               clearance, thickness, centreHoleRadius,
-			                               centre)
+		gear = GearTest.createFullySpecifiedTestGear()
+		gearSpec = gear.toSpecification()
 	})
 
+	it('should behave like a GearSpecification', function() {
+		testGearSpecification(gearSpec, gear)
+	})
+	
+})
+
+function testGearSpecification(gearSpec, gear) {
 	describe('#numTeeth', function() {
 		it('should have the correct value', function() {
-			gearSpec.numTeeth.should.equal(numTeeth)
+			gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())
 		})
 	})
 
 	describe('#circularPitch', function() {
 		it('should have the correct value', function() {
-			gearSpec.circularPitch.should.equal(circularPitch)
+			gearSpec.circularPitch.should.equal(gear.getCircularPitch())
 		})
 	})
 
 	describe('#pressureAngle', function() {
 		it('should have the correct value', function() {
-			gearSpec.pressureAngle.should.equal(pressureAngle)
+			gearSpec.pressureAngle.should.equal(gear.getPressureAngle().getValue())
 		})
 	})
 
 	describe('#clearance', function() {
 		it('should have the correct value', function() {
-			gearSpec.clearance.should.equal(clearance)
+			gearSpec.clearance.should.equal(gear.getClearance().getValue())
 		})
 	})
 
 	describe('#thickness', function() {
 		it('should have the correct value', function() {
-			gearSpec.thickness.should.equal(thickness)
+			gearSpec.thickness.should.equal(gear.getThickness().getValue())
 		})
 	})
 
 	describe('#centreHoleRadius', function() {
 		it('should have the correct value', function() {
-			gearSpec.centreHoleRadius.should.equal(centreHoleRadius)
+			gearSpec.centreHoleRadius.should.equal(gear.getCentreHoleRadius().getValue())
 		})
 	})
-})
+}

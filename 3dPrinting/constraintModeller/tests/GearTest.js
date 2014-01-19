@@ -11,6 +11,14 @@ var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 
+module.exports.createFullySpecifiedTestGear = function() {
+	var gear = new Gear()
+	gear.getCentre().fixAt(1, 2, 3)
+	gear.setNumberOfTeeth(5) 
+	gear.setPitchCircleRadius(2)		
+	return gear
+}
+
 describe('Gear', function() {
 	var gear
 
@@ -26,6 +34,13 @@ describe('Gear', function() {
 		gear.should.have.property('getCentre')
 		gear.should.have.property('getBoundingCircle')
 		gear.should.have.property('toComponentSpecification')
+	})
+
+	describe('#toComponentSpecification', function() {
+		it('should return an Object when the centre is fixed', function() {
+			gear.getCentre().fixAt(1, 2, 3)
+			gear.toComponentSpecification().should.be.an.instanceof(Object)
+		})
 	})
 
 	describe('#getNumberOfTeeth', function() {
