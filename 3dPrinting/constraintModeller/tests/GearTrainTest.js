@@ -10,6 +10,17 @@ var GearTrain = require('../components/GearTrain.js').GearTrain
 var ComponentTest = require('../tests/ComponentTest.js')
 var GearTest = require('../tests/GearTest.js')
 
+module.exports.createTestGearTrain = function() {
+	var train = new GearTrain(8) 
+	var firstGear = GearTest.createFullySpecifiedTestGear(10, 10, 1, 2, 3)
+	firstGear.setPitchCircleRadius(null)
+	train.addGear(firstGear)
+	var secondGear = GearTest.createFullySpecifiedTestGear(20, 10, 50, 20, 3)
+	secondGear.setPitchCircleRadius(null)
+	train.addGear(secondGear)
+	return train
+}
+
 describe('GearTrain', function() {
 	var train 
 
@@ -41,6 +52,12 @@ describe('GearTrain', function() {
 			(function() {
 				new GearTrain(10)
 			}).should.not.throw()
+		})
+	})
+
+	describe('#getGenerateSpindlesOnWrite', function() {
+		it('should have a default value of true', function() {
+			train.getGenerateSpindlesOnWrite().should.be.true
 		})
 	})
 

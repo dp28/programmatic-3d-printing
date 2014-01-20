@@ -29,6 +29,7 @@ function GearTrain(circPitch) {
 	Component.call(this)
 	var gears = []
 	var circularPitch = circPitch
+	var generateSpindlesOnWrite = true
 
 	this.addGear = function(gear) {
 		this.checkIfGearCanBeAdded(gear)
@@ -77,5 +78,13 @@ function GearTrain(circPitch) {
 
 	this.getCircularPitch = function() {
 		return circularPitch
+	}
+
+	this.getGenerateSpindlesOnWrite = function() {
+		return generateSpindlesOnWrite
+	}
+
+	this.setGenerateSpindlesOnWrite = function(flag) {
+		generateSpindlesOnWrite = flag
 	}
 }

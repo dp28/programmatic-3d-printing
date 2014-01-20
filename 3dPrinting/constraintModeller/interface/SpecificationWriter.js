@@ -7,6 +7,7 @@
 var fs = require('fs')
 var console = require('console')
 var util = require('util')
+var GearTrain = require('../components/GearTrain.js').GearTrain
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 
@@ -39,7 +40,19 @@ function SpecificationWriter() {
 	}
 
 	this.addComponent = function(component) {
-		specifications.push(composer.makeSpecification(component))
+		if (component instanceof GearTrain) 
+			this.addGearTrain(component)
+		else
+			specifications.push(composer.makeSpecification(component))
+	}
+
+	this.addGearTrain = function(train) {
+		gears = train.getGears()
+		for (var i = 0; i < gears.length; i++) {
+			this.addComponent(gears[i])
+			if (train.getGenerateSpindlesOnWrite())
+				this.addComponent(gears[i].generateSpindle())
+		}
 	}
 
 	this.writeSpecificationToFile = function() {
