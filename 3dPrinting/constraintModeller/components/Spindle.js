@@ -32,4 +32,12 @@ function Spindle() {
 	this.setHeight = function(h) {
 		height.setValue(h)
 	}
+
+	this.getRadius = function() {
+		return this.getBoundingCircle().getRadius()
+	}
+
+	this.setRadius = function(radius) {
+		this.getBoundingCircle().setRadius(radius)
+	}
 }

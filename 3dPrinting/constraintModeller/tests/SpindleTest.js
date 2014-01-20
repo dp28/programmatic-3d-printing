@@ -17,6 +17,7 @@ function createFullySpecifiedTestSpindle() {
 	var spindle = new Spindle()
 	spindle.getCentre().fixAt(1, 2, 3)
 	spindle.getHeight().fixValue(5)
+	spindle.setRadius(10)
 	return spindle
 }
 
@@ -34,6 +35,18 @@ describe('Spindle', function() {
 	describe('#getTypeName', function() {
 		it('should return "Spindle"', function() {
 			spindle.getTypeName().should.equal("Spindle")
+		})
+	})
+
+	describe('#setRadius', function() {
+		var newRadius = 10
+
+		beforeEach(function() {
+			spindle.setRadius(newRadius)
+		})
+
+		it('should set the radius of the Spindle', function() {
+			spindle.getRadius().getValue().should.equal(newRadius)
 		})
 	})
 

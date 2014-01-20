@@ -202,17 +202,42 @@ describe('Gear', function() {
 				catch(err) {
 					err.should.equal("Point not fully defined")
 				}
+		}) 
+
+		it('should not be possible if the thickness of the gear is not defined',
+			 function() {
+			gear.getThickness().setValue(null)
+			gear.getCentre().fixAt(0, 0, 0)
+			try {
+				gear.generateSpindle().should.throw("Thickness not set")
+			}
+			catch(err) {
+				err.should.equal("Thickness not set")
+			} 
 		})
 
-		it.skip('should not be possible if the thickness of the gear is not defined',
-			 function() {
-			 	gear.getCentre().fixAt(0, 0, 0)
-				try {
-					gear.generateSpindle().should.throw("Thickness not defined")
-				}
-				catch(err) {
-					err.should.equal("Thickness not defined")
-				} 
+		it('should not be posible if the centre hole radius is not defined',
+		   function() {
+		  gear.getCentreHoleRadius().setValue(null)
+			gear.getCentre().fixAt(0, 0, 0)
+			try {
+				gear.generateSpindle().should.throw("Centre hole radius not set")
+			}
+			catch(err) {
+				err.should.equal("Centre hole radius not set")
+			} 
+		})
+
+		it('should not be posible if the centre hole radius is 0',
+		   function() {
+		  gear.getCentreHoleRadius().setValue(0)
+			gear.getCentre().fixAt(0, 0, 0)
+			try {
+				gear.generateSpindle().should.throw("No centre hole in this Gear")
+			}
+			catch(err) {
+				err.should.equal("No centre hole in this Gear")
+			} 
 		})
 
 		it('should produce a Spindle', function() {
@@ -231,6 +256,11 @@ describe('Gear', function() {
 			it('should have a height at least as large as the thickness of the gear',
 				 function() {
 				spindle.getHeight().getValue().should.not.be.lessThan(gear.getThickness().getValue())
+			})
+
+			it('should have a radius at most as large as the centre hole radius of '
+				 + 'the gear', function() {
+				spindle.getRadius().getValue().should.not.be.greaterThan(gear.getCentreHoleRadius().getValue())
 			})
 		})
 	})

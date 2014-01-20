@@ -98,10 +98,17 @@ function Gear() {
 	}
 
 	this.generateSpindle = function() {
-		if (this.getCentre().isNotFullyDefined()) throw "Point not fully defined"
-		if (this.getThickness().isNotSet()) throw "Thickness not set"
+		this.checkCanGenerateSpindle()
 		var spindle = new Spindle()
 		spindle.setHeight(thickness.getValue())
+		spindle.setRadius(centreHoleRadius.getValue())
 		return spindle
+	}
+
+	this.checkCanGenerateSpindle = function() {		
+		if (this.getCentre().isNotFullyDefined()) throw "Point not fully defined"
+		if (thickness.isNotSet()) throw "Thickness not set"
+		if (centreHoleRadius.isNotSet()) throw "Centre hole radius not set"
+		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
 }
