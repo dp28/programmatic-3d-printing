@@ -36,7 +36,7 @@ describe('Circle', function() {
 		})
 		
 		it('should not have exactly the same Point as its centre', function() {
-			component.getCentre().should.not.equal(point)
+			circle.getCentre().should.not.equal(point)
 		})
 	})
 
