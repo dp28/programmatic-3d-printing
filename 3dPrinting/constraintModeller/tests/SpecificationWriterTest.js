@@ -10,6 +10,7 @@ var GearSpecification = require('../interface/GearSpecification.js').GearSpecifi
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
 var GearTest = require('../tests/GearTest.js')
+var GearTrainTest = require('../tests/GearTrainTest.js')
 
 describe('SpecificationWriter', function() {
 	var writer, gear, composer
@@ -79,7 +80,7 @@ describe('SpecificationWriter', function() {
 			var otherGear
 
 			beforeEach(function(done) { 
-				otherGear = GearTest.createSecondFullySpecifiedTestGear()
+				otherGear = GearTest.createFullySpecifiedTestGear(10, 20, 4, 5, 6)
 				writer.addComponent(gear)
 				writer.addComponent(otherGear)
 				writeToFileAndGetContents(done)

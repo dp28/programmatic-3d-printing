@@ -17,22 +17,20 @@ var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js
 
 module.exports.createFullySpecifiedTestGear = createFullySpecifiedTestGear
 
-function createFullySpecifiedTestGear() {
+function createFullySpecifiedTestGear(numTeeth, radius, x, y, z) {
+	// defaults:
+	numTeeth = (numTeeth == undefined) ? 15 : numTeeth
+	radius = (radius == undefined) ? 20 : radius
+	x = (x == undefined) ? 50 : x
+	y = (y == undefined) ? 20 : y 
+	z = (z == undefined) ? 8 : z
+
 	var gear = new Gear()
-	gear.getCentre().fixAt(50, 20, 8)
-	gear.setNumberOfTeeth(15) 
-	gear.setPitchCircleRadius(20)		
+	gear.getCentre().fixAt(x, y, z)
+	gear.setNumberOfTeeth(numTeeth) 
+	gear.setPitchCircleRadius(radius)		
 	return gear
 }
-
-module.exports.createSecondFullySpecifiedTestGear = function() {
-	var gear = new Gear()
-	gear.getCentre().fixAt(4, 5, 6)
-	gear.setNumberOfTeeth(10) 
-	gear.setPitchCircleRadius(20)		
-	return gear
-}
-
 
 describe('Gear', function() {
 	var gear
