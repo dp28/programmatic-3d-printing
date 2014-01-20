@@ -23,7 +23,7 @@ function makeComponent(componentSpec) {
 			component = makeSpindle(componentSpec)
 			break
 	}
-	
+
   component = component.translate([componentSpec.centreX,
   																 componentSpec.centreY,
   																 componentSpec.centreZ]);  
@@ -44,8 +44,8 @@ function makeGearWithHole(params) {
     
   if(params.centreHoleRadius > 0) {
     var centerHole = CSG.cylinder({
-    	                              start: [0, 0,-params.thickness],
-    	                              end: [0, 0, params.thickness], 
+    	                              start: [0, 0,-params.thickness / 2],
+    	                              end: [0, 0, params.thickness / 2], 
     	                              radius: params.centreHoleRadius, 
     	                              resolution: 16
     	                            });
