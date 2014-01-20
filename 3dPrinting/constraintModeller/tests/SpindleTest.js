@@ -85,8 +85,4 @@ describe('Spindle', function() {
 			})
 		})
 	})
-
-	describe('#toComponentSpecification', function() {
-
-	})
 })

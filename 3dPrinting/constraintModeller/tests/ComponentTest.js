@@ -60,12 +60,31 @@ function shouldBehaveLikeComponent(component) {
 		})
 	})
 
+	describe('#setCentre', function() {
+		var point, x =1, y = 2, z = 3
+
+		beforeEach(function() {
+			point = new Point()
+			point.fixAt(x, y, z)
+			component.setCentre(point)
+		})
+
+		it('should set the centre of the Component to have the same coordinates as '
+			 + 'the passed-in Point', function() {
+			component.getCentre().atSameLocationAs(point).should.be.true
+		})
+		
+		it('should not have exactly the same Point as its centre', function() {
+			component.getCentre().should.not.equal(point)
+		})
+	})
+
 	describe('#toComponentSpecification', function() {
 		var centreX = 1
 		var centreY = 2
 		var centreZ = 3
 
-		function setCentre() {
+		function fixCentre() {
 			component.getCentre().fixAt(centreX, centreY, centreZ)
 		}
 
@@ -76,13 +95,13 @@ function shouldBehaveLikeComponent(component) {
 
 		it('should be possible if the centre point is fully defined ', function() {
 			(function() {
-										setCentre()
+										fixCentre()
 										component.toComponentSpecification()
 									}).should.not.throw()
  		})
 
 		it('should return a ComponentSpecification Object', function() {
-			setCentre()
+			fixCentre()
 			component.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
 		})
 
@@ -90,7 +109,7 @@ function shouldBehaveLikeComponent(component) {
 			var componentSpec
 
 			beforeEach(function() {
-				setCentre()			
+				fixCentre()			
 				componentSpec = component.toComponentSpecification()				
 			})
 

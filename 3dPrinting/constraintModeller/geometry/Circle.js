@@ -15,7 +15,10 @@ function Circle() {
 	diameter.scaledByConstant(radius, 2)     
 
 	this.setCentre = function(point) {
-		centre = point
+		centre = new Point()
+		centre.getX().setValue(point.getX().getValue())
+		centre.getY().setValue(point.getY().getValue())
+		centre.getZ().setValue(point.getZ().getValue())
 	}
 
 	this.getCentre = function() {

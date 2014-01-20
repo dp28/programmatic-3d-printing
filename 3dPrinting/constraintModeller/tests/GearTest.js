@@ -262,6 +262,10 @@ describe('Gear', function() {
 				 + 'the gear', function() {
 				spindle.getRadius().getValue().should.not.be.greaterThan(gear.getCentreHoleRadius().getValue())
 			})
+
+			it('should have the same centre point as the gear', function() {
+				spindle.getCentre().atSameLocationAs(gear.getCentre()).should.be.true
+			})
 		})
 	})
 })

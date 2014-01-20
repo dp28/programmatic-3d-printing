@@ -48,6 +48,25 @@ describe('Point', function() {
   	})
   }) 
 
+  describe('#atSameLocationAs', function() {
+    var otherPoint, x = 1, y = 2, z = 3
+
+    beforeEach(function() {
+      otherPoint = new Point()
+      point.fixAt(x, y, z)
+    })
+
+    it('should return true if the points are co-located', function() {      
+      otherPoint.setAt(x, y, z)
+      point.atSameLocationAs(otherPoint).should.be.true
+    })
+
+    it('should return false if the points are not co-located', function() {      
+      otherPoint.setAt(x, y, z + 1)
+      point.atSameLocationAs(otherPoint).should.be.false
+    })
+  })
+
   describe('#fixAt', function() {
   	beforeEach(function() {
   		point = new Point()

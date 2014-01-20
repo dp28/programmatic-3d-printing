@@ -102,6 +102,7 @@ function Gear() {
 		var spindle = new Spindle()
 		spindle.setHeight(thickness.getValue())
 		spindle.setRadius(centreHoleRadius.getValue())
+		spindle.setCentre(this.getCentre())
 		return spindle
 	}
 

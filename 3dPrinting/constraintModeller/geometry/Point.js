@@ -24,6 +24,12 @@ function Point() {
 	var y = new ConstrainableValue()
 	var z = new ConstrainableValue()
 
+	this.atSameLocationAs = function(point) {
+		return (x.getValue() == point.getX().getValue() 
+			     && y.getValue() == point.getY().getValue()
+			     && z.getValue() == point.getZ().getValue())
+	}
+
 	this.fixX = function(xValue) {
 		x.fixValue(xValue)
 	}

@@ -15,8 +15,10 @@ describe('Circle', function() {
 	})
 
 	describe('#setCentre', function() {
+		var point
+		
 		beforeEach(function() {
-			var point = new Point()
+			point = new Point()
 			point.fixAt(1, 2, 3)
 			circle.setCentre(point)
 		})
@@ -31,6 +33,10 @@ describe('Circle', function() {
 
 		it('should have a z coordinate of 3', function() {
 			circle.getCentre().getZ().getValue().should.equal(3)
+		})
+		
+		it('should not have exactly the same Point as its centre', function() {
+			component.getCentre().should.not.equal(point)
 		})
 	})
 
