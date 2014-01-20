@@ -1,16 +1,33 @@
 include("Gear.jscad");
+include("Spindle.jscad");
 include("Specification.jscad")
 
 function main() {
-	var gears = [] 
-	var gear
+	var components = [] 
+	var component
 	for (var i = 0; i < Specification.components.length; i++) {
-		if(Specification.components[i].type == "Gear") {
-			gear = makeGear(Specification.components[i])
-			gears.push(gear)
-		}
+		component = makeComponent(Specification.components[i])
+		components.push(component)
 	}
-  return gears;   
+  return components;   
+}
+
+function makeComponent(componentSpec) {
+	var component 
+	switch(componentSpec.type) {
+		case "Gear":
+			component = makeGear(componentSpec)
+			break
+			
+		case "Spindle":
+			component = makeSpindle(componentSpec)
+			break
+	}
+	
+  component = component.translate([componentSpec.centreX,
+  																 componentSpec.centreY,
+  																 componentSpec.centreZ]);  
+  return component
 }
 
 function makeGear(params) {    
@@ -33,8 +50,11 @@ function makeGearWithHole(params) {
     	                              resolution: 16
     	                            });
     gear = gear.subtract(centerHole);
-  }   
-    
-  gear = gear.translate([params.centreX, params.centreY, params.centreZ]);    
+  }     
   return gear;
+}
+
+function makeSpindle(params) {
+	var spindle = Spindle.makeSpindle(params)
+	return spindle
 }
