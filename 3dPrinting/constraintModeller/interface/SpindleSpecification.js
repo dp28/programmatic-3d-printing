@@ -6,6 +6,7 @@
  */
 module.exports.SpindleSpecification = SpindleSpecification
 
-function SpindleSpecification(h) {
+function SpindleSpecification(h, r) {
 	this.height = h
+	this.radius = r
 }

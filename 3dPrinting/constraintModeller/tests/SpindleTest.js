@@ -61,6 +61,16 @@ describe('Spindle', function() {
 			spindle.toSpecification.should.throw('Height not set')
 		})
 
+		it('should not be possible if the radius has not been set', function() {
+			spindle.getHeight().fixValue(5)
+			try {
+				spindle.toSpecification().should.throw('Radius not set')
+			}
+			catch(err) {
+				err.should.eql(new Error('Radius not set'))
+			}
+		})
+
 		describe('the returned SpindleSpecification', function() {
 			var spindleSpec
 

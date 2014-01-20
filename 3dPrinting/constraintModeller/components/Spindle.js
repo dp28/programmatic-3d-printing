@@ -20,11 +20,6 @@ function Spindle() {
 		return height
 	}
 
-	this.toSpecification = function() {
-		if (!height.isSet()) throw new Error("Height not set")
-		return new SpindleSpecification(height.getValue())
-	}
-
 	this.getTypeName = function() {
 		return "Spindle"
 	}
@@ -39,5 +34,12 @@ function Spindle() {
 
 	this.setRadius = function(radius) {
 		this.getBoundingCircle().setRadius(radius)
+	}
+
+	this.toSpecification = function() {
+		if (height.isNotSet()) throw new Error("Height not set")
+		if (this.getRadius().isNotSet()) throw new Error("Radius not set")
+		return new SpindleSpecification(height.getValue(), 
+			                              this.getRadius().getValue())
 	}
 }

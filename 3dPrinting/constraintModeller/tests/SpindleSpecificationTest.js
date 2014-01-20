@@ -9,8 +9,17 @@ var Point = require('../geometry/Point.js').Point
 var SpindleSpecification = require('../interface/SpindleSpecification.js').SpindleSpecification
 var SpindleTest = require('../tests/SpindleTest.js')
 
-module.exports.testSpindleSpecification = function(spindleSpec, spindle) {
-	it('should have the same height as the Spindle that created it', function() {
-		spindleSpec.height.should.equal(spindle.getHeight().getValue())
+module.exports.testSpindleSpecification = testSpindleSpecification
+
+function testSpindleSpecification(spindleSpec, spindle) {
+	
+	describe('SpindleSpecification', function() {	
+		it('should have the same radius as the Spindle that created it', function() {
+			spindleSpec.radius.should.equal(spindle.getRadius().getValue()) 
+		})
+
+		it('should have the same height as the Spindle that created it', function() {
+			spindleSpec.height.should.equal(spindle.getHeight().getValue())
+		})
 	})
 }
