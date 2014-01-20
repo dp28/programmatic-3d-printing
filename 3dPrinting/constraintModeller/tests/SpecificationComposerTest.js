@@ -5,7 +5,6 @@
  * complete Specification
  */
 var should = require('should')
-var util = require('util')
 var Component = require('../components/Component.js').Component 
 var Gear = require('../components/Gear.js').Gear 
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification

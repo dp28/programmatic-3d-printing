@@ -6,7 +6,6 @@
  */
 var should = require('should')
 var fs = require('fs')
-var util = require('util')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
@@ -100,7 +99,6 @@ describe('SpecificationWriter', function() {
 					writer = new SpecificationWriter()
 					writer.addComponent(gear)
 					writer.addComponent(otherGear)
-					util.puts(gear)
 					spindle = gear.generateSpindle()
 					otherSpindle = otherGear.generateSpindle()
 					writer.addComponent(spindle)
