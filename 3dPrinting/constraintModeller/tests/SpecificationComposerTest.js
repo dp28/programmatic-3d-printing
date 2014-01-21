@@ -27,23 +27,25 @@ describe('SpecificationComposer', function() {
 
 	describe('#makeSpecification', function() {
 
-		function componentBehaviour(componentToTest) {			
-			it('should return an Object', function() {
-				composer.makeSpecification(componentToTest).should.be.an.instanceof(Object)
-			})
-
-			describe('the returned Object', function() {
-				var specification 
-
-				before(function() {
-					specification = composer.makeSpecification(componentToTest)
+		function componentBehaviour(componentToTest) {	
+			describe('Passing a Component to a SpecificationComposer', function() {			
+				it('should return an Object', function() {
+					composer.makeSpecification(componentToTest).should.be.an.instanceof(Object)
 				})
 
-				it('should behave like a ComponentSpecification', function() {
-					ComponentSpecificationTest.testComponentSpecification(specification, 
-						                                                    componentToTest)
+				describe('the returned Object', function() {
+					var specification 
+
+					before(function() {
+						specification = composer.makeSpecification(componentToTest)
+					})
+
+					it('should behave like a ComponentSpecification', function() {
+						ComponentSpecificationTest.testComponentSpecification(specification, 
+							                                                    componentToTest)
+					})
 				})
-			})
+			})	
 		}
 
 		describe('passing a Component as an argument', function() {

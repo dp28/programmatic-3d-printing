@@ -44,79 +44,82 @@ describe('Component', function() {
 })
 
 function shouldBehaveLikeComponent(component) {
-	it('should inherit from Component', function() {
-		component.should.be.an.instanceOf(Component)
-	})
-
-		describe('#getBoundingCircle', function() {
-		it('should return a circle', function() {
-			component.getBoundingCircle().should.be.an.instanceOf(Circle)
-		})
-	})
-
-	describe('#getCentre', function() {
-		it('should return a Point', function() {
-			component.getCentre().should.be.an.instanceOf(Point)
-		})
-	})
-
-	describe('#setCentre', function() {
-		var point, x =1, y = 2, z = 3
-
-		beforeEach(function() {
-			point = new Point()
-			point.fixAt(x, y, z)
-			component.setCentre(point)
-		})
-
-		it('should set the centre of the Component to have the same coordinates as '
-			 + 'the passed-in Point', function() {
-			component.getCentre().atSameLocationAs(point).should.be.true
-		})
+	describe('Anything inheriting from Component', function() {
 		
-		it('should not have exactly the same Point as its centre', function() {
-			component.getCentre().should.not.equal(point)
-		})
-	})
-
-	describe('#toComponentSpecification', function() {
-		var centreX = 1
-		var centreY = 2
-		var centreZ = 3
-
-		function fixCentre() {
-			component.getCentre().fixAt(centreX, centreY, centreZ)
-		}
-
-		it('should not be possible if the centre point is not fully defined',
-			 function() {
-			component.toComponentSpecification.should.throw()
+		it('should inherit from Component', function() {
+			component.should.be.an.instanceOf(Component)
 		})
 
-		it('should be possible if the centre point is fully defined ', function() {
-			(function() {
-										fixCentre()
-										component.toComponentSpecification()
-									}).should.not.throw()
- 		})
-
-		it('should return a ComponentSpecification Object', function() {
-			fixCentre()
-			component.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
+			describe('#getBoundingCircle', function() {
+			it('should return a Circle', function() {
+				component.getBoundingCircle().should.be.an.instanceOf(Circle)
+			})
 		})
 
-		describe('the returned ComponentSpecification', function() {
-			var componentSpec
+		describe('#getCentre', function() {
+			it('should return a Point', function() {
+				component.getCentre().should.be.an.instanceOf(Point)
+			})
+		})
+
+		describe('#setCentre', function() {
+			var point, x =1, y = 2, z = 3
 
 			beforeEach(function() {
-				fixCentre()			
-				componentSpec = component.toComponentSpecification()				
+				point = new Point()
+				point.fixAt(x, y, z)
+				component.setCentre(point)
 			})
 
-			it('should behave like a ComponentSpecification derived from the '
-				 + 'Component', function() {
-				ComponentSpecificationTest.testComponentSpecification(componentSpec,
-					                                                    component)
+			it('should set the centre of the Component to have the same coordinates as '
+				 + 'the passed-in Point', function() {
+				component.getCentre().atSameLocationAs(point).should.be.true
+			})
+			
+			it('should not have exactly the same Point as its centre', function() {
+				component.getCentre().should.not.equal(point)
+			})
+		})
+
+		describe('#toComponentSpecification', function() {
+			var centreX = 1
+			var centreY = 2
+			var centreZ = 3
+
+			function fixCentre() {
+				component.getCentre().fixAt(centreX, centreY, centreZ)
+			}
+
+			it('should not be possible if the centre Point is not fully defined',
+				 function() {
+				component.toComponentSpecification.should.throw()
+			})
+
+			it('should be possible if the centre Point is fully defined ', function() {
+				(function() {
+											fixCentre()
+											component.toComponentSpecification()
+										}).should.not.throw()
+	 		})
+
+			it('should return a ComponentSpecification Object', function() {
+				fixCentre()
+				component.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
+			})
+
+			describe('the returned ComponentSpecification', function() {
+				var componentSpec
+
+				beforeEach(function() {
+					fixCentre()			
+					componentSpec = component.toComponentSpecification()				
+				})
+
+				it('should behave like a ComponentSpecification derived from the '
+					 + 'Component', function() {
+					ComponentSpecificationTest.testComponentSpecification(componentSpec,
+						                                                    component)
+				})
 			})
 		})
 	})

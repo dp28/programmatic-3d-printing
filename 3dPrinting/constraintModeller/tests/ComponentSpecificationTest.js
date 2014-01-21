@@ -14,27 +14,29 @@ module.exports.testComponentSpecification = testComponentSpecification
 function testComponentSpecification(componentSpec, component) {	
 	var centre = component.getCentre()
 
-	describe('#centreX', function() {
-		it('should have the correct value', function() {
-			componentSpec.centreX.should.equal(centre.getX().getValue())
+	describe('ComponentSpecification',function() {		
+		describe('#centreX', function() {
+			it('should have the correct value', function() {
+				componentSpec.centreX.should.equal(centre.getX().getValue())
+			})
 		})
-	})
 
-	describe('#centreY', function() {
-		it('should have the correct value', function() {
-			componentSpec.centreY.should.equal(centre.getY().getValue())
+		describe('#centreY', function() {
+			it('should have the correct value', function() {
+				componentSpec.centreY.should.equal(centre.getY().getValue())
+			})
 		})
-	})
 
-	describe('#centreZ', function() {
-		it('should have the correct value', function() {
-			componentSpec.centreZ.should.equal(centre.getZ().getValue())
+		describe('#centreZ', function() {
+			it('should have the correct value', function() {
+				componentSpec.centreZ.should.equal(centre.getZ().getValue())
+			})
 		})
-	})
 
-	describe('#type', function() {
-		it('should have the correct value', function() {
-			componentSpec.type.should.equal(component.getTypeName())
+		describe('#type', function() {
+			it('should have the correct value', function() {
+				componentSpec.type.should.equal(component.getTypeName())
+			})
 		})
 	})
 }

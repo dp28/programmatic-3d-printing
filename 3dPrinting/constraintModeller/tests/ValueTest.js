@@ -9,7 +9,7 @@
 var should = require("should")
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue 
 
-describe('Value', function() {
+describe('ConstrainableValue', function() {
 	var value
 
 	beforeEach(function() {

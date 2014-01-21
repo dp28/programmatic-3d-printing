@@ -1,3 +1,20 @@
+function toggleCodeVisible() {
+  if ($('#toggleCode').text() == "Show test code")
+    showCode()
+  else
+    hideCode()
+}
+
+function showCode() {
+  $('#toggleCode').text('Hide test code')
+  $('dd').css('display', 'block')
+}
+
+function hideCode() {
+  $('#toggleCode').text('Show test code')
+  $('dd').css('display', 'none')
+}
+
 function setup(){
   removeDuplicates()
   addListPoints()
@@ -46,13 +63,14 @@ function removeDuplicates() {
        uniqueElements.push(text)
   })
 }
-  var uniqueElements = []
-  function isDuplicate(text) {
-    for (var i = 0; i < uniqueElements.length; i++) {
-      if (uniqueElements[i] == text) return true
-    }
-    return false
+
+var uniqueElements = []
+function isDuplicate(text) {
+  for (var i = 0; i < uniqueElements.length; i++) {
+    if (uniqueElements[i] == text) return true
   }
+  return false
+}
 
 // Based on http://jasalguero.com/ledld/development/web/expandable-list/
 function prepareList() {

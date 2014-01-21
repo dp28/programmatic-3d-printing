@@ -14,11 +14,11 @@ h1 {
 	width:85%;
 }
 
-.listControl{
+.buttons {
   margin-bottom: 15px;
 }
 
-.listControl a {
+.buttons a {
   border: 1px solid #555555;
   color: #555555;
   cursor: pointer;
@@ -28,7 +28,7 @@ h1 {
   padding: 4px 10px;
 }
 
-.listControl a:hover {
+.buttons a:hover {
   background-color:#555555;
   color:#222222; 
   font-weight:normal;

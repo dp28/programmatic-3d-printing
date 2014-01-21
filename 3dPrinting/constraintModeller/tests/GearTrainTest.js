@@ -75,7 +75,7 @@ describe('GearTrain', function() {
 			train = new GearTrain(circularPitch)
 		})
 
-		describe('Adding a gear with neither its number of teeth or pitch circle '
+		describe('Adding a Gear with neither its number of teeth or pitch circle '
 			       + 'radius set', function() {
 			it ('should not be possible', function() {
 				var error = "Number of teeth or pitch circle radius not set"
@@ -88,7 +88,7 @@ describe('GearTrain', function() {
 			})
 		})
 
-		describe('Adding a gear with its number of teeth set but pitch circle radius'
+		describe('Adding a Gear with its number of teeth set but pitch circle radius'
 		         + ' not yet set', function() {
 			beforeEach(function() {
 				gear.setNumberOfTeeth(numberOfTeeth)
@@ -101,7 +101,7 @@ describe('GearTrain', function() {
 			})			
 		})
 
-		describe('Adding a gear with its pitch circle radius set but its number of '
+		describe('Adding a Gear with its pitch circle radius set but its number of '
 			       + 'teeth not set', function() {
 			beforeEach(function() {
 				gear.setPitchCircleRadius(pitchCircleRadius)
@@ -115,7 +115,7 @@ describe('GearTrain', function() {
 			
 		})
 
-		describe('Adding a gear with both its number of teeth and pitch circle ' 
+		describe('Adding a Gear with both its number of teeth and pitch circle ' 
 			       + 'radius set', function() {
 			beforeEach(function() {
 				gear.setNumberOfTeeth(numberOfTeeth)
@@ -142,7 +142,7 @@ describe('GearTrain', function() {
 			})
 		})
 
-		describe('Adding a gear with the number of teeth specified but the pitch radius unspecified', function() {
+		describe('Adding a Gear with the number of teeth specified but the pitch radius unspecified', function() {
 			beforeEach(function() {
 				gear = new Gear()
 				gear.setNumberOfTeeth()
