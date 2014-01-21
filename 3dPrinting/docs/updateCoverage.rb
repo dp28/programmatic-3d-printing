@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 # Updates the code coverage document
-DIRECTORIES_TO_IGNORE = ['node-jscoverage', 'tests']
+DIRECTORIES_TO_IGNORE = ['node-jscoverage']
+FILES_NOT_TO_INSTRUMENT = ['node_modules', 'tests', 'Utilities.js']
 CONSTRAINT_MODELLER_NAME = 'constraintModeller'
 CONSTRAINT_MODELLER_LOCATION = "../#{CONSTRAINT_MODELLER_NAME}"
-CONSTRAINT_MODELLER_TESTS_LOCATION = "#{CONSTRAINT_MODELLER_LOCATION}/tests"
+TEST_DIR_NAME = "tests"
 COVERAGE_CODE_DIR = '.instrumented_code'
 COVERAGE_DOCUMENT = 'coverage.html'
 
@@ -16,6 +17,7 @@ def instrumentConstraintModellerCode()
 	codeDirectories = Dir["#{CONSTRAINT_MODELLER_LOCATION}/*/"].map { |name|
 		File.basename(name)
 	}
+	codeDirectories -= FILES_NOT_TO_INSTRUMENT
 	codeDirectories -= DIRECTORIES_TO_IGNORE
 	codeDirectories.each { |directory| 
 		instrumentConstraintDirectory(directory)
@@ -23,22 +25,24 @@ def instrumentConstraintModellerCode()
 end
 
 def copyTestsToInstrumentedCode() 
-	`cp -r #{CONSTRAINT_MODELLER_TESTS_LOCATION} #{COVERAGE_CODE_DIR}/`
-	`cp -r #{CONSTRAINT_MODELLER_LOCATION}/Utilities.js #{COVERAGE_CODE_DIR}/`
-end
-
-def instrumentCode() 
-	`jscoverage #{COVERAGE_CODE_DIR} #{}`
+	FILES_NOT_TO_INSTRUMENT.each { |file| 
+		`cp -r #{CONSTRAINT_MODELLER_LOCATION}/#{file} #{COVERAGE_CODE_DIR}/#{file}`
+	}
 end
 
 def generateCoverageDocument() 
-	`mocha #{COVERAGE_CODE_DIR}/*/*.js -R html-cov >> #{COVERAGE_DOCUMENT}`
+	`mocha #{COVERAGE_CODE_DIR}/#{TEST_DIR_NAME}/*Test.js -R html-cov >> #{COVERAGE_DOCUMENT}`
 end
 
 def removeInstrumentedCode() 
 	`rm -r #{COVERAGE_CODE_DIR}`
 end
 
+def removeOldCoverageDocument() 
+	`rm #{COVERAGE_DOCUMENT}`
+end
+
+removeOldCoverageDocument()
 instrumentConstraintModellerCode()
 copyTestsToInstrumentedCode()
 generateCoverageDocument()
