@@ -172,4 +172,36 @@ describe('Point', function() {
 	  	})
   	})
   })
+
+  describe('#isFullyDefined', function() {
+    beforeEach(function() {
+      point = new Point()
+    })
+
+    it('should be false if not all coordinates of the Point have been set', 
+       function() {
+      point.isFullyDefined().should.be.false
+    })
+
+    it('should be true if all coordinates of the Point have been set', function() {
+      point.setAt(1, 2, 3)
+      point.isFullyDefined().should.be.true
+    })
+  })
+
+  describe('#isNotFullyDefined', function() {
+    beforeEach(function() {
+      point = new Point()
+    })
+    
+    it('should be true if not all coordinates of the Point have been set', 
+       function() {
+      point.isNotFullyDefined().should.be.true
+    })
+
+    it('should be false if all coordinates of the Point have been set', function() {
+      point.setAt(1, 2, 3)
+      point.isNotFullyDefined().should.be.false
+    })
+  })
 })
