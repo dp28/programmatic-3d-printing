@@ -204,4 +204,66 @@ describe('Point', function() {
       point.isNotFullyDefined().should.be.false
     })
   })
+  this.samePointOnAxes = function(otherPoint, axes) {
+    for (var i = 0; i < axes.length; i++) {
+      var getAxis = 'get' + axes[i]
+      this[getAxis]().sameAs(otherPoint[getAxis]())
+    }
+  }
+
+  this.offsetOnAxis = function(otherPoint, axis, offset) {
+    var getAxis = 'get' + axis
+    this[getAxis]().offsetByConstant(otherPoint[getAxis](), offset)
+  }
+
+  describe('#samePointOnAxes', function() {
+    beforeEach(function() {
+      otherPoint = new Point()
+      point = new Point()
+      point.samePointOnAxes(otherPoint, Point.getAxesNames()) 
+      otherPoint.setAt(1, 2, 3)
+    })
+
+    it('should have all its values set', function() {
+      point.isFullyDefined().should.be.true
+    })
+    
+    it('should have the same coordinates as the indpendent Point', function() {
+      point.atSameLocationAs(otherPoint).should.be.true
+    })
+  })
+
+  describe('#offsetOnAxis', function() {
+    var offset = 10
+
+    beforeEach(function() {
+      otherPoint = new Point()
+      point = new Point()
+      point.samePointOnAxes(otherPoint, Point.getAxesNamesWithout('X')) 
+      point.offsetOnAxis(otherPoint, 'X', offset)
+      otherPoint.setAt(1, 2, 3)
+    })
+
+    it('should have an x coordinate offset from the independent Point', 
+      function() {
+      point.getX().getValue().should.equal(otherPoint.getX().getValue() + offset)
+    })
+  })
+
+  describe('Point.getAxesNames', function() {
+    it('should return an array of the capitalised axes names', function() {
+      Point.getAxesNames().should.eql(['X', 'Y', 'Z'])
+    })
+  })
+
+  describe('Point.getAxesNamesWithout', function() {
+    it('should return the array of axes names without the passed in argument',
+      function() {
+      Point.getAxesNamesWithout('X').should.eql(['Y', 'Z'])
+    })
+
+    it('should ignore values that are not axes names', function() {
+      Point.getAxesNamesWithout('b').should.eql(['X', 'Y', 'Z'])
+    })
+  })
 })

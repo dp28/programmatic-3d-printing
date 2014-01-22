@@ -5,6 +5,7 @@
  */
 var util = require('util')
 var Component = require('../components/Component.js').Component
+var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var Utilities = require('../Utilities.js')
@@ -135,11 +136,11 @@ function Gear() {
 
 	this.meshWithOtherGear = function(otherGear, axis, negativeOffset) {
 		var offset = calculateOffsetForGearsToMesh(otherGear, negativeOffset)
-		var axes = ['X', 'Y', 'Z']
-		var indexOfAxis = axes.indexOf(axis)
-		axes.splice(indexOfAxis, 1)
-		this.offsetOnAxis(otherGear, axis, offset)
-		this.samePointOnAxes(otherGear, axes)
+		var axes = Point.getAxesNamesWithout(axis)
+		var centre = this.getCentre()
+		var otherGearCentre = otherGear.getCentre()
+		centre.offsetOnAxis(otherGearCentre, axis, offset)
+		centre.samePointOnAxes(otherGearCentre, axes)
 	}
 
 	var calculateOffsetForGearsToMesh = function(otherGear, negativeOffset) {
@@ -148,17 +149,5 @@ function Gear() {
 		if (negativeOffset) 
 			offset = -offset
 		return offset
-	}
-
-	this.samePointOnAxes = function(otherGear, axes) {
-		for (var i = 0; i < axes.length; i++) {
-			var getAxis = 'get' + axes[i]
-			this.getCentre()[getAxis]().sameAs(otherGear.getCentre()[getAxis]())
-		}
-	}
-
-	this.offsetOnAxis = function(otherGear, axis, offset) {
-		var getAxis = 'get' + axis
-		this.getCentre()[getAxis]().offsetByConstant(otherGear.getCentre()[getAxis](), offset)
 	}
 }

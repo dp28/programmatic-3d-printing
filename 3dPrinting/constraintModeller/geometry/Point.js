@@ -8,6 +8,17 @@ var ConstrainableValue = require('../constraints/ConstrainableValue.js').Constra
 
 module.exports.Point = Point
 
+Point.getAxesNames = function() {
+	return ['X', 'Y', 'Z']
+}
+
+Point.getAxesNamesWithout = function(axis) {
+	var axes = Point.getAxesNames()
+	return axes.filter(function(element) {
+		return element != axis
+	})
+}
+
 // Static factory methods
 Point.createFixedPoint = function(x, y, z) {
 	point = new Point()
@@ -85,16 +96,16 @@ function Point() {
 	this.isFullyDefined = function() {
 		return x.isSet() && y.isSet() && z.isSet()
 	}
-
-	this.samePointOnAxes = function(otherGear, axes) {
+	
+	this.samePointOnAxes = function(otherPoint, axes) {
 		for (var i = 0; i < axes.length; i++) {
 			var getAxis = 'get' + axes[i]
-			this.getCentre()[getAxis]().sameAs(otherGear.getCentre()[getAxis]())
+			this[getAxis]().sameAs(otherPoint[getAxis]())
 		}
 	}
 
-	this.offsetOnAxis = function(otherGear, axis, offset) {
+	this.offsetOnAxis = function(otherPoint, axis, offset) {
 		var getAxis = 'get' + axis
-		this.getCentre()[getAxis]().offsetByConstant(otherGear.getCentre()[getAxis](), offset)
+		this[getAxis]().offsetByConstant(otherPoint[getAxis](), offset)
 	}
 } 
