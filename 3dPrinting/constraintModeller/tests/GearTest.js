@@ -266,4 +266,124 @@ describe('Gear', function() {
 			})
 		})
 	})
+
+	describe('#meshOnLeftOf', function() {
+		var otherGear
+
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			gear.meshOnLeftOf(otherGear)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
+
+		describe('the dependent Gear', function() {
+			it('should have its centre set when the independent Gear\'s centre is set',
+				 function() {
+				gear.getCentre().isFullyDefined().should.be.true
+			})
+
+			it('should be centred to the left of the independent Gear by a distance '
+				 + 'of the sum of their pitch circle radii', function() {
+				var gearCentreX = gear.getCentre().getX().getValue()
+				var otherGearCentreX = otherGear.getCentre().getX().getValue()
+				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
+				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
+				gearCentreX.should.equal(otherGearCentreX - (gearPitchRadius 
+					                                           + otherGearPitchRadius))
+			})
+		})
+	})
+
+	describe('#meshOnRightOf', function() {
+		var otherGear
+
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			gear.meshOnRightOf(otherGear)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
+
+		describe('the dependent Gear', function() {
+			it('should have its centre set when the independent Gear\'s centre is set',
+				 function() {
+				gear.getCentre().isFullyDefined().should.be.true
+			})
+
+			it('should be centred to the right of the independent Gear by a distance '
+				 + 'of the sum of their pitch circle radii', function() {
+				var gearCentreX = gear.getCentre().getX().getValue()
+				var otherGearCentreX = otherGear.getCentre().getX().getValue()
+				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
+				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
+				gearCentreX.should.equal(otherGearCentreX + (gearPitchRadius 
+					                                           + otherGearPitchRadius))
+			})
+		})
+	})
+
+	describe('#meshAtFrontOf', function() {
+		var otherGear
+
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			gear.meshAtFrontOf(otherGear)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
+
+		describe('the dependent Gear', function() {
+			it('should have its centre set when the independent Gear\'s centre is set',
+				 function() {
+				gear.getCentre().isFullyDefined().should.be.true
+			})
+
+			it('should be centred to the right of the independent Gear by a distance '
+				 + 'of the sum of their pitch circle radii', function() {
+				var gearCentreY = gear.getCentre().getY().getValue()
+				var otherGearCentreY = otherGear.getCentre().getY().getValue()
+				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
+				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
+				gearCentreY.should.equal(otherGearCentreY + (gearPitchRadius 
+					                                           + otherGearPitchRadius))
+			})
+		})
+	})
+
+	describe('#meshAtBackOf', function() {
+		var otherGear
+
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			gear.meshAtBackOf(otherGear)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
+
+		describe('the dependent Gear', function() {
+			it('should have its centre set when the independent Gear\'s centre is set',
+				 function() {
+				gear.getCentre().isFullyDefined().should.be.true
+			})
+
+			it('should be centred to the right of the independent Gear by a distance '
+				 + 'of the sum of their pitch circle radii', function() {
+				var gearCentreY = gear.getCentre().getY().getValue()
+				var otherGearCentreY = otherGear.getCentre().getY().getValue()
+				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
+				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
+				gearCentreY.should.equal(otherGearCentreY + -(gearPitchRadius 
+					                                           + otherGearPitchRadius))
+			})
+		})
+	})
 })

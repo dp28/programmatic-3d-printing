@@ -85,4 +85,16 @@ function Point() {
 	this.isFullyDefined = function() {
 		return x.isSet() && y.isSet() && z.isSet()
 	}
+
+	this.samePointOnAxes = function(otherGear, axes) {
+		for (var i = 0; i < axes.length; i++) {
+			var getAxis = 'get' + axes[i]
+			this.getCentre()[getAxis]().sameAs(otherGear.getCentre()[getAxis]())
+		}
+	}
+
+	this.offsetOnAxis = function(otherGear, axis, offset) {
+		var getAxis = 'get' + axis
+		this.getCentre()[getAxis]().offsetByConstant(otherGear.getCentre()[getAxis](), offset)
+	}
 } 

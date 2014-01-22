@@ -116,4 +116,49 @@ function Gear() {
 		if (centreHoleRadius.isNotSet()) throw "Centre hole radius not set"
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
+
+	this.meshOnLeftOf = function(otherGear) {
+		this.meshWithOtherGear(otherGear, 'X', true)
+	}
+
+	this.meshOnRightOf = function(otherGear) {
+		this.meshWithOtherGear(otherGear, 'X', false)
+	}
+
+	this.meshAtFrontOf = function(otherGear) {
+		this.meshWithOtherGear(otherGear, 'Y', false)
+	}
+
+	this.meshAtBackOf = function(otherGear) {
+		this.meshWithOtherGear(otherGear, 'Y', true)
+	}
+
+	this.meshWithOtherGear = function(otherGear, axis, negativeOffset) {
+		var offset = calculateOffsetForGearsToMesh(otherGear, negativeOffset)
+		var axes = ['X', 'Y', 'Z']
+		var indexOfAxis = axes.indexOf(axis)
+		axes.splice(indexOfAxis, 1)
+		this.offsetOnAxis(otherGear, axis, offset)
+		this.samePointOnAxes(otherGear, axes)
+	}
+
+	var calculateOffsetForGearsToMesh = function(otherGear, negativeOffset) {
+		var offset = otherGear.getPitchCircleRadius().getValue() 
+		             + pitchCircleRadius.getValue()
+		if (negativeOffset) 
+			offset = -offset
+		return offset
+	}
+
+	this.samePointOnAxes = function(otherGear, axes) {
+		for (var i = 0; i < axes.length; i++) {
+			var getAxis = 'get' + axes[i]
+			this.getCentre()[getAxis]().sameAs(otherGear.getCentre()[getAxis]())
+		}
+	}
+
+	this.offsetOnAxis = function(otherGear, axis, offset) {
+		var getAxis = 'get' + axis
+		this.getCentre()[getAxis]().offsetByConstant(otherGear.getCentre()[getAxis](), offset)
+	}
 }
