@@ -268,36 +268,34 @@ describe('Gear', function() {
 	})
 
 	function testMeshingFunction(functionName, axis, negativeOffset, direction) {
-		describe('#' + functionName, function() {
-			var otherGear
-			var getAxis = 'get' + axis
+		var otherGear
+		var getAxis = 'get' + axis
+		
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			gear[functionName](otherGear)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
 
-			beforeEach(function() {
-				gear = new Gear()
-				gear.setPitchCircleRadius(10)
-				otherGear = new Gear()
-				otherGear.setPitchCircleRadius(20)
-				gear[functionName](otherGear)
-				otherGear.getCentre().setAt(1, 2, 3)
+		describe('the dependent Gear', function() {
+			it('should have its centre set when the independent Gear\'s centre is set',
+				 function() {
+				gear.getCentre().isFullyDefined().should.be.true
 			})
 
-			describe('the dependent Gear', function() {
-				it('should have its centre set when the independent Gear\'s centre is set',
-					 function() {
-					gear.getCentre().isFullyDefined().should.be.true
-				})
-
-				it('should be centred to the ' + direction + ' of the independent Gear '
-					 + 'by a distance of the sum of their pitch circle radii', function() {
-					var gearCoordinate = gear.getCentre()[getAxis]().getValue()
-					var otherGearCoordinate = otherGear.getCentre()[getAxis]().getValue()
-					var gearPitchRadius = gear.getPitchCircleRadius().getValue()
-					var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
-					var offset = gearPitchRadius + otherGearPitchRadius
-					if (negativeOffset) 
-						offset = -offset
-					gearCoordinate.should.equal(otherGearCoordinate + offset)
-				})
+			it('should be centred to the ' + direction + ' of the independent Gear '
+				 + 'by a distance of the sum of their pitch circle radii', function() {
+				var gearCoordinate = gear.getCentre()[getAxis]().getValue()
+				var otherGearCoordinate = otherGear.getCentre()[getAxis]().getValue()
+				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
+				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
+				var offset = gearPitchRadius + otherGearPitchRadius
+				if (negativeOffset) 
+					offset = -offset
+				gearCoordinate.should.equal(otherGearCoordinate + offset)
 			})
 		})
 	}
