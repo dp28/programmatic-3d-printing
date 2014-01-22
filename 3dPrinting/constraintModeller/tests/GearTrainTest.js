@@ -171,4 +171,24 @@ describe('GearTrain', function() {
 			train.getCircularPitch().should.equal(circularPitch)
 		})
 	})
+
+	describe('#createGear', function() {
+		var gear, numTeeth = 10
+
+		beforeEach(function() {
+			gear = train.createGear(numTeeth) 
+		})
+		
+		it('should return a Gear with the specified number of teeth', function() {
+			gear.getNumberOfTeeth().getValue().should.equal(numTeeth)
+		})
+
+		it('should attach the new Gear to the GearTrain', function() {
+			train.getGears().should.contain(gear)
+		})
+
+		it('should give the new Gear the correct circular pitch', function() {
+			gear.getCircularPitch().should.equal(train.getCircularPitch())
+		})
+	})
 })

@@ -101,4 +101,11 @@ function GearTrain(circPitch) {
 	this.setGenerateSpindlesOnWrite = function(flag) {
 		generateSpindlesOnWrite = flag
 	}
+
+	this.createGear = function(numTeeth) {
+		var gear = new Gear()
+		gear.setNumberOfTeeth(numTeeth)
+		this.addGear(gear)
+		return gear
+	}
 }
