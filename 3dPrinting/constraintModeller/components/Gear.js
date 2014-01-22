@@ -56,6 +56,10 @@ function Gear() {
 		return pressureAngle 
 	}
 
+	this.setPressureAngle = function(value) {
+		pressureAngle.setValue(value)
+	}
+
 	this.getClearance = function() {
 		return clearance 
 	}

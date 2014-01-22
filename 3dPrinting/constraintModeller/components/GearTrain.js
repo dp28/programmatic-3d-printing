@@ -38,10 +38,24 @@ function GearTrain(circPitch) {
 	} 
 
 	this.checkIfGearCanBeAdded = function(gear) {
+		checkPressureAngle(gear)
+		checkHasNumberOfTeethOrPitchCircleRadius(gear)
+		checkCircularPitchMatches(gear)
+	}
+
+	var checkPressureAngle= function(gear) {		
+		if (gears.length > 0 && gears[0].getPressureAngle().getValue() != gear.getPressureAngle().getValue())
+			throw new Error("Gear pressure angle does not match Gears in GearTrain")
+	}
+
+	var checkHasNumberOfTeethOrPitchCircleRadius = function(gear) {
 		if (gear.getNumberOfTeeth().isNotSet() 
 			  && gear.getPitchCircleRadius().isNotSet()) {
 			throw new Error("Number of teeth or pitch circle radius not set")
 		}
+	}
+
+	var checkCircularPitchMatches = function(gear)  {
 		try {
 			if (gear.getCircularPitch() == circularPitch) 
 				return

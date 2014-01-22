@@ -140,12 +140,26 @@ describe('GearTrain', function() {
 				train.getGears().length.should.equal(1)			
 				train.getGears()[0].should.be.an.instanceof(Gear)	
 			})
-		})
+		})	
 
-		describe('Adding a Gear with the number of teeth specified but the pitch radius unspecified', function() {
+		describe('Adding a two Gears with different pressure angles', function() {
+			var otherGear
+
 			beforeEach(function() {
-				gear = new Gear()
-				gear.setNumberOfTeeth()
+				gear.setNumberOfTeeth(numberOfTeeth)
+				otherGear = GearTest.createFullySpecifiedTestGear()
+				otherGear.setNumberOfTeeth(numberOfTeeth)
+				otherGear.setPitchCircleRadius(null)
+				otherGear.setPressureAngle(14)
+				train.addGear(gear)
+			})
+
+			it('should not be possible', function() {
+				var error = "Gear pressure angle does not match Gears in GearTrain";
+				(function() {
+					train.addGear(otherGear)
+				}
+				).should.throw(error)
 			})
 		})
 	})
