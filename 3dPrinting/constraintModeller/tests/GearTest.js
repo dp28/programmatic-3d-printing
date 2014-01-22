@@ -267,7 +267,7 @@ describe('Gear', function() {
 		})
 	})
 
-	function testMeshingFunction(functionName, axis, negativeOffset) {
+	function testMeshingFunction(functionName, axis, negativeOffset, direction) {
 		describe('#' + functionName, function() {
 			var otherGear
 			var getAxis = 'get' + axis
@@ -287,8 +287,8 @@ describe('Gear', function() {
 					gear.getCentre().isFullyDefined().should.be.true
 				})
 
-				it('should be centred to the left of the independent Gear by a distance '
-					 + 'of the sum of their pitch circle radii', function() {
+				it('should be centred to the ' + direction + ' of the independent Gear '
+					 + 'by a distance of the sum of their pitch circle radii', function() {
 					var gearCoordinate = gear.getCentre()[getAxis]().getValue()
 					var otherGearCoordinate = otherGear.getCentre()[getAxis]().getValue()
 					var gearPitchRadius = gear.getPitchCircleRadius().getValue()
@@ -303,18 +303,18 @@ describe('Gear', function() {
 	}
 
 	describe('#meshOnLeftOf', function() {
-		testMeshingFunction('meshOnLeftOf', 'X', true)
+		testMeshingFunction('meshOnLeftOf', 'X', true, 'left')
 	})
 
 	describe('#meshOnRightOf', function() {
-		testMeshingFunction('meshOnRightOf', 'X', false)
+		testMeshingFunction('meshOnRightOf', 'X', false, 'right')
 	})
 
 	describe('#meshAtFrontOf', function() {
-		testMeshingFunction('meshAtFrontOf', 'Y', false)
+		testMeshingFunction('meshAtFrontOf', 'Y', false, 'front')
 	})
 
 	describe('#meshAtBackOf', function() {
-		testMeshingFunction('meshAtBackOf', 'Y', true)
+		testMeshingFunction('meshAtBackOf', 'Y', true, 'back')
 	})
 })
