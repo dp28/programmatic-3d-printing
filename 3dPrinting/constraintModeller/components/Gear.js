@@ -73,6 +73,7 @@ function Gear() {
 		return centreHoleRadius
 	}
 
+
 	this.getCircularPitch = function() {
 		checkIfCanCalculateCircularPitch()
 		return calculateCircularPitch()

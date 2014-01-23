@@ -101,7 +101,6 @@ describe('Gear', function() {
 		})
 	})
 
-
 	var exampleDiameter = 20
 	var exampleNumTeeth = 5
 

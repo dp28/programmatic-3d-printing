@@ -31,6 +31,11 @@ function GearTrain(circPitch) {
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
 
+	// From http://www.cage-gear.com/spur_gear_calculations.htm
+	this.getAddendum = function() {
+		return circularPitch / Math.PI
+	}
+
 	this.addGear = function(gear) {
 		this.checkIfGearCanBeAdded(gear)
 		this.changeGearToHaveSameCircularPitch(gear)
@@ -106,6 +111,8 @@ function GearTrain(circPitch) {
 		var gear = new Gear()
 		gear.setNumberOfTeeth(numTeeth)
 		this.addGear(gear)
+		var boundRadius = gear.getPitchCircleRadius().getValue() + this.getAddendum()
+		gear.getBoundingCircle().setRadius(boundRadius)
 		return gear
 	}
 }
