@@ -108,4 +108,10 @@ function Point() {
 		var getAxis = 'get' + axis
 		this[getAxis]().offsetByConstant(otherPoint[getAxis](), offset)
 	}
+
+	this.distanceToOnXYPlane = function(otherPoint) {
+		var xDifference = x.getValue() - otherPoint.getX().getValue()
+		var yDifference = y.getValue() - otherPoint.getY().getValue()
+		return Math.sqrt(xDifference * xDifference + yDifference * yDifference)
+	}
 } 

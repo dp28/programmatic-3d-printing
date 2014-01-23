@@ -64,7 +64,20 @@ describe('SpecificationWriter', function() {
 				 + 'Gears', function() {
 					writer.getSpecifications().length.should.equal(train.getGears().length)
 				})
-			})			
+			})	
+
+			describe('If the GearTrain contains overlapping Gears', function() {
+				beforeEach(function() {
+					writer = new SpecificationWriter()
+					var train = GearTrainTest.createInvalidTrainWithOverlappingGears()
+				})
+				
+				it('should not be possible', function() {
+					(function() {
+						writer.addComponent(train)
+					}).should.throw("Invalid GearTrain - contains overlapping Gears")
+				})
+			})		
 		})
 	})
 

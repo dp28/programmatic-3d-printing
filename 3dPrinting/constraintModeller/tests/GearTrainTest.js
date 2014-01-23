@@ -21,6 +21,29 @@ module.exports.createTestGearTrain = function() {
 	return train
 }
 
+module.exports.createInvalidTrainWithOverlappingGears = createInvalidTrainWithOverlappingGears
+function createInvalidTrainWithOverlappingGears() {
+	var train = new GearTrain(10)
+	var firstGear = train.createGear(10)
+	var secondGear = train.createGear(20)
+	var thirdGear = train.createGear(15)
+	firstGear.meshOnLeftOf(secondGear)
+	secondGear.getCentre().setAt(0, 0, 0)
+	thirdGear.getCentre().setAt(1, 3, 0)
+	return train
+}
+
+function createTrainWithMeshingGears() {
+	var train = new GearTrain(10)
+	var firstGear = train.createGear(10)
+	var secondGear = train.createGear(20)
+	var thirdGear = train.createGear(15)
+	firstGear.meshOnLeftOf(secondGear)
+	thirdGear.meshOnRightOf(secondGear)
+	secondGear.getCentre().setAt(0, 0, 0)
+	return train
+}
+
 describe('GearTrain', function() {
 	var train 
 
@@ -205,5 +228,20 @@ describe('GearTrain', function() {
 			boundRadius.should.be.approximately(pitchRadius + train.getAddendum(), 
 				                                  0.001)
 		})
+	})
+
+	describe('#onlyMeshingGearsTouching', function() {
+		it('should return false if the GearTrain contains Gears that are '
+			 + ' overlapping', function() {
+			train = createInvalidTrainWithOverlappingGears()
+			train.onlyMeshingGearsTouching().should.be.false
+		})
+
+		it('should return true if the GearTrain only contains meshing Gears',
+		   function() {
+			train = createTrainWithMeshingGears()
+			train.onlyMeshingGearsTouching().should.be.true
+		})
+		
 	})
 })

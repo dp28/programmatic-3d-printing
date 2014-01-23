@@ -47,6 +47,7 @@ function SpecificationWriter() {
 	}
 
 	this.addGearTrain = function(train) {
+		checkAddingIsPossible(train)
 		gears = train.getGears()
 		for (var i = 0; i < gears.length; i++) {
 			this.addComponent(gears[i])
@@ -60,5 +61,10 @@ function SpecificationWriter() {
 		string += JSON.stringify(specifications, null, 2)
 		string += COMPONENT_SUFFIX
 		fs.writeFileSync(SPECIFICATION_FILE_NAME, string)
+	}
+
+	var checkAddingIsPossible = function(train) {
+		if (!train.onlyMeshingGearsTouching())
+			throw new Error("Invalid GearTrain - contains overlapping Gears")
 	}
 }

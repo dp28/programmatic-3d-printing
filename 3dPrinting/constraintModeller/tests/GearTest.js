@@ -33,7 +33,7 @@ function createFullySpecifiedTestGear(numTeeth, radius, x, y, z) {
 }
 
 describe('Gear', function() {
-	var gear
+	var gear, otherGear
 
 	beforeEach(function() {
 		gear = new Gear()
@@ -267,7 +267,6 @@ describe('Gear', function() {
 	})
 
 	function testMeshingFunction(functionName, axis, negativeOffset, direction) {
-		var otherGear
 		var getAxis = 'get' + axis
 		
 		beforeEach(function() {
@@ -279,13 +278,13 @@ describe('Gear', function() {
 			otherGear.getCentre().setAt(1, 2, 3)
 		})
 
-		describe('the dependent Gear', function() {
-			it('should have its centre set when the independent Gear\'s centre is set',
+		describe('the first Gear', function() {
+			it('should have its centre set when the second Gear\'s centre is set',
 				 function() {
 				gear.getCentre().isFullyDefined().should.be.true
 			})
 
-			it('should be centred to the ' + direction + ' of the independent Gear '
+			it('should be centred to the ' + direction + ' of the second Gear '
 				 + 'by a distance of the sum of their pitch circle radii', function() {
 				var gearCoordinate = gear.getCentre()[getAxis]().getValue()
 				var otherGearCoordinate = otherGear.getCentre()[getAxis]().getValue()
@@ -313,5 +312,50 @@ describe('Gear', function() {
 
 	describe('#meshAtBackOf', function() {
 		testMeshingFunction('meshAtBackOf', 'Y', true, 'back')
+	})
+
+	describe('#isTouching', function() {
+		beforeEach(function() {
+			gear = createFullySpecifiedTestGear(10, 5, 0, 0, 0) 
+			otherGear = createFullySpecifiedTestGear(10, 5, 20, 20, 20)
+			gear.getBoundingCircle().setRadius(5)
+		})
+
+		it('should be false if the Gears\' bounding Circles do not intersect', 
+			 function() {
+			otherGear.getBoundingCircle().setRadius(5)
+			gear.isTouching(otherGear).should.be.false
+		})
+		
+		it('should be true if the Gears\' bounding Circles intersect', function() {
+			otherGear.getBoundingCircle().setRadius(50)
+			gear.isTouching(otherGear).should.be.true
+		})
+	})
+
+	describe('#isMeshingWith', function() {
+		beforeEach(function() {
+			gear = new Gear()
+			gear.setPitchCircleRadius(10)
+			gear.getCentre().setAt(10, 11, 12)
+			otherGear = new Gear()
+			otherGear.setPitchCircleRadius(20)
+			otherGear.getCentre().setAt(1, 2, 3)
+		})
+		
+		it('should be false if the Gears\' pitch circles overlap', function() {
+			gear.isMeshingWith(otherGear).should.be.false
+		})
+
+		it('should be false if the Gears\' pitch circles do not touch', function() {
+			otherGear.setPitchCircleRadius(1)
+			gear.isMeshingWith(otherGear).should.be.false
+		})
+
+		it('should be true if the Gears have been set to mesh', function() {
+			gear.meshOnLeftOf(otherGear)
+			otherGear.getCentre().setAt(1.6, 2.9, 30)
+			gear.isMeshingWith(otherGear).should.be.true
+		})
 	})
 })

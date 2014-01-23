@@ -151,4 +151,19 @@ function Gear() {
 			offset = -offset
 		return offset
 	}
+
+	this.isTouching = function(otherGear) {
+		var boundingRadius = this.getBoundingCircle().getRadius().getValue()
+		var otherBoundingRadius = otherGear.getBoundingCircle().getRadius().getValue()
+		var distanceBetween = this.getCentre().distanceToOnXYPlane(otherGear.getCentre())
+		return distanceBetween < (boundingRadius + otherBoundingRadius)
+	} 
+
+	this.isMeshingWith = function(otherGear) {
+		var pitchRadius = pitchCircleRadius.getValue()
+		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()
+		var distanceBetween = this.getCentre().distanceToOnXYPlane(otherGear.getCentre())
+		var combinedRadii = pitchRadius + otherPitchRadius
+		return distanceBetween == combinedRadii
+	}
 }

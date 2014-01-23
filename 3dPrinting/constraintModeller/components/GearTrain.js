@@ -115,4 +115,14 @@ function GearTrain(circPitch) {
 		gear.getBoundingCircle().setRadius(boundRadius)
 		return gear
 	}
+
+	this.onlyMeshingGearsTouching = function() {
+		for (var i = 0; i < gears.length; i++) {
+			for (var j = 0; j < gears.length && j != i; j++) {
+				if (gears[i].isTouching(gears[j]) && !gears[i].isMeshingWith(gears[j]))
+					return false
+			}
+		}
+		return true
+	}
 }
