@@ -46,23 +46,34 @@ Constraint.prototype = {
 	},
 
 	// Applies the Constraint by updating left's value
-	applyConstraint: function() {
+	applyConstraint: function(left, right) {
 		throw "#applyConstraint() not implemented in this instance"
 	},
 
-	// Enforce the constraint, returning true if left's value changes as a result
+	// Enforce the constraint, returning true if a value changes as a result
 	constrain: function() {
 		if (this.isSatisfied()) {
 			return false
 		}
 		else {
-			if (this.left.isRigid()) {
+			return this.applyConstraintToUnfixedValue()
+		}
+	},
+
+	applyConstraintToUnfixedValue: function() {
+		if (this.right.isSet())
+			this.applyConstraintInOrder(this.left, this.right)
+		else
+			this.applyConstraintInOrder(this.right, this.left)
+	},
+
+	applyConstraintInOrder: function(left, right) {
+		if (left.isRigid()) {
 				throw "Cannot change rigid value " + left.value()
-			}
-			else {
-				this.applyConstraint()
-				return true
-			}
+		}
+		else {
+			this.applyConstraint(left, right)
+			return true
 		}
 	}
 }
@@ -81,8 +92,8 @@ SameAsConstraint.prototype.isSatisfied = function() {
 	return this.getLeft().getValue() == this.getRight().getValue()
 }
 
-SameAsConstraint.prototype.applyConstraint = function() {
-	this.getLeft().setValue(this.getRight().getValue())
+SameAsConstraint.prototype.applyConstraint = function(left, right) {
+	left.setValue(right.getValue())
 }
 
 /*
@@ -101,8 +112,8 @@ OffsetByConstantConstraint.prototype.isSatisfied = function() {
 	       this.getLeft().getValue() == this.getRight().getValue() + this.offset
 }
 
-OffsetByConstantConstraint.prototype.applyConstraint = function() {
-	this.getLeft().setValue(this.getRight().getValue() + this.offset)
+OffsetByConstantConstraint.prototype.applyConstraint = function(left, right) {
+	left.setValue(right.getValue() + this.offset)
 }
 
 /*
@@ -121,8 +132,8 @@ ScaledByConstantConstraint.prototype.isSatisfied = function() {
 	       this.getLeft().getValue() == this.getRight().getValue() * this.factor
 }
 
-ScaledByConstantConstraint.prototype.applyConstraint = function() {
-	this.getLeft().setValue(this.getRight().getValue() * this.factor)
+ScaledByConstantConstraint.prototype.applyConstraint = function(left, right) {
+	left.setValue(right.getValue() * this.factor)
 }
 
 

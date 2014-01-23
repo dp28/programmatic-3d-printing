@@ -82,7 +82,7 @@ describe('ConstrainableValue', function() {
 		})
 	})
 
-	describe('Constraint convenience functions', function() {
+	describe('Two-way Constraint functions', function() {
 		var anotherValue
 
 		beforeEach(function() {
@@ -102,6 +102,14 @@ describe('ConstrainableValue', function() {
         anotherValue.setValue(10)
         value.getValue().should.equal(anotherValue.getValue())
 			})
+
+			it('should constrain the other value to be the same as this value if this'
+				 + ' value is set first', function() {
+        value.sameAs(anotherValue)
+        value.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue())
+        value.getValue().should.equal(10)
+			})
 		})
 
 		describe('#offsetByConstant', function() {
@@ -116,6 +124,14 @@ describe('ConstrainableValue', function() {
 				value.offsetByConstant(anotherValue, 15)
 				anotherValue.setValue(10)
         value.getValue().should.equal(anotherValue.getValue() + 15)
+			})
+
+			it('should constrain the other value to be a constant offset from this '
+				 + 'value if this value is set first', function() {
+        value.offsetByConstant(anotherValue, 15)
+        value.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue() + 15)
+        anotherValue.getValue().should.equal(value.getValue() - 15)
 			})
 		})
 
@@ -132,6 +148,15 @@ describe('ConstrainableValue', function() {
 				value.scaledByConstant(anotherValue, 1.5)
 				anotherValue.setValue(10)
         value.getValue().should.equal(anotherValue.getValue() * 1.5)
+			})
+
+			it('should constrain the other value to be a constant factor smaller than'
+				 + ' this value if this value is set first', function() {
+        value.scaledByConstant(anotherValue, 15)
+        value.setValue(10)
+        value.getValue().should.equal(anotherValue.getValue() *  15)
+        anotherValue.getValue().should.be.approximately(value.getValue() /  15, 
+        	                                              0.001)
 			})
 		})
 	})	

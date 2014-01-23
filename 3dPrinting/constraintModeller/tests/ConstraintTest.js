@@ -23,6 +23,14 @@ describe('SameAsConstraint', function(){
     leftValue.getValue().should.equal(rightValue.getValue())
   })
 
+  it('should be one way - a change in the dependent value should not change the'
+  	 + ' independent value', function() {
+    new constraints.SameAsConstraint(leftValue, rightValue)
+    rightValue.setValue(15)
+    leftValue.setValue(10)
+    leftValue.getValue().should.not.equal(rightValue.getValue())
+  })
+
   describe('#isSatisfied', function() {
   	it('should return true if both values have the same stored value', function() {
   		rightValue.setValue(10)
@@ -48,6 +56,14 @@ describe('OffsetByConstantConstraint', function() {
 		leftValue.getValue().should.equal(rightValue.getValue() + 15)
 	})
 
+  it('should be one way - a change in the dependent value should not change the '
+  	 + 'independent value', function() {
+    new constraints.OffsetByConstantConstraint(leftValue, rightValue, 15)
+    rightValue.setValue(15)
+    leftValue.setValue(10)
+		leftValue.getValue().should.not.equal(rightValue.getValue() + 15)
+  })
+
 	it('should not be satisfied if the left value is not set', function() {
 		constraint = new constraints.OffsetByConstantConstraint(leftValue, 
 			                                                      rightValue, 
@@ -63,6 +79,14 @@ describe('ScaledByConstantConstraint', function() {
 		rightValue.setValue(10)
 		leftValue.getValue().should.equal(rightValue.getValue() * 1.5)
 	})
+
+  it('should be one way - a change in the dependent value should not change the '
+  	 + 'independent value', function() {
+    new constraints.ScaledByConstantConstraint(leftValue, rightValue, 15)
+    rightValue.setValue(15)
+    leftValue.setValue(10)
+		leftValue.getValue().should.not.equal(rightValue.getValue() * 15)
+  })
 
 	it('should not be satisfied if the left value is not set', function() {
 		constraint = new constraints.ScaledByConstantConstraint(leftValue, 
