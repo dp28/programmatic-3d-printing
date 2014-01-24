@@ -17,15 +17,15 @@ function makeComponent(componentSpec) {
 	var component 
 	switch(componentSpec.type) {
 		case "Gear":
-			component = makeGear(componentSpec)
+			component = makeGearWithHole(componentSpec)
 			break
 			
 		case "Spindle":
-			component = makeSpindle(componentSpec)
+			component = Spindle.makeSpindle(componentSpec)
 			break
 
 		case "Base":
-			component = makeBase(componentSpec)
+			component = Base.makeBase(componentSpec)
 			break
 	}
 
@@ -33,11 +33,6 @@ function makeComponent(componentSpec) {
   																 componentSpec.centreY,
   																 componentSpec.centreZ]);  
   return component
-}
-
-function makeGear(params) {    
-  var gear = makeGearWithHole(params);
-  return gear;
 }
 
 function makeGearWithHole(params) {
@@ -57,14 +52,4 @@ function makeGearWithHole(params) {
     gear = gear.subtract(centerHole);
   }     
   return gear;
-}
-
-function makeSpindle(params) {
-	var spindle = Spindle.makeSpindle(params)
-	return spindle
-}
-
-function makeBase(params) {
-	var base = Base.makeBase(params)
-	return base
 }
