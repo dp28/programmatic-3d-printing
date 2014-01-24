@@ -75,7 +75,28 @@ describe('SpecificationWriter', function() {
 				it('should not be possible', function() {
 					(function() {
 						writer.addComponent(train)
-					}).should.throw("Invalid GearTrain - contains overlapping Gears")
+					}).should.throw()
+				})
+
+				describe('the error message generated', function() {
+					var errorMessage, overlappingGears
+
+					beforeEach(function() {
+						overlappingGears = train.findNonMeshingTouchingGears()
+						try {
+							writer.addComponent(train)
+						} 
+						catch(err) {
+							errorMessage = err.message
+						}
+					})
+
+					it('should contain a string representation of the overlapping gears',
+					   function() {
+						for (var i = overlappingGears.length - 1; i >= 0; i--) {
+							errorMessage.should.contain(overlappingGears[i].toString())
+						};
+					})
 				})
 			})		
 		})

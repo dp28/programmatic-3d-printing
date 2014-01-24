@@ -241,7 +241,28 @@ describe('GearTrain', function() {
 		   function() {
 			train = createTrainWithMeshingGears()
 			train.onlyMeshingGearsTouching().should.be.true
+		})		
+	})
+
+	describe('#findNonMeshingTouchingGears', function() {
+		var firstGear, secondGear
+
+		beforeEach(function() {
+			train = new GearTrain(8)
+			firstGear = train.createGear(10)
+			firstGear.getCentre().setAt(0, 0, 0)
+			secondGear = train.createGear(10)
+			secondGear.getCentre().setAt(1, 1, 0)
 		})
 		
+		it('should return all the overlapping Gears if there are any', function() {
+			train.findNonMeshingTouchingGears().should.contain(firstGear)
+			train.findNonMeshingTouchingGears().should.contain(secondGear)
+		})
+
+		it('should return an empty array if no Gears overlap', function() {
+			train = createTrainWithMeshingGears()
+			train.findNonMeshingTouchingGears().should.eql([])
+		})
 	})
 })

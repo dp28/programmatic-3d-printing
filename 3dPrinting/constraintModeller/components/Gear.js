@@ -166,4 +166,18 @@ function Gear() {
 		var combinedRadii = pitchRadius + otherPitchRadius
 		return distanceBetween == combinedRadii
 	}
+
+	this.toString = function() {
+		var string = 'Gear {\n\tNumber of teeth: ' + numTeeth.getValue() + '\n\t'
+		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
+		string += 'Bounding circle radius: ' 
+		string += this.getBoundingCircle().getRadius().getValue() + '\n\t'
+		string += 'Thickness: ' + thickness.getValue() + '\n\t'
+		string += 'Clearance: ' + clearance.getValue() + '\n\t'
+		string += 'Centre hole radius: ' + centreHoleRadius.getValue() + '\n\t'
+		string += 'Pressure angle: ' + pressureAngle.getValue() + '\n\t'
+		string += 'Centre point: ' + this.getCentre().toString() + '\n'
+		string += '}'
+		return string
+	}
 }

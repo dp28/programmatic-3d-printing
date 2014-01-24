@@ -358,4 +358,67 @@ describe('Gear', function() {
 			gear.isMeshingWith(otherGear).should.be.true
 		})
 	})
+
+	describe('#toString', function() {
+		var numTeeth = 10
+		var pitchCircleRadius = 15
+		var boundRadius = 18
+		var centreX = 1
+		var centreY = 2
+		var centreZ = 3
+		beforeEach(function() {
+			gear = createFullySpecifiedTestGear(numTeeth,
+																					pitchCircleRadius,
+																					centreX,
+																					centreY,
+																					centreZ)
+			gear.getBoundingCircle().setRadius(boundRadius)
+		})
+
+		it('should return a string', function() {
+			gear.toString().should.be.type('string')
+		})
+
+		describe('the returned string', function() {
+			var string 
+
+			beforeEach(function() {
+				string = gear.toString() 
+			})
+			
+			it('should contain the number of teeth', function() {
+				string.should.contain('Number of teeth: ' + numTeeth)
+			})
+			
+			it('should contain the pitch circle radius', function() {
+				string.should.contain('Pitch circle radius: ' + pitchCircleRadius)
+			})
+			
+			it('should contain the bounding radius', function() {
+				string.should.contain('Bounding circle radius: ' + boundRadius)
+			})
+			
+			it('should contain the centre point', function() {
+				string.should.contain('Centre point: (' + centreX + ', ' + centreY 
+					                    + ', ' + centreZ + ')')
+			})
+
+			it('should describe the thickness', function() {
+				string.should.contain('Thickness: ')
+			})
+
+			it('should describe the clearance', function() {
+				string.should.contain('Clearance: ')
+			})
+
+			it('should describe the pressure angle', function() {
+				string.should.contain('Pressure angle: ')
+			})
+
+			it('should describe the centre hole radius', function() {
+				string.should.contain('Centre hole radius: ')
+			})
+		})
+		
+	})
 })

@@ -125,4 +125,18 @@ function GearTrain(circPitch) {
 		}
 		return true
 	}
+
+	this.findNonMeshingTouchingGears = function() {
+		var overlapping = []
+		for (var i = 0; i < gears.length; i++) {
+			for (var j = 0; j < gears.length && j != i; j++) {
+				if (gears[i].isTouching(gears[j]) && !gears[i].isMeshingWith(gears[j]))
+					overlapping.push(gears[i], gears[j])
+			}
+		}
+		// Remove duplicates
+		return overlapping.filter(function(element, position, self) {
+			return self.indexOf(element) == position
+		})
+	}
 }

@@ -64,7 +64,20 @@ function SpecificationWriter() {
 	}
 
 	var checkAddingIsPossible = function(train) {
-		if (!train.onlyMeshingGearsTouching())
-			throw new Error("Invalid GearTrain - contains overlapping Gears")
+		if (!train.onlyMeshingGearsTouching()) {
+			var errorMessage = createOverlappingGearErrorMessage(train)
+			throw new Error(errorMessage)
+		}
+	}
+
+	var createOverlappingGearErrorMessage = function(train) {
+		var string = "Invalid GearTrain - contains overlapping Gears: \n"
+		var gears = train.findNonMeshingTouchingGears()
+		for (var i = gears.length - 1; i >= 0; i--) {
+			string += gears[i].toString() + ',\n'
+		};
+
+		string = string.substring (0, string.length - 2) // remove trailing ,\n
+		return string
 	}
 }
