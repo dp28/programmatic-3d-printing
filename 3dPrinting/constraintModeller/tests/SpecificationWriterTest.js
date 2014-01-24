@@ -69,7 +69,7 @@ describe('SpecificationWriter', function() {
 			describe('If the GearTrain contains overlapping Gears', function() {
 				beforeEach(function() {
 					writer = new SpecificationWriter()
-					var train = GearTrainTest.createInvalidTrainWithOverlappingGears()
+					train = GearTrainTest.createInvalidTrainWithOverlappingGears()
 				})
 				
 				it('should not be possible', function() {

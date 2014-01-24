@@ -15,7 +15,7 @@ module.exports.createTestGearTrain = function() {
 	var firstGear = GearTest.createFullySpecifiedTestGear(10, 10, 1, 2, 3)
 	firstGear.setPitchCircleRadius(null)
 	train.addGear(firstGear)
-	var secondGear = GearTest.createFullySpecifiedTestGear(20, 10, 50, 20, 3)
+	var secondGear = GearTest.createFullySpecifiedTestGear(20, 10, 50, 200, 3)
 	secondGear.setPitchCircleRadius(null)
 	train.addGear(secondGear)
 	return train

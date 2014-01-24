@@ -1,9 +1,9 @@
 /*
  * A sample application that creates a simple GearTrain
  */
-var GearTrain = require('../components/GearTrain.js').GearTrain
-var Gear = require('../components/Gear.js').Gear
-var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
+var GearTrain = require('../constraintModeller/components/GearTrain.js').GearTrain
+var Gear = require('../constraintModeller/components/Gear.js').Gear
+var SpecificationWriter = require('../constraintModeller/interface/SpecificationWriter.js').SpecificationWriter
 
 var gearTrain = new GearTrain(10)
 var firstGear = gearTrain.createGear(10)
