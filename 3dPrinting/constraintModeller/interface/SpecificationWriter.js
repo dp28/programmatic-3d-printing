@@ -51,9 +51,11 @@ function SpecificationWriter() {
 		gears = train.getGears()
 		for (var i = 0; i < gears.length; i++) {
 			this.addComponent(gears[i])
-			if (train.getGenerateSpindlesOnWrite())
+			if (train.shouldGenerateSpindlesOnWrite())
 				this.addComponent(gears[i].generateSpindle())
 		}
+		if (train.shouldGenerateBaseOnWrite())
+			this.addComponent(train.generateBase())
 	}
 
 	this.writeSpecificationToFile = function() {

@@ -7,6 +7,7 @@
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
+var Base = require('../components/Base.js').Base
 var Utilities = require('../Utilities.js')
 var util = require('util')
 
@@ -30,6 +31,7 @@ function GearTrain(circPitch) {
 	var gears = []
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
+	var generateBaseOnWrite = true
 
 	// From http://www.cage-gear.com/spur_gear_calculations.htm
 	this.getAddendum = function() {
@@ -99,12 +101,20 @@ function GearTrain(circPitch) {
 		return circularPitch
 	}
 
-	this.getGenerateSpindlesOnWrite = function() {
+	this.shouldGenerateSpindlesOnWrite = function() {
 		return generateSpindlesOnWrite
 	}
 
 	this.setGenerateSpindlesOnWrite = function(flag) {
 		generateSpindlesOnWrite = flag
+	}
+
+	this.shouldGenerateBaseOnWrite = function() {
+		return generateBaseOnWrite
+	}
+
+	this.setGenerateBaseOnWrite = function(flag) {
+		generateBaseOnWrite = flag
 	}
 
 	this.createGear = function(numTeeth) {
@@ -138,5 +148,13 @@ function GearTrain(circPitch) {
 		return overlapping.filter(function(element, position, self) {
 			return self.indexOf(element) == position
 		})
+	}
+
+	this.generateBase = function() {
+		var base = new Base()
+		base.getCentre().setAt(0, 0, 0)
+		base.setHeight(0.2)
+		base.setRadius(100)
+		return base
 	}
 }
