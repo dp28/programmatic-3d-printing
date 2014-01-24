@@ -2,7 +2,7 @@
  * author: Daniel Patterson
  *
  * The Object that is used to interface between the Constraint Modelling aspect
- * and the 3D Drawing aspectfor Gears
+ * and the 3D Drawing aspect for Gears
  */
 module.exports.GearSpecification = GearSpecification
 

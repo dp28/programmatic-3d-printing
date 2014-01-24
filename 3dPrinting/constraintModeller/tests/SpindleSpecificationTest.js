@@ -5,10 +5,6 @@
  * Constraint Modelling aspect and the 3D Drawing aspect
  */
 var should = require('should')
-var Point = require('../geometry/Point.js').Point
-var SpindleSpecification = require('../interface/SpindleSpecification.js').SpindleSpecification
-var SpindleTest = require('../tests/SpindleTest.js')
-
 module.exports.testSpindleSpecification = testSpindleSpecification
 
 function testSpindleSpecification(spindleSpec, spindle) {
