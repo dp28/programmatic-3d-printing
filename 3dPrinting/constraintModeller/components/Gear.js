@@ -164,7 +164,7 @@ function Gear() {
 		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()
 		var distanceBetween = this.getCentre().distanceToOnXYPlane(otherGear.getCentre())
 		var combinedRadii = pitchRadius + otherPitchRadius
-		return distanceBetween == combinedRadii
+		return Utilities.approximatelyEqual(distanceBetween, combinedRadii, 0.001)
 	}
 
 	this.toString = function() {
