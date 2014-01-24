@@ -1,5 +1,6 @@
 include("Gear.jscad");
 include("Spindle.jscad");
+include("Base.jscad");
 include("Specification.jscad")
 
 function main() {
@@ -21,6 +22,10 @@ function makeComponent(componentSpec) {
 			
 		case "Spindle":
 			component = makeSpindle(componentSpec)
+			break
+
+		case "Base":
+			component = makeBase(componentSpec)
 			break
 	}
 
@@ -57,4 +62,9 @@ function makeGearWithHole(params) {
 function makeSpindle(params) {
 	var spindle = Spindle.makeSpindle(params)
 	return spindle
+}
+
+function makeBase(params) {
+	var base = Base.makeBase(params)
+	return base
 }

@@ -153,7 +153,7 @@ function GearTrain(circPitch) {
 	this.generateBase = function() {
 		var base = new Base()
 		base.getCentre().setAt(0, 0, 0)
-		base.setHeight(0.2)
+		base.setHeight(1)
 		base.setRadius(100)
 		return base
 	}
