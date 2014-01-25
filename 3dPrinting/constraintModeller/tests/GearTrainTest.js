@@ -11,6 +11,7 @@ var Base = require('../components/Base.js').Base
 var GearTrain = require('../components/GearTrain.js').GearTrain
 var ComponentTest = require('../tests/ComponentTest.js')
 var GearTest = require('../tests/GearTest.js')
+var BaseSpecificationTest = require('../tests/BaseSpecificationTest.js')
 
 module.exports.createTestGearTrain = function() {
 	var train = new GearTrain(8) 
@@ -171,7 +172,14 @@ describe('GearTrain', function() {
 				containsSupportingLineBetween(base, firstGear, secondGear).should.be.true
 				containsSupportingLineBetween(base, thirdGear, secondGear).should.be.true
 			})
-			
+
+			describe('#toSpecification', function() {
+				it('return a Specification that behaves like a BaseSpecification ' 
+					 + 'generated from this Base', function() {
+					var baseSpec = base.toSpecification()
+					BaseSpecificationTest.testBaseSpecification(baseSpec, base)
+				})
+			})			
 		})
 	})
 
