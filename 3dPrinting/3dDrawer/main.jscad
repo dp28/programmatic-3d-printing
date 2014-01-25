@@ -46,7 +46,7 @@ function makeGearWithHole(params) {
     var centerHole = CSG.cylinder({
     	                              start: [0, 0,-params.thickness / 2],
     	                              end: [0, 0, params.thickness / 2], 
-    	                              radius: params.centreHoleRadius, 
+    	                              radius: params.centreHoleRadius * 20, 
     	                              resolution: 16
     	                            });
     gear = gear.subtract(centerHole);

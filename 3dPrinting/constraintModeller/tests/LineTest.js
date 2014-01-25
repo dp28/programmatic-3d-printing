@@ -9,18 +9,21 @@ var LineSpecificationTest = require('../tests/LineSpecificationTest.js')
 
 describe('Line', function() {
 	var line, firstPoint, secondPoint
-	var startX = 0
-	var startY = 0
+	var startX = 1
+	var startY = 2
+	var startZ = 3
 	var endX = 4
 	var endY = 3
+	var endZ = 1
 	var xDifference = endX - startX
 	var yDifference = endY - startY
+	var zDifference = endZ - startZ
 
 	beforeEach(function() {
 		firstPoint = new Point()
-		firstPoint.setAt(startX, startY, 0)
+		firstPoint.setAt(startX, startY, startZ)
 		secondPoint = new Point()
-		secondPoint.setAt(endX, endY, 0)
+		secondPoint.setAt(endX, endY, endZ)
 		line = new Line(firstPoint, secondPoint)
 	})
 
@@ -46,12 +49,17 @@ describe('Line', function() {
 			
 			it('should have an x coordinate at half the distance between the two '
 				 + 'Points', function() {
-				centre.getX().getValue().should.equal(xDifference / 2)
+				centre.getX().getValue().should.equal(startX + xDifference / 2)
 			})
 			
 			it('should have a y coordinate at half the distance between the two '
 				 + 'Points', function() {
-				centre.getY().getValue().should.equal(yDifference / 2)
+				centre.getY().getValue().should.equal(startY + yDifference / 2)
+			})
+			
+			it('should have a z coordinate at half the distance between the two '
+				 + 'Points', function() {
+				centre.getZ().getValue().should.equal(startZ + zDifference / 2)
 			})
 		})		
 	})
@@ -65,14 +73,16 @@ describe('Line', function() {
 	describe('#getLength', function() {
 		it('should be the hypotenuse of the triangle defined by the x and y '
 			  + 'differences between the Points', function() {
-			var length = 5 // Pythagorean triple
+			var length = Math.sqrt(xDifference * xDifference 
+								             + yDifference * yDifference
+								             + zDifference * zDifference)
 			line.getLength().should.equal(length)
 		})
 	})
 
 	describe('#getAngleInRadians', function() {
 		it('should return the angle this line makes with the x axis', function() {
-			var angle = Math.atan2(3, 4)
+			var angle = Math.atan2(yDifference, xDifference)
 			line.getAngleInRadians().should.be.approximately(angle, 0.001)
 		})
 	})

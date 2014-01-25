@@ -196,7 +196,7 @@ function GearTrain(circPitch) {
 	}
 
 	var addSupportingLineBetween = function(base, startGear, endGear) {
-		var baseCentreZ = calculateBaseCentreZ(base, startGear)		
+		var baseCentreZ = calculateBaseCentreZ(base, startGear)	
 		var startPoint = makePointBelow(startGear, baseCentreZ)
 		var endPoint = makePointBelow(endGear, baseCentreZ)
 		var line = new Line(startPoint, endPoint)

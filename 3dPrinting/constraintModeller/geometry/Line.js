@@ -1,7 +1,7 @@
 /*
  * author: Daniel Patterson
  *
- * A 2D line built from two Points with a width.
+ * A 3D line built from two Points with a width.
  */
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
@@ -14,12 +14,24 @@ function Line(point1, point2) {
 		throw new Error("Two Points required")
 	var start = point1
 	var end = point2
-	var xDifference = end.getX().getValue() - start.getX().getValue()
-	var yDifference = end.getY().getValue() - start.getY().getValue()
+
+	var startX = start.getX().getValue()
+	var endX = end.getX().getValue()
+	var startY = start.getY().getValue()
+	var endY = end.getY().getValue()
+	var startZ = start.getZ().getValue()
+	var endZ = end.getZ().getValue()
+
+	var xDifference = endX - startX
+	var yDifference = endY - startY
+	var zDifference = endZ - startZ
+
 	var centre = new Point()
 	const DEFAULT_WIDTH = 1
 	var width = DEFAULT_WIDTH
-	centre.setAt(xDifference / 2, yDifference / 2, 0)
+	centre.setAt(startX + xDifference / 2,
+	             startY + yDifference / 2,
+	             startZ + zDifference / 2)
 
 	this.getCentre = function() {
 		return centre
@@ -42,7 +54,9 @@ function Line(point1, point2) {
 	}
 
 	this.getLength = function() {
-		return Math.sqrt(xDifference * xDifference + yDifference * yDifference) 
+		return Math.sqrt(xDifference * xDifference 
+			              + yDifference * yDifference
+			              + zDifference * zDifference) 
 	}
 
 	this.getAngleInRadians = function() {

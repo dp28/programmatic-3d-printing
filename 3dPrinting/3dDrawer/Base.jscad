@@ -3,33 +3,49 @@ include("Utils.jscad");
 Base = function() {};
 
 Base.makeBase = function(specification) {
-  var base = Utils.makeCylinder(specification.radius, specification.height);
+  var parts = makeParts(specification)
+  var base = union(parts)
   base = base.setColor(0.4, 0.4, 0.4);
   return base;
 };
 
+function makeParts(specification) { 
+  var parts = [] 
+  var height = specification.height
+  var partSpecs = specification.parts
+  for (var i = partSpecs.length - 1; i >= 0; i--) {
+    parts.push(makePart(partSpecs[i], height))
+  };
 
-// function Bridge(a, b, w) {
-//     this.start = a;
-//     this.end = b;
-//     this.width = w;
-//     var xDiff = b.x - a.x;
-//     var yDiff = b.y - a.y;
-//     var centreX = xDiff / 2;
-//     var centreY = yDiff / 2;
-//     var rotation = Math.atan2(yDiff, xDiff);
-//     var length = (Math.sqrt(xDiff * xDiff + yDiff * yDiff));
-    
-//     this.shape = function() {
-//         return CSG.cube({
-//           center: [centreX, centreY, 0],
-//           radius: [length / 2, this.width, 1]
-//     }).translate([-centreX, -centreY, 0])
-//       .rotateZ(toDegrees(rotation))
-//       .translate([centreX, centreY, 0]);
-//     };
-// }
+  return parts
+}
 
-// function toDegrees(rad) {
-//     return 180 / Math.PI * rad;
-// }
+function makePart(specification, height) {
+  var part
+  switch(specification.type) {
+    case "Circle":
+      part =  Utils.makeCylinder(specification.radius, height)
+  part = part.translate([specification.centreX, 
+                         specification.centreY, 
+                         specification.centreZ])
+
+      break;
+
+    case "Line":
+      part = makeRectangle(specification, height)
+      break
+  }
+  return part
+}
+
+function makeRectangle(specification, height) {
+  var angleInDegrees = toDegrees(specification.angleInRadians)
+  return CSG.cube({
+          center: [specification.centreX, specification.centreY, specification.centreZ],
+          radius: [specification.length / 2, specification.width, 1]
+    }).rotateZ(angleInDegrees)
+}
+
+function toDegrees(rad) {
+    return 180 / Math.PI * rad;
+}
