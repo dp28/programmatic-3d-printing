@@ -5,6 +5,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var CircleSpecification = require('../interface/CircleSpecification.js').CircleSpecification
 
 module.exports.Circle = Circle
 
@@ -35,6 +36,16 @@ function Circle() {
 
 	this.getDiameter = function() {
 		return diameter
+	}
+
+	this.toSpecification = function() {
+		checkCanGenerateSpecification()
+		return new CircleSpecification(centre, radius)
+	}
+
+	var checkCanGenerateSpecification = function() {		
+		if (radius.isNotSet()) throw new Error("Radius not set")
+		if (centre.isNotFullyDefined()) throw new Error("Centre not fully defined")
 	}
 }
 

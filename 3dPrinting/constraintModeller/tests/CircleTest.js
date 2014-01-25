@@ -6,6 +6,8 @@
 var should = require('should')
 var Circle = require('../geometry/Circle.js').Circle
 var Point = require('../geometry/Point.js').Point
+var CircleSpecification = require('../interface/CircleSpecification.js').CircleSpecification
+var CircleSpecificationTest = require('../tests/CircleSpecificationTest.js')
 
 describe('Circle', function() {
 	var circle
@@ -59,6 +61,50 @@ describe('Circle', function() {
 
 		it('should be twice the radius', function() {
 			circle.getDiameter().getValue().should.equal(2 * radius)
+		})
+	})
+
+	describe('#toSpecification', function() {
+
+		function setRadiusAndCentre() {
+			circle.setRadius(10)
+			point = new Point()
+			point.fixAt(1, 2, 3)
+			circle.setCentre(point)
+		}
+
+		beforeEach(function() {
+			circle = new Circle() 
+		})
+		
+		it('should not be possible if the radius is not set', function() {
+			circle.toSpecification.should.throw("Radius not set")
+		})
+
+		it('should not be possible if the centre is not set even if the radius is',
+		   function() {
+			circle.setRadius(1)
+			circle.toSpecification.should.throw("Centre not fully defined")
+		})
+
+		it('should be possible if both the centre and radius are set', function() {
+			(function() {
+				setRadiusAndCentre()
+				circle.toSpecification()
+			}).should.not.throw()
+		})
+
+		describe('the returned CircleSpecification', function() {
+			var circleSpec
+
+			beforeEach(function() {
+				setRadiusAndCentre()
+				circleSpec = circle.toSpecification() 
+			})
+
+			it('should behave like a CircleSpecification', function() {
+				CircleSpecificationTest.testCircleSpecification(circleSpec, circle)
+			})			
 		})
 	})
 })
