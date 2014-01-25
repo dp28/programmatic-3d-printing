@@ -40,8 +40,6 @@ function Base() {
 	var checkCanGenerateSpecification = function(base) {
 		if (height.isNotSet()) 
 			throw new Error("Height not set")
-		if (base.getRadius().isNotSet())
-		 throw new Error("Radius not set")
 	}
 
 	this.toSpecification = function() {

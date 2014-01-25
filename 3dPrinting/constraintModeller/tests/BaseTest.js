@@ -29,11 +29,6 @@ describe('Base', function() {
 			base.getHeight().should.be.an.instanceof(ConstrainableValue)
 		})
 	})
-
-	function setHeightAndRadius() {
-		base.setHeight(2)
-		base.setRadius(10)
-	}
 	
 	describe('#toSpecification', function() {
 
@@ -41,27 +36,15 @@ describe('Base', function() {
 			base.toSpecification.should.throw("Height not set")
 		})
 
-		it('should not be possible if the bounding radius has not been set', 
-			 function() {
-			base.setHeight(10)
-			try {
-				base.toSpecification().should.throw('Radius not set')
-			}
-			catch(err) {
-				err.should.eql(new Error('Radius not set'))
-			}
-		})
-
-		it('should be possible if both the bounding radius and the height are '
-			 + 'set', function() {
+		it('should be possible if the the height is set', function() {
 			(function() {
-				setHeightAndRadius()
+				base.setHeight(10)
 				base.toSpecification()
 			}).should.not.throw()
  		})
 
 		it('should return a BaseSpecification Object', function() {
-			setHeightAndRadius()
+			base.setHeight(10)
 			base.toSpecification().should.be.an.instanceof(BaseSpecification)
 		})
 
@@ -69,7 +52,7 @@ describe('Base', function() {
 			var baseSpec
 
 			beforeEach(function() {
-				setHeightAndRadius()			
+				base.setHeight(10)
 				baseSpec = base.toSpecification()				
 			})
 
