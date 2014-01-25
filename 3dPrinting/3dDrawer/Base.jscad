@@ -25,24 +25,24 @@ function makePart(specification, height) {
   switch(specification.type) {
     case "Circle":
       part =  Utils.makeCylinder(specification.radius, height)
-  part = part.translate([specification.centreX, 
-                         specification.centreY, 
-                         specification.centreZ])
-
       break;
 
     case "Line":
-      part = makeRectangle(specification, height)
+      part =makeRectangle(specification, height)
       break
   }
+
+  part = part.translate([specification.centreX, 
+                         specification.centreY, 
+                         specification.centreZ])
   return part
 }
 
 function makeRectangle(specification, height) {
   var angleInDegrees = toDegrees(specification.angleInRadians)
   return CSG.cube({
-          center: [specification.centreX, specification.centreY, specification.centreZ],
-          radius: [specification.length / 2, specification.width, 1]
+          center: [0, 0, 0],
+          radius: [specification.length / 2, specification.width, height / 2]
     }).rotateZ(angleInDegrees)
 }
 
