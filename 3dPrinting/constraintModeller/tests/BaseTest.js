@@ -29,6 +29,12 @@ describe('Base', function() {
 			base.getHeight().should.be.an.instanceof(ConstrainableValue)
 		})
 	})
+
+	describe('#getParts', function() {
+		it('should return an empty array', function() {
+			base.getParts().should.eql([])
+		})
+	})
 	
 	describe('#toSpecification', function() {
 

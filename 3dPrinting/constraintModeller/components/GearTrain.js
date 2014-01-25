@@ -9,7 +9,9 @@ var ConstrainableValue = require('../constraints/ConstrainableValue.js').Constra
 var Gear = require('../components/Gear.js').Gear
 var Base = require('../components/Base.js').Base
 var Utilities = require('../Utilities.js')
-var util = require('util')
+var Circle = require('../geometry/Circle.js').Circle
+var Line = require('../geometry/Line.js').Line
+var Point = require('../geometry/Point.js').Point
 
 module.exports.GearTrain = GearTrain
 
@@ -32,6 +34,10 @@ function GearTrain(circPitch) {
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
 	var generateBaseOnWrite = true
+
+	// The additional radius of a Gear's space on the base in addition to the 
+	// Gear's centre hole radius.
+	const GEAR_LIP = 3
 
 	// From http://www.cage-gear.com/spur_gear_calculations.htm
 	this.getAddendum = function() {
@@ -154,7 +160,57 @@ function GearTrain(circPitch) {
 		var base = new Base()
 		base.getCentre().setAt(0, 0, 0)
 		base.setHeight(1)
-		base.setRadius(100)
+		addSupportingCirclesToBase(base)
+		addSupportingLinesToBase(base)
 		return base
+	}
+
+	var addSupportingCirclesToBase = function(base) {		
+		for (var i = gears.length - 1; i >= 0; i--) {
+			var baseCentreZ = calculateBaseCentreZ(base, gears[i])
+			var circle = new Circle() 
+			circle.setRadius(gears[i].getCentreHoleRadius().getValue() + GEAR_LIP)
+			var point = new Point()
+			point.setAt(gears[i].getCentre().getX().getValue(),
+				          gears[i].getCentre().getY().getValue(),
+				          baseCentreZ)
+			circle.setCentre(point)
+			base.addPart(circle)
+		};
+	}
+
+	var calculateBaseCentreZ = function(base, gear) {
+		var gearCentreZ = gear.getCentre().getZ().getValue()
+		var gearThickness = gear.getThickness().getValue()
+		var baseHeight = base.getHeight().getValue()
+		return gearCentreZ - (gearThickness / 2) - (baseHeight / 2)
+	}
+
+	var addSupportingLinesToBase = function(base) {
+		for (var i = 0; i < gears.length; i++) {
+			for (var j = 0; j < gears.length && j != i; j++) {
+				if (gears[i].isMeshingWith(gears[j]))
+					addSupportingLineBetween(base, gears[i], gears[j])
+			}
+		}
+	}
+
+	var addSupportingLineBetween = function(base, startGear, endGear) {
+		var baseCentreZ = calculateBaseCentreZ(base, startGear)		
+		var startPoint = makePointBelow(startGear, baseCentreZ)
+		var endPoint = makePointBelow(endGear, baseCentreZ)
+		var line = new Line(startPoint, endPoint)
+		line.setWidth(GEAR_LIP)
+		base.addPart(line)
+	}
+
+	var makePointBelow = function(gear, baseCentreZ) {
+		var point = new Point()
+		var gearCentre = gear.getCentre()
+		var x = gearCentre.getX().getValue()
+		var y = gearCentre.getY().getValue()
+		var z = baseCentreZ
+		point.setAt(x, y, z)
+		return point
 	}
 }

@@ -5,6 +5,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var LineSpecification = require('../interface/LineSpecification.js').LineSpecification
 
 module.exports.Line = Line
 
@@ -16,10 +17,28 @@ function Line(point1, point2) {
 	var xDifference = end.getX().getValue() - start.getX().getValue()
 	var yDifference = end.getY().getValue() - start.getY().getValue()
 	var centre = new Point()
+	const DEFAULT_WIDTH = 1
+	var width = DEFAULT_WIDTH
 	centre.setAt(xDifference / 2, yDifference / 2, 0)
 
 	this.getCentre = function() {
 		return centre
+	}
+
+	this.getStart = function() {
+		return start
+	}
+
+	this.getEnd = function() {
+		return end
+	}
+
+	this.getWidth = function() {
+		return width
+	}
+
+	this.setWidth = function(w) {
+		width = w
 	}
 
 	this.getLength = function() {
@@ -28,5 +47,12 @@ function Line(point1, point2) {
 
 	this.getAngleInRadians = function() {
 		return Math.atan2(yDifference, xDifference)
+	}
+
+	this.toSpecification = function() {
+		return new LineSpecification(centre, 
+			                           this.getLength(), 
+			                           this.getAngleInRadians(),
+			                           width)
 	}
 }

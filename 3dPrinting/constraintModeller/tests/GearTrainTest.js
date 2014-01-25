@@ -3,9 +3,11 @@
  *
  * Tests GearTrains which contain a collection of Gears
  */
+ var util = require('util')
 var should = require('should')
 var Component = require('../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
+var Base = require('../components/Base.js').Base 
 var GearTrain = require('../components/GearTrain.js').GearTrain
 var ComponentTest = require('../tests/ComponentTest.js')
 var GearTest = require('../tests/GearTest.js')
@@ -87,6 +89,89 @@ describe('GearTrain', function() {
 	describe('#shouldGenerateBaseOnWrite', function() {
 		it('should have a default value of true', function() {
 			train.shouldGenerateBaseOnWrite().should.be.true
+		})
+	})
+
+	describe('#generateBase', function() {
+		it('should return a Base', function() {
+			train.generateBase().should.be.an.instanceof(Base)
+		})
+
+		describe('the generated Base', function() {
+			var base, firstGear, secondGear, thirdGear
+
+			beforeEach(function() {	
+				train = new GearTrain(10)
+				firstGear = train.createGear(10)
+				secondGear = train.createGear(20)
+				thirdGear = train.createGear(5)
+				firstGear.meshAtFrontOf(secondGear)
+				thirdGear.meshAtBackOf(secondGear)
+				secondGear.getCentre().setAt(0, 0, 0)
+				base = train.generateBase() 
+			})
+
+			function containsSupportingCirlce(base, gear) {
+				var parts = base.getCircles()
+				for (var i = parts.length - 1; i >= 0; i--) {
+					if (gearSupportedByPointOnBase(gear, parts[i].getCentre(), base))
+						return true 
+				}
+
+				return false
+			}
+
+			function gearSupportedByPointOnBase(gear, pointOnBase, base) {
+				return gearDirectlyAboveOrBelowPoint(gear, pointOnBase) 
+				       && isSupporting(gear, pointOnBase, base)
+			}
+
+			function gearDirectlyAboveOrBelowPoint(gear, point) {
+				var gearX = gear.getCentre().getX().getValue()
+				var gearY = gear.getCentre().getY().getValue()
+				var pointX = point.getX().getValue()
+				var pointY = point.getY().getValue() 
+				return pointX == gearX && pointY == gearY
+			}
+
+			function isSupporting(gear, pointOnBase, base) {
+				var baseHeight = base.getHeight().getValue()
+				var gearZ = gear.getCentre().getZ().getValue()
+				var gearThickness = gear.getThickness().getValue()
+				var pointZ = pointOnBase.getZ().getValue()
+				return pointZ == gearZ - gearThickness / 2 - baseHeight / 2 
+			}
+
+			function containsSupportingLineBetween(base, startGear, endGear) {
+				var lines = base.getLines()
+				for (var i = lines.length - 1; i >= 0; i--) {
+					if (isSupportingLineFor(lines[i], startGear, endGear, base))
+						return true
+				};
+
+				return false
+			}
+
+			function isSupportingLineFor(line, startGear, endGear, base) {
+				return (gearSupportedByPointOnBase(startGear, line.getStart(), base) 
+				       && gearSupportedByPointOnBase(endGear, line.getEnd(), base))
+				       ||  (gearSupportedByPointOnBase(endGear, line.getStart(), base) 
+				           && gearSupportedByPointOnBase(startGear, line.getEnd(), base))
+			}
+
+
+			it('should contain a Circle for each Gear', function() {
+				base.getCircles().length.should.equal(3)
+				containsSupportingCirlce(base, firstGear).should.be.true
+				containsSupportingCirlce(base, secondGear).should.be.true
+				containsSupportingCirlce(base, thirdGear).should.be.true
+			})
+
+			it('should contain a Line between each meshing Gear', function() {
+				containsSupportingLineBetween(base, firstGear, secondGear).should.be.true
+				containsSupportingLineBetween(base, thirdGear, secondGear).should.be.true
+			})
+			
 		})
 	})
 

@@ -5,6 +5,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var Line = require('../geometry/Line.js').Line
+var LineSpecificationTest = require('../tests/LineSpecificationTest.js')
 
 describe('Line', function() {
 	var line, firstPoint, secondPoint
@@ -52,21 +53,41 @@ describe('Line', function() {
 				 + 'Points', function() {
 				centre.getY().getValue().should.equal(yDifference / 2)
 			})
-		})
+		})		
+	})
 
-		describe('#getLength', function() {
-			it('should be the hypotenuse of the triangle defined by the x and y '
-				  + 'differences between the Points', function() {
-				var length = 5 // Pythagorean triple
-				line.getLength().should.equal(length)
-			})
+	describe('#getWidth', function() {
+		it('should have a default value of 1', function() {
+			line.getWidth().should.equal(1)
 		})
+	})
 
-		describe('#getAngleInRadians', function() {
-			it('should return the angle this line makes with the x axis', function() {
-				var angle = Math.atan2(3, 4)
-				line.getAngleInRadians().should.be.approximately(angle, 0.001)
+	describe('#getLength', function() {
+		it('should be the hypotenuse of the triangle defined by the x and y '
+			  + 'differences between the Points', function() {
+			var length = 5 // Pythagorean triple
+			line.getLength().should.equal(length)
+		})
+	})
+
+	describe('#getAngleInRadians', function() {
+		it('should return the angle this line makes with the x axis', function() {
+			var angle = Math.atan2(3, 4)
+			line.getAngleInRadians().should.be.approximately(angle, 0.001)
+		})
+	})
+
+	describe('#toSpecification', function() {
+		describe('the returned LineSpecification', function() {
+			var lineSpec
+
+			beforeEach(function() {
+				lineSpec = line.toSpecification() 
 			})
+
+			it('should behave like a LineSpecification', function() {
+				LineSpecificationTest.testLineSpecification(lineSpec, line)
+			})			
 		})
 	})
 })
