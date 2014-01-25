@@ -67,8 +67,6 @@ function Base() {
 
 	this.toSpecification = function() {
 		checkCanGenerateSpecification(this)
-		return new BaseSpecification(height.getValue(),
-		                             this.getRadius().getValue(),
-		                             parts)
+		return new BaseSpecification(height.getValue(), parts)
 	}
 }

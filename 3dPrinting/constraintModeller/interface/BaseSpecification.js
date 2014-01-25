@@ -6,9 +6,8 @@
  */
 module.exports.BaseSpecification = BaseSpecification
 
-function BaseSpecification(h, r, p) {
+function BaseSpecification(h, p) {
 	this.height = h
-	this.radius = r
 	this.parts = makePartSpecifications(p)
 }
 
