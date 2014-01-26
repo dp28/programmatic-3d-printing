@@ -25,6 +25,7 @@ module.exports.Gear = Gear
 Utilities.inheritPrototype(Gear, Component)
 
 function Gear() {
+	var id = null
 	Component.call(this) 
 	var pitchCircleRadius = new ConstrainableValue()
 	var numTeeth = new ConstrainableValue()
@@ -36,6 +37,15 @@ function Gear() {
 	thickness.setValue(DEFAULT_THICKNESS)
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
+	var meshingGears = []
+
+	this.setID = function(newID) {
+		id = newID
+	}
+
+	this.getID = function() {
+		return id
+	}
 
 	this.getNumberOfTeeth = function() {
 		return numTeeth
@@ -80,6 +90,14 @@ function Gear() {
 		return calculateCircularPitch()
 	}
 
+	this.getMeshingGears = function() {
+		return meshingGears
+	}
+
+	this.addMeshingGear = function(gear) {
+		meshingGears.push(gear)
+	}
+
 	var checkIfCanCalculateCircularPitch = function() {		
 		if (!numTeeth.isSet()) throw new Error("Number of teeth not set")
 		if (!pitchCircleRadius.isSet())	throw new Error("Pitch radius not set")
@@ -92,12 +110,14 @@ function Gear() {
 	this.toSpecification = function() {
 		checkIfCanCalculateCircularPitch()
 		var circularPitch = calculateCircularPitch()
-		return new GearSpecification(numTeeth.getValue(),
+		return new GearSpecification(id,
+																 numTeeth.getValue(),
 		                             circularPitch, 
 			                           pressureAngle.getValue(),
 			                           clearance.getValue(),
 			                           thickness.getValue(),
-			                           centreHoleRadius.getValue())
+			                           centreHoleRadius.getValue(),
+			                           meshingGears)
 	}
 
 	this.getTypeName = function() {
@@ -143,6 +163,8 @@ function Gear() {
 		var otherGearCentre = otherGear.getCentre()
 		centre.offsetOnAxis(otherGearCentre, axis, offset)
 		centre.samePointOnAxes(otherGearCentre, axes)
+		meshingGears.push(otherGear)
+		otherGear.addMeshingGear(this)
 	}
 
 	var calculateOffsetForGearsToMesh = function(otherGear, negativeOffset) {
@@ -169,7 +191,8 @@ function Gear() {
 	}
 
 	this.toString = function() {
-		var string = 'Gear {\n\tNumber of teeth: ' + numTeeth.getValue() + '\n\t'
+		var string = 'Gear {\n\tID: ' + id + '\n\t' 
+		string += 'Number of teeth: ' + numTeeth.getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 
 		string += this.getBoundingCircle().getRadius().getValue() + '\n\t'

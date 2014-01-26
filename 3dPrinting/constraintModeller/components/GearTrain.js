@@ -35,6 +35,7 @@ function GearTrain(circPitch) {
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
 	var generateBaseOnWrite = true
+	var nextGearID = 1
 
 	// The additional radius of a Gear's space on the base in addition to the 
 	// Gear's centre hole radius.
@@ -50,6 +51,7 @@ function GearTrain(circPitch) {
 		this.changeGearToHaveSameCircularPitch(gear)
 		this.checkIfGearIsValid(gear)
 		gears.push(gear)
+		gear.setID(nextGearID++)
 	} 
 
 	var checkIfGearCanBeAdded = function(gear) {

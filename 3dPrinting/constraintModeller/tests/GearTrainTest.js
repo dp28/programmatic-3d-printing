@@ -247,7 +247,7 @@ describe('GearTrain', function() {
 			it('should set the pitch circle radius of the Gear to the value '
 				 + 'corresponding to the circular pitch of the GearTrain', function() {
 				gear.getPitchCircleRadius().getValue().should.be.approximately(pitchCircleRadius, 0.001)
-			})			
+			})
 		})
 
 		describe('Adding a Gear with its pitch circle radius set but its number of '
@@ -309,6 +309,31 @@ describe('GearTrain', function() {
 					train.addGear(otherGear)
 				}
 				).should.throw(error)
+			})
+		})
+
+		describe('successfully adding a Gear', function() {	
+			beforeEach(function() {
+				gear.setPitchCircleRadius(pitchCircleRadius)
+				train.addGear(gear)
+			})			
+
+			it('should give the Gear an id', function() {
+				gear.getID().should.not.equal(null)
+			})		
+
+			describe('then adding another Gear', function() {
+				var secondGear
+
+				beforeEach(function() {
+					secondGear = new Gear()
+					secondGear.setPitchCircleRadius(pitchCircleRadius)
+					train.addGear(secondGear)
+				})
+				
+				it('should give the second Gear a different id', function() {
+					secondGear.getID().should.not.equal(gear.getID())
+				})
 			})
 		})
 	})

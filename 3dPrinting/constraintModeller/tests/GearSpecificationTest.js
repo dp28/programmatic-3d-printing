@@ -6,6 +6,7 @@
  */
 var should = require('should')
 var Point = require('../geometry/Point.js').Point
+var Gear = require('../components/Gear.js').Gear
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var GearTest = require('../tests/GearTest.js')
 
@@ -16,6 +17,12 @@ function testGearSpecification(gearSpec, gear) {
 		describe('#numTeeth', function() {
 			it('should have the correct value', function() {
 				gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())
+			})
+		})
+
+		describe('#ID', function() {
+			it('should have the correct ID', function() {
+				should.equal(gearSpec.ID, gear.getID())
 			})
 		})
 
@@ -46,6 +53,16 @@ function testGearSpecification(gearSpec, gear) {
 		describe('#centreHoleRadius', function() {
 			it('should have the correct value', function() {
 				gearSpec.centreHoleRadius.should.equal(gear.getCentreHoleRadius().getValue())
+			})
+		})
+
+		describe('#meshingGears', function() {
+			it('should contain the IDs of all the Gears the Gear that created it is '
+				 + 'meshing with', function() {
+				var meshingGears = gear.getMeshingGears()
+				for (var i = meshingGears.length - 1; i >= 0; i--) {
+					gearSpec.meshingGears.should.contain(meshingGears[i].getID())
+				};
 			})
 		})
 	})

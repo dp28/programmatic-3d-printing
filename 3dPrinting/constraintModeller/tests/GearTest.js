@@ -43,6 +43,12 @@ describe('Gear', function() {
 		ComponentTest.shouldBehaveLikeComponent(gear)
 	})
 
+	describe('#getID', function() {
+		it('should have a default of null', function() {
+			should.equal(gear.getID(), null)
+		})
+	})
+
 	describe('#getTypeName', function() {
 		it('should return "Gear"', function() {
 			gear.getTypeName().should.equal("Gear")
@@ -184,6 +190,25 @@ describe('Gear', function() {
 				GearSpecificationTest.testGearSpecification(gearSpec, gear)
 			})
 		})
+
+		describe('when the Gear is meshing with another Gear', function() {
+			describe('the returned GearSpecification', function() {
+				var gearSpec
+
+				beforeEach(function() {
+					setExampleNumTeethAndPitchRadius()
+					var anotherGear = new Gear() 
+					anotherGear.setID(1)
+					gear.meshOnRightOf(anotherGear)
+					gearSpec = gear.toSpecification()
+				})
+				
+				it('should behave like a GearSpecification created by the Gear',
+				   function() {
+					GearSpecificationTest.testGearSpecification(gearSpec, gear)
+				})
+			})
+		})
 	})
 
 	describe('#generateSpindle', function() {
@@ -295,6 +320,20 @@ describe('Gear', function() {
 					offset = -offset
 				gearCoordinate.should.equal(otherGearCoordinate + offset)
 			})
+
+			describe('#getMeshingGears', function() {
+				it('should return an array containing the second Gear', function() {
+					gear.getMeshingGears().should.contain(otherGear)
+				})
+			})
+		})
+
+		describe('the second Gear', function() {
+			describe('#getMeshingGears', function() {
+				it('should return an array containing the second Gear', function() {
+					otherGear.getMeshingGears().should.contain(gear)
+				})
+			})
 		})
 	}
 
@@ -360,6 +399,7 @@ describe('Gear', function() {
 	})
 
 	describe('#toString', function() {
+		var id = 1
 		var numTeeth = 10
 		var pitchCircleRadius = 15
 		var boundRadius = 18
@@ -372,6 +412,7 @@ describe('Gear', function() {
 																					centreX,
 																					centreY,
 																					centreZ)
+			gear.setID(id)
 			gear.getBoundingCircle().setRadius(boundRadius)
 		})
 
@@ -384,6 +425,10 @@ describe('Gear', function() {
 
 			beforeEach(function() {
 				string = gear.toString() 
+			})
+
+			it('should contain the id', function() {
+				string.should.contain('ID: ' + id)
 			})
 			
 			it('should contain the number of teeth', function() {
