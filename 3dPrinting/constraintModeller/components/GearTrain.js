@@ -4,6 +4,7 @@
  * A collection of Gears that are standardised so that they can interact 
  * properly
  */
+var util = require('util')
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
@@ -45,12 +46,13 @@ function GearTrain(circPitch) {
 	}
 
 	this.addGear = function(gear) {
-		this.checkIfGearCanBeAdded(gear)
+		checkIfGearCanBeAdded(gear)
 		this.changeGearToHaveSameCircularPitch(gear)
+		this.checkIfGearIsValid(gear)
 		gears.push(gear)
 	} 
 
-	this.checkIfGearCanBeAdded = function(gear) {
+	var checkIfGearCanBeAdded = function(gear) {
 		checkPressureAngle(gear)
 		checkHasNumberOfTeethOrPitchCircleRadius(gear)
 		checkCircularPitchMatches(gear)
@@ -78,6 +80,17 @@ function GearTrain(circPitch) {
 			return
 		}
 		throw new Error("Circular pitch of Gear does not match GearTrain")
+	}
+
+	this.checkIfGearIsValid = function(gear) {
+		if(this.calculateGearRootRadius(gear) <= gear.getCentreHoleRadius().getValue())
+			throw new Error("Invalid Gear - Centre hole radius bigger than root "
+				            + "circle radius:\n" + gear.toString())
+	}
+
+	this.calculateGearRootRadius = function(gear, gearTrain) {
+		return gear.getPitchCircleRadius().getValue() - this.getAddendum() 
+		       - gear.getClearance().getValue()
 	}
 
 	this.changeGearToHaveSameCircularPitch = function(gear) {

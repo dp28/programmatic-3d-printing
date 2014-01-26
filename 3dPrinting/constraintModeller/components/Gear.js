@@ -53,10 +53,12 @@ function Gear() {
 		pitchCircleRadius.setValue(r)
 	}
 
+	// In degrees
 	this.getPressureAngle = function() {
 		return pressureAngle 
 	}
 
+	// In degrees
 	this.setPressureAngle = function(value) {
 		pressureAngle.setValue(value)
 	}
@@ -72,7 +74,6 @@ function Gear() {
 	this.getCentreHoleRadius = function() {
 		return centreHoleRadius
 	}
-
 
 	this.getCircularPitch = function() {
 		checkIfCanCalculateCircularPitch()

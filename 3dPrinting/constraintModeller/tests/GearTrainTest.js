@@ -105,7 +105,7 @@ describe('GearTrain', function() {
 				train = new GearTrain(10)
 				firstGear = train.createGear(10)
 				secondGear = train.createGear(20)
-				thirdGear = train.createGear(5)
+				thirdGear = train.createGear(8)
 				firstGear.meshAtFrontOf(secondGear)
 				thirdGear.meshAtBackOf(secondGear)
 				secondGear.getCentre().setAt(0, 0, 0)
@@ -202,6 +202,26 @@ describe('GearTrain', function() {
 		beforeEach(function() {
 			gear = new Gear()
 			train = new GearTrain(circularPitch)
+		})
+
+		describe('Adding a Gear with a centre hole radius bigger than it\'s root '
+			       + 'circle radius', function() {
+			beforeEach(function() {
+				// root circle radius must be less than pitch circle radius - clearance
+				gear.setPitchCircleRadius(2) 
+				gear.getCentreHoleRadius().setValue(2) 
+			})
+			
+			it('should not be possible', function() {
+				var error = "Invalid Gear - Centre hole radius bigger than root circle"
+				            + " radius"
+				try {
+					train.addGear(gear).should.throw(error)
+				}
+				catch(err) {
+					err.message.should.contain(error)
+				}
+			})
 		})
 
 		describe('Adding a Gear with neither its number of teeth or pitch circle '
