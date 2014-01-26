@@ -2,29 +2,29 @@ include("Utils.jscad");
 
 Base = function() {};
 
-Base.makeBase = function(specification) {
-  var parts = makeParts(specification)
+Base.makeBase = function(specification, params) {
+  var parts = makeParts(specification, params)
   var base = union(parts)
   base = base.setColor(0.4, 0.4, 0.4);
   return base;
 };
 
-function makeParts(specification) { 
+function makeParts(specification, params) { 
   var parts = [] 
   var height = specification.height
   var partSpecs = specification.parts
   for (var i = partSpecs.length - 1; i >= 0; i--) {
-    parts.push(makePart(partSpecs[i], height))
+    parts.push(makePart(partSpecs[i], height, params))
   };
 
   return parts
 }
 
-function makePart(specification, height) {
+function makePart(specification, height, params) {
   var part
   switch(specification.type) {
     case "Circle":
-      part =  Utils.makeCylinder(specification.radius, height)
+      part =  Utils.makeCylinder(specification.radius, height, params.circleRes)
       break;
 
     case "Line":

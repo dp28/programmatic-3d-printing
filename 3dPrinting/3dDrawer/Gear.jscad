@@ -25,7 +25,7 @@
 Gear = function() {
 };
 
-Gear.involuteGear = function (numTeeth, circularPitch, pressureAngle, clearance, thickness)
+Gear.involuteGear = function (numTeeth, circularPitch, pressureAngle, clearance, thickness, resolution)
 {
   // default values:
   if(arguments.length < 3) pressureAngle = 20;
@@ -50,7 +50,6 @@ Gear.involuteGear = function (numTeeth, circularPitch, pressureAngle, clearance,
   var angularToothWidthAtBase = Math.PI / numTeeth + 2*diffangle;
 
   // build a single 2d tooth in the 'points' array:
-  var resolution = 5;
   var points = [new CSG.Vector2D(0,0)];
   for(var i = 0; i <= resolution; i++)
   {
