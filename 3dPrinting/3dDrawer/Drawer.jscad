@@ -7,14 +7,38 @@ Drawer = function() {};
 
 Drawer.drawComponents = function(params) {
 	checkParamsAreValid(params);
+	var componentSpecs = Specification.components
+	componentSpecs = filterByShowParameter(params.show, componentSpecs)
 	var components = [] 
 	var component
-	for (var i = 0; i < Specification.components.length; i++) {
-		component = makeComponent(Specification.components[i], params)
+	for (var i = 0; i < componentSpecs.length; i++) {
+		component = makeComponent(componentSpecs[i], params)
 		components.push(component)
 	}
   return components;   
 };
+
+function filterByShowParameter(show, componentSpecs) {
+	switch(show) {
+		case "All":
+			return componentSpecs
+
+		case "Gears only":
+			return componentSpecs.filter(function(element) {
+				return element.type == "Gear"
+			})
+
+		case "Base only":
+			return componentSpecs.filter(function(element) {
+				return element.type != "Gear"
+			})
+
+		default:
+			return componentSpecs.filter(function(element) {
+				return element.type == "Gear" && element.id == show
+			})
+	}
+}
 
 function checkParamsAreValid(params) {
 	if (params.printerMinRes < 0) throw "Printer resolution must be positive"
