@@ -5,11 +5,13 @@
  * understandable by the 3D Drawer.
  */
 var fs = require('fs')
+var util = require('util')
 var console = require('console')
 var util = require('util')
 var GearTrain = require('../components/GearTrain.js').GearTrain
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
+var MainFileWriter = require('../interface/MainFileWriter.js').MainFileWriter
 
 module.exports.SpecificationWriter = SpecificationWriter
 
@@ -31,9 +33,13 @@ const COMPONENT_PREFIX = 'Specification.components = '
 //OpenJSCAD
 const COMPONENT_SUFFIX = ';'
 
+const DEFAULT_SELECTION_VALUES = ['"All"', '"Gears only"', '"Base only"']
+
 function SpecificationWriter() {
 	var specifications = []
 	var composer = new SpecificationComposer()
+	var mainFileWriter = new MainFileWriter()
+	var components = []
  
 	this.getSpecifications = function() {
 		return specifications
@@ -42,8 +48,10 @@ function SpecificationWriter() {
 	this.addComponent = function(component) {
 		if (component instanceof GearTrain) 
 			this.addGearTrain(component)
-		else
+		else {
 			specifications.push(composer.makeSpecification(component))
+			components.push(component)
+		}
 	}
 
 	this.addGearTrain = function(train) {
@@ -59,6 +67,12 @@ function SpecificationWriter() {
 	}
 
 	this.writeSpecificationToFile = function() {
+		generateSpecificationFile()
+		var dynamicParameter = createComponentSelectionParameter()
+		mainFileWriter.generateMainFile(dynamicParameter)
+	}
+
+	var generateSpecificationFile = function() {		
 		var string = COMMENT_HEADER + LIBRARY_HEADER + COMPONENT_PREFIX
 		string += JSON.stringify(specifications, null, 2)
 		string += COMPONENT_SUFFIX
@@ -81,5 +95,39 @@ function SpecificationWriter() {
 
 		string = string.substring (0, string.length - 2) // remove trailing ,\n
 		return string
+	}
+
+	var createComponentSelectionParameter = function() {
+		var values = makeComponentSelectionValues()
+		var captions = makeCaptionsFrom(values)
+		var definition = '\t,\n'
+										+ '\t{\n'
+											+ '\t\tname: "show",\n'
+											+ '\t\ttype: "choice",\n'
+											+ '\t\tvalues: [' + values + '],\n'
+											+ '\t\tcaptions: [' + captions + '],\n'
+											+ '\t\tcaption: "Show: ",\n'
+											+ '\t\tinitial: "All"\n'
+										+ '\t}\n'
+		return definition
+	}
+
+	var makeComponentSelectionValues = function() {
+		var values = DEFAULT_SELECTION_VALUES.slice()
+		for (var i = components.length - 1; i >= 0; i--) {
+			if (components[i].getTypeName() == "Gear" && components[i].getID() != null) 
+				values.push(components[i].getID())
+		};
+		return values
+	}
+
+	var makeCaptionsFrom = function(values) {
+		var captions = DEFAULT_SELECTION_VALUES.slice()
+
+		// Skip default values, include captions for rest
+		for (var i = 3; i < values.length; i++) {
+			captions.push('"Just Gear ID #' + values[i] + '"')
+		};
+		return captions
 	}
 }
