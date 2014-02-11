@@ -3,13 +3,13 @@ include("Utils.jscad");
 
 Gear = function() {};
 
-Gear.makeGear = function(specification, params) {
+Gear.make = function(specification, params) {
   var gear = InvoluteGear.involuteGear(specification.numTeeth,
-                               specification.circularPitch,
-                               specification.pressureAngle,
-                               specification.clearance,
-                               specification.thickness,
-                               params.circleRes / 2); 
+                                       specification.circularPitch,
+                                       specification.pressureAngle,
+                                       specification.clearance,
+                                       specification.thickness,
+                                       params.circleRes / 2); 
     
   gear = removeCentreHole(gear, specification, params)
   gear = addID(gear, specification, params)

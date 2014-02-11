@@ -44,22 +44,9 @@ function checkParamsAreValid(params) {
 	if (params.printerMinRes < 0) throw "Printer resolution must be positive"
 };
 
-function makeComponent(componentSpec, params) {
-	var component 
-	switch(componentSpec.type) {
-		case "Gear":
-			component = Gear.makeGear(componentSpec, params)
-			break
-			
-		case "Spindle":
-			component = Spindle.makeSpindle(componentSpec, params)
-			break
-
-		case "Base":
-			component = Base.makeBase(componentSpec, params)
-			break
-	}
-
+function makeComponent(componentSpec, params) { 
+	// Allows the component to be specified by its type
+	var component = eval(componentSpec.type + '.make(componentSpec, params);');
   component = component.translate([componentSpec.centreX,
   																 componentSpec.centreY,
   																 componentSpec.centreZ]);  
