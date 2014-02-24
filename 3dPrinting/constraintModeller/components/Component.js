@@ -10,42 +10,40 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 module.exports.Component = Component
 
 function Component() {
-	this.boundingCircle = new Circle()
-}
 
-Component.prototype = {
+	return {
+		boundingCircle: new Circle(),
 
-	constructor: Component,
+		getBoundingCircle: function() {
+			return this.boundingCircle
+		},
 
-	getBoundingCircle: function() {
-		return this.boundingCircle
-	},
+		getCentre: function() {
+			return this.boundingCircle.getCentre()
+		},
 
-	getCentre: function() {
-		return this.boundingCircle.getCentre()
-	},
+		setCentre: function(c) {
+			this.boundingCircle.setCentre(c)
+		},
 
-	setCentre: function(c) {
-		this.boundingCircle.setCentre(c)
-	},
+		checkCentreFullyDefined: function() {
+			if (this.getCentre().isNotFullyDefined()) 
+				throw "Point not fully defined"
+		},
 
-	checkCentreFullyDefined: function() {
-		if (this.getCentre().isNotFullyDefined()) 
-			throw "Point not fully defined"
-	},
+		toComponentSpecification: function() {
+			this.checkCentreFullyDefined()
+			return new ComponentSpecification(this.getCentre(), this.getTypeName())
+		},
 
-	toComponentSpecification: function() {
-		this.checkCentreFullyDefined()
-		return new ComponentSpecification(this.getCentre(), this.getTypeName())
-	},
+		// Should be overriden by any subclass that needs more for its Specification
+		toSpecification: function() {
+			return null
+		},
 
-	// Should be overriden by any subclass that needs more for its Specification
-	toSpecification: function() {
-		return null
-	},
-
-	// Should be overriden by all subclassed to give their name
-	getTypeName: function() {
-		return "Component"
+		// Should be overriden by all subclassed to give their name
+		getTypeName: function() {
+			return "Component"
+		}
 	}
 }

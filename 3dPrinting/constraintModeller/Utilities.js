@@ -3,18 +3,8 @@
  *
  * Contains utility functions used in multiple places
  */
-
-module.exports.inheritPrototype = inheritPrototype
 module.exports.approximatelyEqual = approximatelyEqual
 
-// From http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/
-//
-// Allows use of Parasitic Combination Inheritance pattern
-function inheritPrototype(childObject, parentObject) {
-  var copyOfParent = Object.create(parentObject.prototype);
-  copyOfParent.constructor = childObject;
-  childObject.prototype = copyOfParent;
-}
 // From http://www.mattsnider.com/approximately-and-essentially-equal/
 //
 // Allows comparison of floats taking rounding errors into account

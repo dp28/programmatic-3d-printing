@@ -12,7 +12,7 @@ function Shape() {
 	var centre = new Point()
 
 	return {  
-		setCentre:function(point) {
+		setCentre: function(point) {
 			centre = new Point()
 			centre.getX().setValue(point.getX().getValue())
 			centre.getY().setValue(point.getY().getValue())

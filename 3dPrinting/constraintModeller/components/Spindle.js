@@ -10,36 +10,36 @@ var Utilities = require('../Utilities.js')
 
 module.exports.Spindle = Spindle
 
-Utilities.inheritPrototype(Spindle, Component)
-
 function Spindle() {
-	Component.call(this)
+	var spindle = Component()
 	var height = new ConstrainableValue()
 
-	this.getHeight = function() {
+	spindle.getHeight = function() {
 		return height
 	}
 
-	this.getTypeName = function() {
+	spindle.getTypeName = function() {
 		return "Spindle"
 	}
 
-	this.setHeight = function(h) {
+	spindle.setHeight = function(h) {
 		height.setValue(h)
 	}
 
-	this.getRadius = function() {
-		return this.getBoundingCircle().getRadius()
+	spindle.getRadius = function() {
+		return spindle.getBoundingCircle().getRadius()
 	}
 
-	this.setRadius = function(radius) {
-		this.getBoundingCircle().setRadius(radius)
+	spindle.setRadius = function(radius) {
+		spindle.getBoundingCircle().setRadius(radius)
 	}
 
-	this.toSpecification = function() {
+	spindle.toSpecification = function() {
 		if (height.isNotSet()) throw new Error("Height not set")
-		if (this.getRadius().isNotSet()) throw new Error("Radius not set")
+		if (spindle.getRadius().isNotSet()) throw new Error("Radius not set")
 		return new SpindleSpecification(height.getValue(), 
-			                              this.getRadius().getValue())
+			                              spindle.getRadius().getValue())
 	}
+
+	return spindle
 }

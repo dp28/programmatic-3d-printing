@@ -16,8 +16,6 @@ var Point = require('../geometry/Point.js').Point
 
 module.exports.GearTrain = GearTrain
 
-Utilities.inheritPrototype(GearTrain, Component)
-
 function checkIfCreationIsLegal(circPitch) {
 	if (circPitch == undefined) throw new Error("No circular pitch specified")
 	if (circPitch <= 0) throw new Error("Invalid circular pitch specified")
@@ -30,7 +28,7 @@ function checkIfCreationIsLegal(circPitch) {
  */ 
 function GearTrain(circPitch) {
 	checkIfCreationIsLegal(circPitch)
-	Component.call(this)
+	train = Component()
 	var gears = []
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
@@ -42,14 +40,18 @@ function GearTrain(circPitch) {
 	const GEAR_LIP = 3
 
 	// From http://www.cage-gear.com/spur_gear_calculations.htm
-	this.getAddendum = function() {
+	train.getAddendum = function() {
 		return circularPitch / Math.PI
 	}
 
-	this.addGear = function(gear) {
+	train.getTypeName = function() {
+		return "GearTrain"
+	}
+
+	train.addGear = function(gear) {
 		checkIfGearCanBeAdded(gear)
-		this.changeGearToHaveSameCircularPitch(gear)
-		this.checkIfGearIsValid(gear)
+		train.changeGearToHaveSameCircularPitch(gear)
+		train.checkIfGearIsValid(gear)
 		gears.push(gear)
 		gear.setID(nextGearID++)
 	} 
@@ -84,18 +86,18 @@ function GearTrain(circPitch) {
 		throw new Error("Circular pitch of Gear does not match GearTrain")
 	}
 
-	this.checkIfGearIsValid = function(gear) {
-		if(this.calculateGearRootRadius(gear) <= gear.getCentreHoleRadius().getValue())
+	train.checkIfGearIsValid = function(gear) {
+		if(train.calculateGearRootRadius(gear) <= gear.getCentreHoleRadius().getValue())
 			throw new Error("Invalid Gear - Centre hole radius bigger than root "
 				            + "circle radius:\n" + gear.toString())
 	}
 
-	this.calculateGearRootRadius = function(gear, gearTrain) {
-		return gear.getPitchCircleRadius().getValue() - this.getAddendum() 
+	train.calculateGearRootRadius = function(gear, gearTrain) {
+		return gear.getPitchCircleRadius().getValue() - train.getAddendum() 
 		       - gear.getClearance().getValue()
 	}
 
-	this.changeGearToHaveSameCircularPitch = function(gear) {
+	train.changeGearToHaveSameCircularPitch = function(gear) {
 		if (gear.getNumberOfTeeth().isNotSet()) {
 			var numTeeth = calculateNumberOfTeethFromPitchCircleRadius(gear)
 			gear.setNumberOfTeeth(numTeeth)
@@ -114,40 +116,40 @@ function GearTrain(circPitch) {
 		return circularPitch * gear.getNumberOfTeeth().getValue() / (2 * Math.PI)
 	}
 
-	this.getGears = function() {
+	train.getGears = function() {
 		return gears
 	}
 
-	this.getCircularPitch = function() {
+	train.getCircularPitch = function() {
 		return circularPitch
 	}
 
-	this.shouldGenerateSpindlesOnWrite = function() {
+	train.shouldGenerateSpindlesOnWrite = function() {
 		return generateSpindlesOnWrite
 	}
 
-	this.setGenerateSpindlesOnWrite = function(flag) {
+	train.setGenerateSpindlesOnWrite = function(flag) {
 		generateSpindlesOnWrite = flag
 	}
 
-	this.shouldGenerateBaseOnWrite = function() {
+	train.shouldGenerateBaseOnWrite = function() {
 		return generateBaseOnWrite
 	}
 
-	this.setGenerateBaseOnWrite = function(flag) {
+	train.setGenerateBaseOnWrite = function(flag) {
 		generateBaseOnWrite = flag
 	}
 
-	this.createGear = function(numTeeth) {
+	train.createGear = function(numTeeth) {
 		var gear = new Gear()
 		gear.setNumberOfTeeth(numTeeth)
-		this.addGear(gear)
-		var boundRadius = gear.getPitchCircleRadius().getValue() + this.getAddendum()
+		train.addGear(gear)
+		var boundRadius = gear.getPitchCircleRadius().getValue() + train.getAddendum()
 		gear.getBoundingCircle().setRadius(boundRadius)
 		return gear
 	}
 
-	this.onlyMeshingGearsTouching = function() {
+	train.onlyMeshingGearsTouching = function() {
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
 				if (gears[i].isTouching(gears[j]) && !gears[i].isMeshingWith(gears[j]))
@@ -157,7 +159,7 @@ function GearTrain(circPitch) {
 		return true
 	}
 
-	this.findNonMeshingTouchingGears = function() {
+	train.findNonMeshingTouchingGears = function() {
 		var overlapping = []
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
@@ -171,7 +173,7 @@ function GearTrain(circPitch) {
 		})
 	}
 
-	this.generateBase = function() {
+	train.generateBase = function() {
 		var base = new Base()
 		base.getCentre().setAt(0, 0, 0)
 		base.setHeight(1)
@@ -228,4 +230,6 @@ function GearTrain(circPitch) {
 		point.setAt(x, y, z)
 		return point
 	}
+
+	return train
 }

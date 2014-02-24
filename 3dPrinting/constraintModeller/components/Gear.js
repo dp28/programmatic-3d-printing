@@ -22,11 +22,9 @@ const DEFAULT_CENTRE_HOLE_RADIUS = 4
 
 module.exports.Gear = Gear
 
-Utilities.inheritPrototype(Gear, MeshableComponent)
-
 function Gear() {
 	var id = null
-	MeshableComponent.call(this) 
+	var gear = MeshableComponent() 
 	var pitchCircleRadius = new ConstrainableValue()
 	var numTeeth = new ConstrainableValue()
 	var pressureAngle = new ConstrainableValue()
@@ -39,62 +37,62 @@ function Gear() {
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
 	var meshingGears = []
 
-	this.setID = function(newID) {
+	gear.setID = function(newID) {
 		id = newID
 	}
 
-	this.getID = function() {
+	gear.getID = function() {
 		return id
 	}
 
-	this.getNumberOfTeeth = function() {
+	gear.getNumberOfTeeth = function() {
 		return numTeeth
 	}
 
-	this.setNumberOfTeeth = function(num) {
+	gear.setNumberOfTeeth = function(num) {
 		numTeeth.setValue(num)
 	}
 
-	this.getPitchCircleRadius = function() {
+	gear.getPitchCircleRadius = function() {
 		return pitchCircleRadius
 	}
 
-	this.setPitchCircleRadius = function(r) {
+	gear.setPitchCircleRadius = function(r) {
 		pitchCircleRadius.setValue(r)
 	}
 
 	// In degrees
-	this.getPressureAngle = function() {
+	gear.getPressureAngle = function() {
 		return pressureAngle 
 	}
 
 	// In degrees
-	this.setPressureAngle = function(value) {
+	gear.setPressureAngle = function(value) {
 		pressureAngle.setValue(value)
 	}
 
-	this.getClearance = function() {
+	gear.getClearance = function() {
 		return clearance 
 	}
 
-	this.getThickness = function() {
+	gear.getThickness = function() {
 		return thickness 
 	}
 
-	this.getCentreHoleRadius = function() {
+	gear.getCentreHoleRadius = function() {
 		return centreHoleRadius
 	}
 
-	this.getCircularPitch = function() {
+	gear.getCircularPitch = function() {
 		checkIfCanCalculateCircularPitch()
 		return calculateCircularPitch()
 	}
 
-	this.getMeshingGears = function() {
+	gear.getMeshingGears = function() {
 		return meshingGears
 	}
 
-	this.addMeshingGear = function(gear) {
+	gear.addMeshingGear = function(gear) {
 		meshingGears.push(gear)
 	}
 
@@ -107,7 +105,7 @@ function Gear() {
 		return Math.PI * pitchCircleRadius.getValue() * 2 / numTeeth.getValue()
 	}
 
-	this.toSpecification = function() {
+	gear.toSpecification = function() {
 		checkIfCanCalculateCircularPitch()
 		var circularPitch = calculateCircularPitch()
 		return new GearSpecification(id,
@@ -120,51 +118,51 @@ function Gear() {
 			                           meshingGears)
 	}
 
-	this.getTypeName = function() {
+	gear.getTypeName = function() {
 		return "Gear"
 	}
 
-	this.generateSpindle = function() {
-		this.checkCanGenerateSpindle()
+	gear.generateSpindle = function() {
+		gear.checkCanGenerateSpindle()
 		var spindle = new Spindle()
 		spindle.setHeight(thickness.getValue())
 		spindle.setRadius(centreHoleRadius.getValue())
-		spindle.setCentre(this.getCentre())
+		spindle.setCentre(gear.getCentre())
 		return spindle
 	}
 
-	this.checkCanGenerateSpindle = function() {		
-		if (this.getCentre().isNotFullyDefined()) throw "Point not fully defined"
+	gear.checkCanGenerateSpindle = function() {		
+		if (gear.getCentre().isNotFullyDefined()) throw "Point not fully defined"
 		if (thickness.isNotSet()) throw "Thickness not set"
 		if (centreHoleRadius.isNotSet()) throw "Centre hole radius not set"
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
 
-	this.meshOnLeftOf = function(otherGear) {
-		this.meshWithOtherGear(otherGear, 'X', true)
+	gear.meshOnLeftOf = function(otherGear) {
+		gear.meshWithOtherGear(otherGear, 'X', true)
 	}
 
-	this.meshOnRightOf = function(otherGear) {
-		this.meshWithOtherGear(otherGear, 'X', false)
+	gear.meshOnRightOf = function(otherGear) {
+		gear.meshWithOtherGear(otherGear, 'X', false)
 	}
 
-	this.meshAtFrontOf = function(otherGear) {
-		this.meshWithOtherGear(otherGear, 'Y', false)
+	gear.meshAtFrontOf = function(otherGear) {
+		gear.meshWithOtherGear(otherGear, 'Y', false)
 	}
 
-	this.meshAtBackOf = function(otherGear) {
-		this.meshWithOtherGear(otherGear, 'Y', true)
+	gear.meshAtBackOf = function(otherGear) {
+		gear.meshWithOtherGear(otherGear, 'Y', true)
 	}
 
-	this.meshWithOtherGear = function(otherGear, axis, negativeOffset) {
+	gear.meshWithOtherGear = function(otherGear, axis, negativeOffset) {
 		var offset = calculateOffsetForGearsToMesh(otherGear, negativeOffset)
 		var axes = Point.getAxesNamesWithout(axis)
-		var centre = this.getCentre()
+		var centre = gear.getCentre()
 		var otherGearCentre = otherGear.getCentre()
 		centre.offsetOnAxis(otherGearCentre, axis, offset)
 		centre.samePointOnAxes(otherGearCentre, axes)
 		meshingGears.push(otherGear)
-		otherGear.addMeshingGear(this)
+		otherGear.addMeshingGear(gear)
 	}
 
 	var calculateOffsetForGearsToMesh = function(otherGear, negativeOffset) {
@@ -175,33 +173,35 @@ function Gear() {
 		return offset
 	}
 
-	this.isTouching = function(otherGear) {
-		var boundingRadius = this.getBoundingCircle().getRadius().getValue()
+	gear.isTouching = function(otherGear) {
+		var boundingRadius = gear.getBoundingCircle().getRadius().getValue()
 		var otherBoundingRadius = otherGear.getBoundingCircle().getRadius().getValue()
-		var distanceBetween = this.getCentre().distanceToOnXYPlane(otherGear.getCentre())
+		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())
 		return distanceBetween < (boundingRadius + otherBoundingRadius)
 	} 
 
-	this.isMeshingWith = function(otherGear) {
+	gear.isMeshingWith = function(otherGear) {
 		var pitchRadius = pitchCircleRadius.getValue()
 		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()
-		var distanceBetween = this.getCentre().distanceToOnXYPlane(otherGear.getCentre())
+		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())
 		var combinedRadii = pitchRadius + otherPitchRadius
 		return Utilities.approximatelyEqual(distanceBetween, combinedRadii, 0.001)
 	}
 
-	this.toString = function() {
+	gear.toString = function() {
 		var string = 'Gear {\n\tID: ' + id + '\n\t' 
 		string += 'Number of teeth: ' + numTeeth.getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 
-		string += this.getBoundingCircle().getRadius().getValue() + '\n\t'
+		string += gear.getBoundingCircle().getRadius().getValue() + '\n\t'
 		string += 'Thickness: ' + thickness.getValue() + '\n\t'
 		string += 'Clearance: ' + clearance.getValue() + '\n\t'
 		string += 'Centre hole radius: ' + centreHoleRadius.getValue() + '\n\t'
 		string += 'Pressure angle: ' + pressureAngle.getValue() + '\n\t'
-		string += 'Centre point: ' + this.getCentre().toString() + '\n'
+		string += 'Centre point: ' + gear.getCentre().toString() + '\n'
 		string += '}'
 		return string
 	}
+
+	return gear
 }

@@ -8,9 +8,7 @@ var Utilities = require('../Utilities.js')
 
 module.exports.MeshableComponent = MeshableComponent
 
-Utilities.inheritPrototype(MeshableComponent, Component)
-
 function MeshableComponent() {
-	var id = null
-	Component.call(this) 
+	var meshable = Component(this) 
+	return meshable
 }

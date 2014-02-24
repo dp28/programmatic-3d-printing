@@ -46,7 +46,7 @@ function SpecificationWriter() {
 	}
 
 	this.addComponent = function(component) {
-		if (component instanceof GearTrain) 
+		if (component.getTypeName() == "GearTrain") 
 			this.addGearTrain(component)
 		else {
 			specifications.push(composer.makeSpecification(component))

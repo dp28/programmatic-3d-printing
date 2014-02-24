@@ -58,6 +58,12 @@ describe('GearTrain', function() {
 		ComponentTest.shouldBehaveLikeComponent(train)
 	})
 
+	describe('#getTypeName', function() {
+		it('should return "GearTrain"', function() {
+			train.getTypeName().should.equal("GearTrain")
+		})
+	})
+
 	describe('construction', function() {
 		it('should not be possible to create a GearTrain without specifying a ' 
 			 + 'circular pitch', function(){
@@ -95,7 +101,7 @@ describe('GearTrain', function() {
 
 	describe('#generateBase', function() {
 		it('should return a Base', function() {
-			train.generateBase().should.be.an.instanceof(Base)
+			train.generateBase().getTypeName().should.equal("Base")
 		})
 
 		describe('the generated Base', function() {
@@ -287,7 +293,7 @@ describe('GearTrain', function() {
 				train.getGears().length.should.equal(0)			
 				train.addGear(gear)
 				train.getGears().length.should.equal(1)			
-				train.getGears()[0].should.be.an.instanceof(Gear)	
+				train.getGears()[0].getTypeName().should.equal("Gear")
 			})
 		})	
 

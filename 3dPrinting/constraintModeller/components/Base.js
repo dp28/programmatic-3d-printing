@@ -12,51 +12,49 @@ var Line = require('../geometry/Line.js').Line
 
 module.exports.Base = Base
 
-Utilities.inheritPrototype(Base, Component)
-
 function Base() {
-	Component.call(this) 
+	var base = Component() 
 	var height = new ConstrainableValue()
 	var parts = []
 
-	this.getParts = function() {
+	base.getParts = function() {
 		return parts
 	}
 
-	this.getCircles = function() {
+	base.getCircles = function() {
 		return parts.filter(function(element) {
 			return element.getType != undefined && element.getType() == 'Circle'
 		})
 	}
 
-	this.getLines = function() {
+	base.getLines = function() {
 		return parts.filter(function(element) {
 			return element instanceof Line
 		})
 	}
 
-	this.addPart = function(part) {
+	base.addPart = function(part) {
 		parts.push(part)
 	}
 
-	this.getTypeName = function() {
+	base.getTypeName = function() {
 		return "Base"
 	}
 
-	this.getHeight = function() {
+	base.getHeight = function() {
 		return height
 	}
 
-	this.setHeight = function(h) {
+	base.setHeight = function(h) {
 		height.setValue(h)
 	}
 
-	this.getRadius = function() {
-		return this.getBoundingCircle().getRadius()
+	base.getRadius = function() {
+		return base.getBoundingCircle().getRadius()
 	}
 
-	this.setRadius = function(r) {
-		this.getBoundingCircle().getRadius().setValue(r)
+	base.setRadius = function(r) {
+		base.getBoundingCircle().getRadius().setValue(r)
 	}
 
 	var checkCanGenerateSpecification = function(base) {
@@ -64,8 +62,10 @@ function Base() {
 			throw new Error("Height not set")
 	}
 
-	this.toSpecification = function() {
-		checkCanGenerateSpecification(this)
+	base.toSpecification = function() {
+		checkCanGenerateSpecification(base)
 		return new BaseSpecification(height.getValue(), parts)
 	}
+
+	return base
 }

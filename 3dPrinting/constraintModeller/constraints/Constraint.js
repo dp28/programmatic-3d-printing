@@ -14,68 +14,62 @@
  *
  * This is the base class for all Constraints
  */
-
-var Utilities = require('../Utilities.js')
-
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint
 module.exports.OffsetByConstantConstraint = OffsetByConstantConstraint
 module.exports.ScaledByConstantConstraint = ScaledByConstantConstraint
 
 // Constructor
-function Constraint(l, r) {
-	this.left = l
-	this.right = r
-	this.right.addConstraint(this)
-}
+function Constraint(left, right) {
+	var constraint = {
 
-Constraint.prototype = {
+		getLeft: function() {
+			return left
+		},
 
-	constructor: Constraint,
+		getRight: function() {
+			return right
+		},
 
-	getLeft: function() {
-		return this.left
-	},
+		isSatisfied: function() {
+			throw "#isSatisfied() not implemented in this instance"
+		},
 
-	getRight: function() {
-		return this.right
-	},
+		// Applies the Constraint by updating left's value
+		applyConstraint: function(left, right) {
+			throw "#applyConstraint() not implemented in this instance"
+		},
 
-	isSatisfied: function() {
-		throw "#isSatisfied() not implemented in this instance"
-	},
+		// Enforce the constraint, returning true if a value changes as a result
+		constrain: function() {
+			if (this.isSatisfied()) {
+				return false
+			}
+			else {
+				return this.applyConstraintToUnfixedValue()
+			}
+		},
 
-	// Applies the Constraint by updating left's value
-	applyConstraint: function(left, right) {
-		throw "#applyConstraint() not implemented in this instance"
-	},
+		applyConstraintToUnfixedValue: function() {
+			if (right.isSet())
+				this.applyConstraintInOrder(left, right)
+			else
+				this.applyConstraintInOrder(right, left)
+		},
 
-	// Enforce the constraint, returning true if a value changes as a result
-	constrain: function() {
-		if (this.isSatisfied()) {
-			return false
-		}
-		else {
-			return this.applyConstraintToUnfixedValue()
-		}
-	},
-
-	applyConstraintToUnfixedValue: function() {
-		if (this.right.isSet())
-			this.applyConstraintInOrder(this.left, this.right)
-		else
-			this.applyConstraintInOrder(this.right, this.left)
-	},
-
-	applyConstraintInOrder: function(left, right) {
-		if (left.isRigid()) {
-				throw "Cannot change rigid value " + left.value()
-		}
-		else {
-			this.applyConstraint(left, right)
-			return true
+		applyConstraintInOrder: function(left, right) {
+			if (left.isRigid()) {
+					throw "Cannot change rigid value " + left.value()
+			}
+			else {
+				this.applyConstraint(left, right)
+				return true
+			}
 		}
 	}
+
+	right.addConstraint(constraint)
+	return constraint
 }
 
 /*
@@ -83,17 +77,17 @@ Constraint.prototype = {
  * value.
  */
 function SameAsConstraint(left, right) { 
-	Constraint.call(this, left, right)
-}
-  
-Utilities.inheritPrototype(SameAsConstraint, Constraint)
+	sameAs = Constraint(left, right)
 
-SameAsConstraint.prototype.isSatisfied = function() {
-	return this.getLeft().getValue() == this.getRight().getValue()
-}
+	sameAs.isSatisfied = function() {
+		return left.getValue() == right.getValue()
+	}
 
-SameAsConstraint.prototype.applyConstraint = function(left, right) {
-	left.setValue(right.getValue())
+	sameAs.applyConstraint = function(left, right) {
+		left.setValue(right.getValue())
+	}
+
+	return sameAs
 }
 
 /*
@@ -101,19 +95,18 @@ SameAsConstraint.prototype.applyConstraint = function(left, right) {
  * the right value.
  */
 function OffsetByConstantConstraint(left, right, constant) {
-	Constraint.call(this, left, right)
-	this.offset = constant
-}
+	offsetConstraint = Constraint(left, right)
 
-Utilities.inheritPrototype(OffsetByConstantConstraint, Constraint)
+	offsetConstraint.isSatisfied = function() {
+		return left.isSet() &&
+		       left.getValue() == right.getValue() + constant
+	}
 
-OffsetByConstantConstraint.prototype.isSatisfied = function() {
-	return this.getLeft().isSet() &&
-	       this.getLeft().getValue() == this.getRight().getValue() + this.offset
-}
+	offsetConstraint.applyConstraint = function(left, right) {
+		left.setValue(right.getValue() + constant)
+	}
 
-OffsetByConstantConstraint.prototype.applyConstraint = function(left, right) {
-	left.setValue(right.getValue() + this.offset)
+	return offsetConstraint
 }
 
 /*
@@ -121,19 +114,19 @@ OffsetByConstantConstraint.prototype.applyConstraint = function(left, right) {
  * than the right value.
  */
 function ScaledByConstantConstraint(left, right, constant) {
-	Constraint.call(this, left, right)
-	this.factor = constant
-}
+	scaledConstraint = Constraint(left, right)
 
-Utilities.inheritPrototype(ScaledByConstantConstraint, Constraint)
+	scaledConstraint.isSatisfied = function() {
+		return this.getLeft().isSet() &&
+			     this.getLeft().getValue() == this.getRight().getValue() * constant
+	}
 
-ScaledByConstantConstraint.prototype.isSatisfied = function() {
-	return this.getLeft().isSet() &&
-	       this.getLeft().getValue() == this.getRight().getValue() * this.factor
-}
 
-ScaledByConstantConstraint.prototype.applyConstraint = function(left, right) {
-	left.setValue(right.getValue() * this.factor)
+	scaledConstraint.applyConstraint = function(left, right) {
+		left.setValue(right.getValue() * constant)
+	}
+
+	return scaledConstraint
 }
 
 

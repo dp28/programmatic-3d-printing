@@ -24,10 +24,6 @@ describe('MeshableComponent', function() {
 
 function shouldBehaveLikeMeshableComponent(meshable) {
 	describe('Anything inheriting from MeshableComponent', function() {
-		
-		it('should inherit from MeshableComponent', function() {
-			meshable.should.be.an.instanceOf(MeshableComponent)
-		})
 
 		it('should behave like a Component', function() {
 			ComponentTest.shouldBehaveLikeComponent(meshable)

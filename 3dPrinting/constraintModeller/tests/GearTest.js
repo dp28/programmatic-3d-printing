@@ -264,7 +264,7 @@ describe('Gear', function() {
 
 		it('should produce a Spindle', function() {
 			gear = createFullySpecifiedTestGear()
-			gear.generateSpindle().should.be.an.instanceof(Spindle)
+			gear.generateSpindle().getTypeName().should.equal("Spindle")
 		})
 
 		describe('the produced Spindle', function() {
