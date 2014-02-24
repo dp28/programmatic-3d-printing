@@ -8,6 +8,7 @@ var Circle = require('../geometry/Circle.js').Circle
 var Point = require('../geometry/Point.js').Point
 var CircleSpecification = require('../interface/CircleSpecification.js').CircleSpecification
 var CircleSpecificationTest = require('../tests/CircleSpecificationTest.js')
+var ShapeTest = require('../tests/ShapeTest.js')
 
 describe('Circle', function() {
 	var circle
@@ -16,30 +17,8 @@ describe('Circle', function() {
 		circle = new Circle()
 	})
 
-	describe('#setCentre', function() {
-		var point
-		
-		beforeEach(function() {
-			point = new Point()
-			point.fixAt(1, 2, 3)
-			circle.setCentre(point)
-		})
-
-		it('should have an x coordinate of 1', function() {
-			circle.getCentre().getX().getValue().should.equal(1)
-		})
-
-		it('should have a y coordinate of 2', function() {
-			circle.getCentre().getY().getValue().should.equal(2)
-		})
-
-		it('should have a z coordinate of 3', function() {
-			circle.getCentre().getZ().getValue().should.equal(3)
-		})
-		
-		it('should not have exactly the same Point as its centre', function() {
-			circle.getCentre().should.not.equal(point)
-		})
+	it('should behave like a Shape', function() {
+		ShapeTest.shouldBehaveLikeShape(circle)
 	})
 
 	describe('#setRadius', function() {
@@ -106,5 +85,5 @@ describe('Circle', function() {
 				CircleSpecificationTest.testCircleSpecification(circleSpec, circle)
 			})			
 		})
-	})
+	}) 
 })

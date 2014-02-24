@@ -7,7 +7,6 @@ var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecification
 var Utilities = require('../Utilities.js')
-var Circle = require('../geometry/Circle.js').Circle
 var Line = require('../geometry/Line.js').Line
 
 
@@ -26,7 +25,7 @@ function Base() {
 
 	this.getCircles = function() {
 		return parts.filter(function(element) {
-			return element instanceof Circle
+			return element.getType != undefined && element.getType() == 'Circle'
 		})
 	}
 

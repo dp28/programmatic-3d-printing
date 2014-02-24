@@ -9,6 +9,7 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 var Point = require('../geometry/Point.js').Point
 var Circle = require('../geometry/Circle.js').Circle
 var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
+var ShapeTest = require('../tests/ShapeTest.js')
 
 module.exports.shouldBehaveLikeComponent = shouldBehaveLikeComponent
 module.exports.createFullySpecifiedTestComponent = function() {
@@ -50,9 +51,9 @@ function shouldBehaveLikeComponent(component) {
 			component.should.be.an.instanceOf(Component)
 		})
 
-			describe('#getBoundingCircle', function() {
-			it('should return a Circle', function() {
-				component.getBoundingCircle().should.be.an.instanceOf(Circle)
+		describe('#getBoundingCircle', function() {
+			it('should return a Shape', function() {
+				ShapeTest.shouldBehaveLikeShape(component)
 			})
 		})
 

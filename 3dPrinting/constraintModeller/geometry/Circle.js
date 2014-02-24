@@ -4,48 +4,45 @@
  * A circle with constrainable properties.
  */
 var Point = require('../geometry/Point.js').Point
+var Shape = require('../geometry/Shape.js').Shape
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var CircleSpecification = require('../interface/CircleSpecification.js').CircleSpecification
+var Utilities = require('../Utilities.js')
 
 module.exports.Circle = Circle
 
 function Circle() {
-	var centre = new Point()
+	var circle = Shape()
 	var radius = new ConstrainableValue() 
 	var diameter = new ConstrainableValue()
-	diameter.scaledByConstant(radius, 2)     
+	diameter.scaledByConstant(radius, 2)   
 
-	this.setCentre = function(point) {
-		centre = new Point()
-		centre.getX().setValue(point.getX().getValue())
-		centre.getY().setValue(point.getY().getValue())
-		centre.getZ().setValue(point.getZ().getValue())
-	}
+	circle.getType = function() {
+		return 'Circle'
+	}  
 
-	this.getCentre = function() {
-		return centre
-	}
-
-	this.setRadius = function(r) {
+	circle.setRadius = function(r) {
 		radius.setValue(r)
 	}
 
-	this.getRadius = function() {
+	circle.getRadius = function() {
 		return radius
 	}
 
-	this.getDiameter = function() {
+	circle.getDiameter = function() {
 		return diameter
 	}
 
-	this.toSpecification = function() {
+	circle.toSpecification = function() {
 		checkCanGenerateSpecification()
-		return new CircleSpecification(centre, radius)
+		return new CircleSpecification(circle.getCentre(), radius)
 	}
 
 	var checkCanGenerateSpecification = function() {		
 		if (radius.isNotSet()) throw new Error("Radius not set")
-		if (centre.isNotFullyDefined()) throw new Error("Centre not fully defined")
+		if (circle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
 	}
+
+	return circle
 }
 
