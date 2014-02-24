@@ -11,7 +11,7 @@ var ConstrainableValue = require('../constraints/ConstrainableValue.js').Constra
 var Circle = require('../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
-var ComponentTest = require('../tests/ComponentTest.js')
+var MeshableComponentTest = require('../tests/MeshableComponentTest.js')
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
 var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
 
@@ -40,7 +40,7 @@ describe('Gear', function() {
 	})
 
 	it('should behave like a Component', function() {
-		ComponentTest.shouldBehaveLikeComponent(gear)
+		MeshableComponentTest.shouldBehaveLikeMeshableComponent(gear)
 	})
 
 	describe('#getID', function() {

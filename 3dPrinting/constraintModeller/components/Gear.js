@@ -4,7 +4,7 @@
  * A representation of an involute gear
  */
 var util = require('util')
-var Component = require('../components/Component.js').Component
+var MeshableComponent = require('../components/MeshableComponent.js').MeshableComponent
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
@@ -22,11 +22,11 @@ const DEFAULT_CENTRE_HOLE_RADIUS = 4
 
 module.exports.Gear = Gear
 
-Utilities.inheritPrototype(Gear, Component)
+Utilities.inheritPrototype(Gear, MeshableComponent)
 
 function Gear() {
 	var id = null
-	Component.call(this) 
+	MeshableComponent.call(this) 
 	var pitchCircleRadius = new ConstrainableValue()
 	var numTeeth = new ConstrainableValue()
 	var pressureAngle = new ConstrainableValue()
