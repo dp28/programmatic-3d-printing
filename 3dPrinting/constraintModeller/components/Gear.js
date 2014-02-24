@@ -174,8 +174,8 @@ function Gear() {
 	}
 
 	gear.isTouching = function(otherGear) {
-		var boundingRadius = gear.getBoundingCircle().getRadius().getValue()
-		var otherBoundingRadius = otherGear.getBoundingCircle().getRadius().getValue()
+		var boundingRadius = gear.getBoundingShape().getRadius().getValue()
+		var otherBoundingRadius = otherGear.getBoundingShape().getRadius().getValue()
 		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())
 		return distanceBetween < (boundingRadius + otherBoundingRadius)
 	} 
@@ -193,7 +193,7 @@ function Gear() {
 		string += 'Number of teeth: ' + numTeeth.getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 
-		string += gear.getBoundingCircle().getRadius().getValue() + '\n\t'
+		string += gear.getBoundingShape().getRadius().getValue() + '\n\t'
 		string += 'Thickness: ' + thickness.getValue() + '\n\t'
 		string += 'Clearance: ' + clearance.getValue() + '\n\t'
 		string += 'Centre hole radius: ' + centreHoleRadius.getValue() + '\n\t'

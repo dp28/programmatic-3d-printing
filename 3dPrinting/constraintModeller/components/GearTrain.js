@@ -145,7 +145,7 @@ function GearTrain(circPitch) {
 		gear.setNumberOfTeeth(numTeeth)
 		train.addGear(gear)
 		var boundRadius = gear.getPitchCircleRadius().getValue() + train.getAddendum()
-		gear.getBoundingCircle().setRadius(boundRadius)
+		gear.getBoundingShape().setRadius(boundRadius)
 		return gear
 	}
 

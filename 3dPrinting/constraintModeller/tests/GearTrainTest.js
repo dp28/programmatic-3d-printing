@@ -373,7 +373,7 @@ describe('GearTrain', function() {
 
 		it('should have a bounding Circle with a radius greater than its pitch '
 			 + 'circle radius by the addendum of all Gears in this GearTrain', function() {
-			var boundRadius = gear.getBoundingCircle().getRadius().getValue()
+			var boundRadius = gear.getBoundingShape().getRadius().getValue()
 			var pitchRadius = gear.getPitchCircleRadius().getValue()
 			boundRadius.should.be.approximately(pitchRadius + train.getAddendum(), 
 				                                  0.001)

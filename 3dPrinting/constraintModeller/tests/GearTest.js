@@ -357,17 +357,17 @@ describe('Gear', function() {
 		beforeEach(function() {
 			gear = createFullySpecifiedTestGear(10, 5, 0, 0, 0) 
 			otherGear = createFullySpecifiedTestGear(10, 5, 20, 20, 20)
-			gear.getBoundingCircle().setRadius(5)
+			gear.getBoundingShape().setRadius(5)
 		})
 
 		it('should be false if the Gears\' bounding Circles do not intersect', 
 			 function() {
-			otherGear.getBoundingCircle().setRadius(5)
+			otherGear.getBoundingShape().setRadius(5)
 			gear.isTouching(otherGear).should.be.false
 		})
 		
 		it('should be true if the Gears\' bounding Circles intersect', function() {
-			otherGear.getBoundingCircle().setRadius(50)
+			otherGear.getBoundingShape().setRadius(50)
 			gear.isTouching(otherGear).should.be.true
 		})
 	})
@@ -413,7 +413,7 @@ describe('Gear', function() {
 																					centreY,
 																					centreZ)
 			gear.setID(id)
-			gear.getBoundingCircle().setRadius(boundRadius)
+			gear.getBoundingShape().setRadius(boundRadius)
 		})
 
 		it('should return a string', function() {

@@ -50,11 +50,11 @@ function Base() {
 	}
 
 	base.getRadius = function() {
-		return base.getBoundingCircle().getRadius()
+		return base.getBoundingShape().getRadius()
 	}
 
 	base.setRadius = function(r) {
-		base.getBoundingCircle().getRadius().setValue(r)
+		base.getBoundingShape().getRadius().setValue(r)
 	}
 
 	var checkCanGenerateSpecification = function(base) {

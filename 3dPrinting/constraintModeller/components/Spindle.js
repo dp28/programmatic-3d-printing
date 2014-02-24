@@ -27,11 +27,11 @@ function Spindle() {
 	}
 
 	spindle.getRadius = function() {
-		return spindle.getBoundingCircle().getRadius()
+		return spindle.getBoundingShape().getRadius()
 	}
 
 	spindle.setRadius = function(radius) {
-		spindle.getBoundingCircle().setRadius(radius)
+		spindle.getBoundingShape().setRadius(radius)
 	}
 
 	spindle.toSpecification = function() {

@@ -12,18 +12,18 @@ module.exports.Component = Component
 function Component() {
 
 	return {
-		boundingCircle: new Circle(),
+		boundingShape: new Circle(),
 
-		getBoundingCircle: function() {
-			return this.boundingCircle
+		getBoundingShape: function() {
+			return this.boundingShape
 		},
 
 		getCentre: function() {
-			return this.boundingCircle.getCentre()
+			return this.boundingShape.getCentre()
 		},
 
 		setCentre: function(c) {
-			this.boundingCircle.setCentre(c)
+			this.boundingShape.setCentre(c)
 		},
 
 		checkCentreFullyDefined: function() {
