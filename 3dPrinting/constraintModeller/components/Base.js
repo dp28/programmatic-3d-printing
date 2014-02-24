@@ -6,14 +6,14 @@
 var Component = require('../components/Component.js').Component
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecification
-var Utilities = require('../Utilities.js')
+var Circle = require('../geometry/Circle.js').Circle
 var Line = require('../geometry/Line.js').Line
 
 
 module.exports.Base = Base
 
 function Base() {
-	var base = Component() 
+	var base = Component(Circle) 
 	var height = new ConstrainableValue()
 	var parts = []
 

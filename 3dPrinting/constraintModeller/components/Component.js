@@ -9,10 +9,12 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 
 module.exports.Component = Component
 
-function Component() {
+function Component(boundaryShape) {
+	if (boundaryShape == undefined)
+		boundaryShape = Circle
 
 	return {
-		boundingShape: new Circle(),
+		boundingShape: new boundaryShape(),
 
 		getBoundingShape: function() {
 			return this.boundingShape
