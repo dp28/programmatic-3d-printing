@@ -11,8 +11,6 @@ module.exports.Shape = Shape
 function Shape() {
 	var centre = new Point()
 
-	// setPointToOrigin(front)
-
 	return {  
 		setCentre: function(point) {
 			centre = new Point()
