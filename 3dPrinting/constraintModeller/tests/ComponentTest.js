@@ -47,9 +47,9 @@ describe('Component', function() {
 function shouldBehaveLikeComponent(component) {
 	describe('Anything inheriting from Component', function() {
 
-		describe('#getBoundingCircle', function() {
+		describe('#getBoundingShape', function() {
 			it('should return a Shape', function() {
-				ShapeTest.shouldBehaveLikeShape(component)
+				ShapeTest.shouldBehaveLikeShape(component.getBoundingShape())
 			})
 		})
 
