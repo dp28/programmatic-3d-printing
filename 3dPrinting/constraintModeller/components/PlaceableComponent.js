@@ -5,9 +5,9 @@
  */
 var Component = require('../components/Component.js').Component
 
-module.exports.MeshableComponent = MeshableComponent
+module.exports.PlaceableComponent = PlaceableComponent
 
-function MeshableComponent(boundaryShape) {
+function PlaceableComponent(boundaryShape) {
 	var meshable = Component(boundaryShape) 
 	return meshable
 }
