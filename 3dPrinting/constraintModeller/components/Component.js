@@ -46,6 +46,10 @@ function Component(boundaryShape) {
 		// Should be overriden by all subclassed to give their name
 		getTypeName: function() {
 			return "Component"
-		}
+		},
+
+		isTouching: function(otherComponent) {
+			return this.boundingShape.isTouching(otherComponent.getBoundingShape())
+		} 
 	}
 }

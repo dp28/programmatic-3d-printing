@@ -132,13 +132,6 @@ function Gear() {
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
 
-	gear.isTouching = function(otherGear) {
-		var boundingRadius = gear.getBoundingShape().getRadius().getValue()
-		var otherBoundingRadius = otherGear.getBoundingShape().getRadius().getValue()
-		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())
-		return distanceBetween < (boundingRadius + otherBoundingRadius)
-	} 
-
 	gear.isMeshingWith = function(otherGear) {
 		var pitchRadius = pitchCircleRadius.getValue()
 		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()

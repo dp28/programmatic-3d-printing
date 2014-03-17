@@ -42,6 +42,28 @@ describe('Component', function() {
 			component.getTypeName().should.equal('Component')
 		})
 	})
+
+	describe('#isTouching', function() {
+		var otherComponent
+
+		beforeEach(function() {
+			otherComponent = new Component()
+			otherComponent.getCentre().setAt(0, 0, 0)
+			component.getBoundingShape().setRadius(5)
+			component.getCentre().setAt(12, 0, 0)
+		})
+
+		it('should be false if the Components\' bounding shapes do not intersect', 
+			 function() {
+			otherComponent.getBoundingShape().setRadius(5)
+			component.isTouching(otherComponent).should.be.false
+		})
+		
+		it('should be true if the Components\' bounding shapes intersect', function() {
+			otherComponent.getBoundingShape().setRadius(50)
+			component.isTouching(otherComponent).should.be.true
+		})
+	})
 })
 
 function shouldBehaveLikeComponent(component) {

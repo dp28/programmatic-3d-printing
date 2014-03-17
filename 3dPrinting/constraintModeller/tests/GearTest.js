@@ -298,25 +298,6 @@ describe('Gear', function() {
 		})
 	})
 
-	describe('#isTouching', function() {
-		beforeEach(function() {
-			gear = createFullySpecifiedTestGear(10, 5, 0, 0, 0) 
-			otherGear = createFullySpecifiedTestGear(10, 5, 20, 20, 20)
-			gear.getBoundingShape().setRadius(5)
-		})
-
-		it('should be false if the Gears\' bounding Circles do not intersect', 
-			 function() {
-			otherGear.getBoundingShape().setRadius(5)
-			gear.isTouching(otherGear).should.be.false
-		})
-		
-		it('should be true if the Gears\' bounding Circles intersect', function() {
-			otherGear.getBoundingShape().setRadius(50)
-			gear.isTouching(otherGear).should.be.true
-		})
-	})
-
 	describe('#isMeshingWith', function() {
 		beforeEach(function() {
 			gear = new Gear()

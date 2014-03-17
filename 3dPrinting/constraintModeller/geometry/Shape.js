@@ -47,7 +47,18 @@ function Shape() {
 		getDistanceToFrontBoundary: function() {
 			throw new Error("getDistanceToFrontBoundary() not implemented in Shape " +
 				              "base class")
-		}
+		},
+
+		isTouching: function(otherShape) {
+			return checkIfTwoCirclesIntersect(this, otherShape)
+		} 
 	}
+}
+
+function checkIfTwoCirclesIntersect(firstCircle, secondCircle) {
+	var firstRadius = firstCircle.getRadius().getValue()
+	var secondRadius = secondCircle.getRadius().getValue()
+	var distanceBetween = firstCircle.getCentre().distanceToOnXYPlane(secondCircle.getCentre())
+	return distanceBetween < (firstRadius + secondRadius)
 }
 
