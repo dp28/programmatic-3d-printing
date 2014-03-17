@@ -45,6 +45,11 @@ function Shape() {
 
 		getFrontPoint: function() {
 			return front
+		},
+
+		setupBoundaryPoints: function() {
+			throw new Error("Not implemented in subclass - necessary to link front," +
+				              " back, left and right to centre Point")
 		}
 	}
 }

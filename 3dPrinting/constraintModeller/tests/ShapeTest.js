@@ -26,6 +26,15 @@ describe('Shape', function() {
 			shape.getType().should.equal('Shape')
 		})
 	})
+
+	describe('#setupBoundaryPoints', function() {
+		it('should throw an exception as it is only implemented in subclasses',
+		   function() {
+			shape.setupBoundaryPoints.should.throw("Not implemented in subclass - " +
+				                                     "necessary to link front, back, " +
+				                                     "left and right to centre Point")
+		})
+	})
 	
 })
 
