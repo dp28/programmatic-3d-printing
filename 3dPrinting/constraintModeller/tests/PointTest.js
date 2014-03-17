@@ -48,7 +48,7 @@ describe('Point', function() {
   	})
   }) 
 
-  describe('#atSameLocationAs', function() {
+  describe('#isAtSameLocationAs', function() {
     var otherPoint, x = 1, y = 2, z = 3
 
     beforeEach(function() {
@@ -58,12 +58,12 @@ describe('Point', function() {
 
     it('should return true if the Points are co-located', function() {      
       otherPoint.setAt(x, y, z)
-      point.atSameLocationAs(otherPoint).should.be.true
+      point.isAtSameLocationAs(otherPoint).should.be.true
     })
 
     it('should return false if the Points are not co-located', function() {      
       otherPoint.setAt(x, y, z + 1)
-      point.atSameLocationAs(otherPoint).should.be.false
+      point.isAtSameLocationAs(otherPoint).should.be.false
     })
   })
 
@@ -204,17 +204,23 @@ describe('Point', function() {
       point.isNotFullyDefined().should.be.false
     })
   })
-  this.samePointOnAxes = function(otherPoint, axes) {
-    for (var i = 0; i < axes.length; i++) {
-      var getAxis = 'get' + axes[i]
-      this[getAxis]().sameAs(otherPoint[getAxis]())
-    }
-  }
 
-  this.offsetOnAxis = function(otherPoint, axis, offset) {
-    var getAxis = 'get' + axis
-    this[getAxis]().offsetByConstant(otherPoint[getAxis](), offset)
-  }
+  describe('sameAs', function() {
+    beforeEach(function() {
+      otherPoint = new Point()
+      point = new Point()
+      point.sameAs(otherPoint) 
+      otherPoint.setAt(1, 2, 3)
+    })
+
+    it('should have all its values set', function() {
+      point.isFullyDefined().should.be.true
+    })
+    
+    it('should have the same coordinates as the indpendent Point', function() {
+      point.isAtSameLocationAs(otherPoint).should.be.true
+    })
+  })
 
   describe('#samePointOnAxes', function() {
     beforeEach(function() {
@@ -229,7 +235,7 @@ describe('Point', function() {
     })
     
     it('should have the same coordinates as the indpendent Point', function() {
-      point.atSameLocationAs(otherPoint).should.be.true
+      point.isAtSameLocationAs(otherPoint).should.be.true
     })
   })
 

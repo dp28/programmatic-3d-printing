@@ -35,7 +35,7 @@ function Point() {
 	var y = new ConstrainableValue()
 	var z = new ConstrainableValue()
 
-	this.atSameLocationAs = function(point) {
+	this.isAtSameLocationAs = function(point) {
 		return (x.getValue() == point.getX().getValue() 
 			     && y.getValue() == point.getY().getValue()
 			     && z.getValue() == point.getZ().getValue())
@@ -102,6 +102,10 @@ function Point() {
 			var getAxis = 'get' + axes[i]
 			this[getAxis]().sameAs(otherPoint[getAxis]())
 		}
+	}
+
+	this.sameAs = function(otherPoint) {
+		this.samePointOnAxes(otherPoint, Point.getAxesNames())
 	}
 
 	this.offsetOnAxis = function(otherPoint, axis, offset) {

@@ -40,7 +40,14 @@ describe('Gear', function() {
 	})
 
 	it('should behave like a Component', function() {
-		PlaceableComponentTest.shouldBehaveLikePlaceableComponent(gear)
+
+		function setupTestBoundaries(gear) {
+			
+		}
+
+		PlaceableComponentTest.shouldBehaveLikePlaceableComponent(Gear, 
+			                                                        setupTestBoundaries, 
+			                                                        Circle)
 	})
 
 	describe('#getID', function() {
@@ -286,7 +293,7 @@ describe('Gear', function() {
 			})
 
 			it('should have the same centre point as the Gear', function() {
-				spindle.getCentre().atSameLocationAs(gear.getCentre()).should.be.true
+				spindle.getCentre().isAtSameLocationAs(gear.getCentre()).should.be.true
 			})
 		})
 	})

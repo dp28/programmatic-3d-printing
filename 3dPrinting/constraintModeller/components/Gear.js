@@ -26,6 +26,8 @@ module.exports.Gear = Gear
 function Gear() {
 	var id = null
 	var gear = PlaceableComponent(Circle) 
+
+	// Set up contstrainable variables
 	var pitchCircleRadius = new ConstrainableValue()
 	var numTeeth = new ConstrainableValue()
 	var pressureAngle = new ConstrainableValue()
@@ -36,6 +38,7 @@ function Gear() {
 	thickness.setValue(DEFAULT_THICKNESS)
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
+	
 	var meshingGears = []
 
 	gear.setID = function(newID) {
