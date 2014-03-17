@@ -3,6 +3,7 @@
  *
  * Tests the base class for all placeable components
  */
+var util = require('util')
 var should = require('should')
 var Component = require('../components/Component.js').Component 
 var Circle = require('../geometry/Circle.js').Circle
@@ -83,6 +84,7 @@ function shouldBehaveLikePlaceableComponent(Placeable,
 					var firstPlaceableCoordinate = firstPlaceable.getCentre()[getAxis]().getValue()
 					var secondPlaceableCoordinate = secondPlaceable.getCentre()[getAxis]().getValue()
 					
+
 					var firstPlacementShape = firstPlaceable.getPlacementShape()
 					var secondPlacementShape = secondPlaceable.getPlacementShape()
 					var firstDistance = firstPlacementShape[getFirstDistance]()
@@ -108,20 +110,20 @@ function shouldBehaveLikePlaceableComponent(Placeable,
 			})
 		}
 
-		describe('#placeOnLeftOf', function() {
-			testPlacementFunction('placeOnLeftOf', 'X', 'Right', 'Left')
-		})
-
 		describe('#placeOnRightOf', function() {
-			testPlacementFunction('placeOnRightOf', 'X', 'Left', 'Right')
+			testPlacementFunction('placeOnRightOf', 'X', 'Right', 'Left')
 		})
 
-		describe('#placeAtFrontOf', function() {
-			testPlacementFunction('placeAtFrontOf', 'Y', 'Back', 'Front')
+		describe('#placeOnLeftOf', function() {
+			testPlacementFunction('placeOnLeftOf', 'X', 'Left', 'Right')
 		})
 
 		describe('#placeAtBackOf', function() {
-			testPlacementFunction('placeAtBackOf', 'Y', 'Front', 'Back')
+			testPlacementFunction('placeAtBackOf', 'Y', 'Back', 'Front')
+		})
+
+		describe('#placeAtFrontOf', function() {
+			testPlacementFunction('placeAtFrontOf', 'Y', 'Front', 'Back')
 		})
 	})
 }

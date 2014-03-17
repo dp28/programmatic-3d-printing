@@ -30,7 +30,7 @@ function createInvalidTrainWithOverlappingGears() {
 	var firstGear = train.createGear(10)
 	var secondGear = train.createGear(20)
 	var thirdGear = train.createGear(15)
-	firstGear.meshOnLeftOf(secondGear)
+	firstGear.placeOnLeftOf(secondGear)
 	secondGear.getCentre().setAt(0, 0, 0)
 	thirdGear.getCentre().setAt(1, 3, 0)
 	return train
@@ -41,8 +41,8 @@ function createTrainWithMeshingGears() {
 	var firstGear = train.createGear(10)
 	var secondGear = train.createGear(20)
 	var thirdGear = train.createGear(15)
-	firstGear.meshOnLeftOf(secondGear)
-	thirdGear.meshOnRightOf(secondGear)
+	firstGear.placeOnRightOf(secondGear)
+	thirdGear.placeOnLeftOf(secondGear)
 	secondGear.getCentre().setAt(0, 0, 0)
 	return train
 }
@@ -112,8 +112,8 @@ describe('GearTrain', function() {
 				firstGear = train.createGear(10)
 				secondGear = train.createGear(20)
 				thirdGear = train.createGear(8)
-				firstGear.meshAtFrontOf(secondGear)
-				thirdGear.meshAtBackOf(secondGear)
+				firstGear.placeAtFrontOf(secondGear)
+				thirdGear.placeAtBackOf(secondGear)
 				secondGear.getCentre().setAt(0, 0, 0)
 				base = train.generateBase() 
 			})

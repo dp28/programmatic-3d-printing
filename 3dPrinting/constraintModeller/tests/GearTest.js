@@ -41,8 +41,8 @@ describe('Gear', function() {
 
 	it('should behave like a Component', function() {
 
-		function setupTestBoundaries(gear) {
-			
+		function setupTestBoundaries(gear) {			
+			gear.setPitchCircleRadius(10)
 		}
 
 		PlaceableComponentTest.shouldBehaveLikePlaceableComponent(Gear, 
@@ -206,7 +206,7 @@ describe('Gear', function() {
 					setExampleNumTeethAndPitchRadius()
 					var anotherGear = new Gear() 
 					anotherGear.setID(1)
-					gear.meshOnRightOf(anotherGear)
+					gear.placeOnRightOf(anotherGear)
 					gearSpec = gear.toSpecification()
 				})
 				
@@ -298,68 +298,6 @@ describe('Gear', function() {
 		})
 	})
 
-	function testMeshingFunction(functionName, axis, negativeOffset, direction) {
-		var getAxis = 'get' + axis
-		
-		beforeEach(function() {
-			gear = new Gear()
-			gear.setPitchCircleRadius(10)
-			otherGear = new Gear()
-			otherGear.setPitchCircleRadius(20)
-			gear[functionName](otherGear)
-			otherGear.getCentre().setAt(1, 2, 3)
-		})
-
-		describe('the first Gear', function() {
-			it('should have its centre set when the second Gear\'s centre is set',
-				 function() {
-				gear.getCentre().isFullyDefined().should.be.true
-			})
-
-			it('should be centred to the ' + direction + ' of the second Gear '
-				 + 'by a distance of the sum of their pitch circle radii', function() {
-				var gearCoordinate = gear.getCentre()[getAxis]().getValue()
-				var otherGearCoordinate = otherGear.getCentre()[getAxis]().getValue()
-				var gearPitchRadius = gear.getPitchCircleRadius().getValue()
-				var otherGearPitchRadius = otherGear.getPitchCircleRadius().getValue()
-				var offset = gearPitchRadius + otherGearPitchRadius
-				if (negativeOffset) 
-					offset = -offset
-				gearCoordinate.should.equal(otherGearCoordinate + offset)
-			})
-
-			describe('#getMeshingGears', function() {
-				it('should return an array containing the second Gear', function() {
-					gear.getMeshingGears().should.contain(otherGear)
-				})
-			})
-		})
-
-		describe('the second Gear', function() {
-			describe('#getMeshingGears', function() {
-				it('should return an array containing the second Gear', function() {
-					otherGear.getMeshingGears().should.contain(gear)
-				})
-			})
-		})
-	}
-
-	describe('#meshOnLeftOf', function() {
-		testMeshingFunction('meshOnLeftOf', 'X', true, 'left')
-	})
-
-	describe('#meshOnRightOf', function() {
-		testMeshingFunction('meshOnRightOf', 'X', false, 'right')
-	})
-
-	describe('#meshAtFrontOf', function() {
-		testMeshingFunction('meshAtFrontOf', 'Y', false, 'front')
-	})
-
-	describe('#meshAtBackOf', function() {
-		testMeshingFunction('meshAtBackOf', 'Y', true, 'back')
-	})
-
 	describe('#isTouching', function() {
 		beforeEach(function() {
 			gear = createFullySpecifiedTestGear(10, 5, 0, 0, 0) 
@@ -399,7 +337,7 @@ describe('Gear', function() {
 		})
 
 		it('should be true if the Gears have been set to mesh', function() {
-			gear.meshOnLeftOf(otherGear)
+			gear.placeOnLeftOf(otherGear)
 			otherGear.getCentre().setAt(1.6, 2.9, 30)
 			gear.isMeshingWith(otherGear).should.be.true
 		})

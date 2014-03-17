@@ -38,8 +38,6 @@ function Gear() {
 	thickness.setValue(DEFAULT_THICKNESS)
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
-	
-	var meshingGears = []
 
 	gear.setID = function(newID) {
 		id = newID
@@ -63,6 +61,7 @@ function Gear() {
 
 	gear.setPitchCircleRadius = function(r) {
 		pitchCircleRadius.setValue(r)
+		gear.getPlacementShape().setRadius(r)
 	}
 
 	// In degrees
@@ -92,14 +91,6 @@ function Gear() {
 		return calculateCircularPitch()
 	}
 
-	gear.getMeshingGears = function() {
-		return meshingGears
-	}
-
-	gear.addMeshingGear = function(gear) {
-		meshingGears.push(gear)
-	}
-
 	var checkIfCanCalculateCircularPitch = function() {		
 		if (!numTeeth.isSet()) throw new Error("Number of teeth not set")
 		if (!pitchCircleRadius.isSet())	throw new Error("Pitch radius not set")
@@ -118,8 +109,7 @@ function Gear() {
 			                           pressureAngle.getValue(),
 			                           clearance.getValue(),
 			                           thickness.getValue(),
-			                           centreHoleRadius.getValue(),
-			                           meshingGears)
+			                           centreHoleRadius.getValue())
 	}
 
 	gear.getTypeName = function() {
@@ -140,41 +130,6 @@ function Gear() {
 		if (thickness.isNotSet()) throw "Thickness not set"
 		if (centreHoleRadius.isNotSet()) throw "Centre hole radius not set"
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
-	}
-
-	gear.meshOnLeftOf = function(otherGear) {
-		gear.meshWithOtherGear(otherGear, 'X', true)
-	}
-
-	gear.meshOnRightOf = function(otherGear) {
-		gear.meshWithOtherGear(otherGear, 'X', false)
-	}
-
-	gear.meshAtFrontOf = function(otherGear) {
-		gear.meshWithOtherGear(otherGear, 'Y', false)
-	}
-
-	gear.meshAtBackOf = function(otherGear) {
-		gear.meshWithOtherGear(otherGear, 'Y', true)
-	}
-
-	gear.meshWithOtherGear = function(otherGear, axis, negativeOffset) {
-		var offset = calculateOffsetForGearsToMesh(otherGear, negativeOffset)
-		var axes = Point.getAxesNamesWithout(axis)
-		var centre = gear.getCentre()
-		var otherGearCentre = otherGear.getCentre()
-		centre.offsetOnAxis(otherGearCentre, axis, offset)
-		centre.samePointOnAxes(otherGearCentre, axes)
-		meshingGears.push(otherGear)
-		otherGear.addMeshingGear(gear)
-	}
-
-	var calculateOffsetForGearsToMesh = function(otherGear, negativeOffset) {
-		var offset = otherGear.getPitchCircleRadius().getValue() 
-		             + pitchCircleRadius.getValue()
-		if (negativeOffset) 
-			offset = -offset
-		return offset
 	}
 
 	gear.isTouching = function(otherGear) {

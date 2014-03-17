@@ -3,6 +3,7 @@
  *
  * A base class for all meshable components
  */
+var util = require('util')
 var Component = require('../components/Component.js').Component
 var Point = require('../geometry/Point.js').Point
 
@@ -29,19 +30,19 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		return adjacentComponents
 	}
 
-	placeable.placeOnLeftOf = function(otherPlaceable) {
+	placeable.placeOnRightOf = function(otherPlaceable) {
 		placeable.placeAdjacentTo(otherPlaceable, 'X', 'Right', 'Left')
 	}
 
-	placeable.placeOnRightOf = function(otherPlaceable) {
+	placeable.placeOnLeftOf = function(otherPlaceable) {
 		placeable.placeAdjacentTo(otherPlaceable, 'X', 'Left', 'Right')
 	}
 
-	placeable.placeAtFrontOf = function(otherPlaceable) {
+	placeable.placeAtBackOf = function(otherPlaceable) {
 		placeable.placeAdjacentTo(otherPlaceable, 'Y', 'Back', 'Front')
 	}
 
-	placeable.placeAtBackOf = function(otherPlaceable) {
+	placeable.placeAtFrontOf = function(otherPlaceable) {
 		placeable.placeAdjacentTo(otherPlaceable, 'Y', 'Front', 'Back')
 	}
 

@@ -55,15 +55,5 @@ function testGearSpecification(gearSpec, gear) {
 				gearSpec.centreHoleRadius.should.equal(gear.getCentreHoleRadius().getValue())
 			})
 		})
-
-		describe('#meshingGears', function() {
-			it('should contain the IDs of all the Gears the Gear that created it is '
-				 + 'meshing with', function() {
-				var meshingGears = gear.getMeshingGears()
-				for (var i = meshingGears.length - 1; i >= 0; i--) {
-					gearSpec.meshingGears.should.contain(meshingGears[i].getID())
-				};
-			})
-		})
 	})
 }
