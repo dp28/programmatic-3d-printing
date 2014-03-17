@@ -57,5 +57,29 @@ function shouldBehaveLikeShape(shape) {
 				shape.getCentre().should.not.equal(point)
 			})
 		})
+
+		describe('#getRightPoint', function() {
+			it('should return a Point', function() {
+				shape.getRightPoint().should.be.an.instanceof(Point)
+			})
+		})
+
+		describe('#getLeftPoint', function() {
+			it('should return a Point', function() {
+				shape.getLeftPoint().should.be.an.instanceof(Point)
+			})
+		})
+
+		describe('#getFrontPoint', function() {
+			it('should return a Point', function() {
+				shape.getFrontPoint().should.be.an.instanceof(Point)
+			})
+		})
+
+		describe('#getBackPoint', function() {
+			it('should return a Point', function() {
+				shape.getBackPoint().should.be.an.instanceof(Point)
+			})
+		})
 	})
 }

@@ -10,6 +10,10 @@ module.exports.Shape = Shape
 
 function Shape() {
 	var centre = new Point()
+	var right = new Point()
+	var left = new Point()
+	var front = new Point()
+	var back = new Point()
 
 	return {  
 		setCentre: function(point) {
@@ -25,6 +29,22 @@ function Shape() {
 
 		getType: function() {
 			return 'Shape'
+		},
+
+		getRightPoint: function() {
+			return right
+		},
+
+		getLeftPoint: function() {
+			return left
+		},
+
+		getBackPoint: function() {
+			return back
+		},
+
+		getFrontPoint: function() {
+			return front
 		}
 	}
 }
