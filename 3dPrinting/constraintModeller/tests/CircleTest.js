@@ -85,5 +85,37 @@ describe('Circle', function() {
 				CircleSpecificationTest.testCircleSpecification(circleSpec, circle)
 			})			
 		})
+	})
+
+	describe('distance to boundary functions', function() {
+		var radius = 10
+
+		beforeEach(function() {
+			circle.setRadius(radius)
+		})		
+
+		describe('#getDistanceToRightBoundary', function() {
+			it('should return the value of the radius', function() {
+				circle.getDistanceToRightBoundary().should.equal(radius)
+			})
+		})
+
+		describe('#getDistanceToLeftBoundary', function() {
+			it('should return the negative of the value of the radius', function() {
+				circle.getDistanceToLeftBoundary().should.equal(-radius)
+			})
+		})
+
+		describe('#getDistanceToFrontBoundary', function() {
+			it('should return the value of the radius', function() {
+				circle.getDistanceToFrontBoundary().should.equal(radius)
+			})
+		})
+
+		describe('#getDistanceToBackBoundary', function() {
+			it('should return the negative of the value of the radius', function() {
+				circle.getDistanceToBackBoundary().should.equal(-radius)
+			})
+		})
 	}) 
 })

@@ -25,17 +25,41 @@ describe('Shape', function() {
 		it('should return "Shape"', function() {
 			shape.getType().should.equal('Shape')
 		})
-	})
+	})	
 
-	describe('#setupBoundaryPoints', function() {
-		it('should throw an exception as it is only implemented in subclasses',
-		   function() {
-			shape.setupBoundaryPoints.should.throw("Not implemented in subclass - " +
-				                                     "necessary to link front, back, " +
-				                                     "left and right to centre Point")
+	describe('distance to boundary functions', function() {
+		describe('#getDistanceToRightBoundary', function() {
+			it('should return a number', function() {
+				var message = "getDistanceToRightBoundary() not implemented in Shape " +
+				              "base class"
+				shape.getDistanceToRightBoundary.should.throw(message)
+			})
+		})
+
+		describe('#getDistanceToLeftBoundary', function() {
+			it('should return a number', function() {
+				var message = "getDistanceToLeftBoundary() not implemented in Shape " +
+				              "base class"
+				shape.getDistanceToLeftBoundary.should.throw(message)
+			})
+		})
+
+		describe('#getDistanceToFrontBoundary', function() {
+			it('should return a number', function() {
+				var message = "getDistanceToFrontBoundary() not implemented in Shape " +
+				              "base class"
+				shape.getDistanceToFrontBoundary.should.throw(message)
+			})
+		})
+
+		describe('#getDistanceToBackBoundary', function() {
+			it('should return a number', function() {
+				var message = "getDistanceToBackBoundary() not implemented in Shape " +
+				              "base class"
+				shape.getDistanceToBackBoundary.should.throw(message)
+			})
 		})
 	})
-	
 })
 
 function shouldBehaveLikeShape(shape) {
@@ -67,28 +91,34 @@ function shouldBehaveLikeShape(shape) {
 			})
 		})
 
-		describe('#getRightPoint', function() {
-			it('should return a Point', function() {
-				shape.getRightPoint().should.be.an.instanceof(Point)
-			})
-		})
+		describe('distance to boundary functions', function() {
+			if (shape.getType() != "Shape") {			
+				// These methods are only implemented in Shape subclasses
 
-		describe('#getLeftPoint', function() {
-			it('should return a Point', function() {
-				shape.getLeftPoint().should.be.an.instanceof(Point)
-			})
-		})
+				describe('#getDistanceToRightBoundary', function() {
+					it('should return a number', function() {
+						shape.getDistanceToRightBoundary().should.be.a.Number
+					})
+				})
 
-		describe('#getFrontPoint', function() {
-			it('should return a Point', function() {
-				shape.getFrontPoint().should.be.an.instanceof(Point)
-			})
-		})
+				describe('#getDistanceToLeftBoundary', function() {
+					it('should return a number', function() {
+						shape.getDistanceToLeftBoundary().should.be.a.Number
+					})
+				})
 
-		describe('#getBackPoint', function() {
-			it('should return a Point', function() {
-				shape.getBackPoint().should.be.an.instanceof(Point)
-			})
+				describe('#getDistanceToFrontBoundary', function() {
+					it('should return a number', function() {
+						shape.getDistanceToFrontBoundary().should.be.a.Number
+					})
+				})
+
+				describe('#getDistanceToBackBoundary', function() {
+					it('should return a number', function() {
+						shape.getDistanceToBackBoundary().should.be.a.Number
+					})
+				})
+			}
 		})
 	})
 }

@@ -43,6 +43,22 @@ function Circle() {
 		if (circle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
 	}
 
+	circle.getDistanceToRightBoundary = function() {
+		return new Number(radius.getValue())
+	}
+
+	circle.getDistanceToLeftBoundary = function() {
+		return (0 - new Number(radius.getValue()))
+	}
+
+	circle.getDistanceToBackBoundary = function() {
+		return (0 - new Number(radius.getValue()))
+	}
+
+	circle.getDistanceToFrontBoundary = function() {
+		return new Number(radius.getValue())
+	}
+
 	return circle
 }
 

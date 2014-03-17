@@ -10,10 +10,8 @@ module.exports.Shape = Shape
 
 function Shape() {
 	var centre = new Point()
-	var right = new Point()
-	var left = new Point()
-	var front = new Point()
-	var back = new Point()
+
+	// setPointToOrigin(front)
 
 	return {  
 		setCentre: function(point) {
@@ -31,25 +29,24 @@ function Shape() {
 			return 'Shape'
 		},
 
-		getRightPoint: function() {
-			return right
+		getDistanceToRightBoundary: function() {
+			throw new Error("getDistanceToRightBoundary() not implemented in Shape " +
+				              "base class")
 		},
 
-		getLeftPoint: function() {
-			return left
+		getDistanceToLeftBoundary: function() {
+			throw new Error("getDistanceToLeftBoundary() not implemented in Shape " +
+				              "base class")
 		},
 
-		getBackPoint: function() {
-			return back
+		getDistanceToBackBoundary: function() {
+			throw new Error("getDistanceToBackBoundary() not implemented in Shape " +
+				              "base class")
 		},
 
-		getFrontPoint: function() {
-			return front
-		},
-
-		setupBoundaryPoints: function() {
-			throw new Error("Not implemented in subclass - necessary to link front," +
-				              " back, left and right to centre Point")
+		getDistanceToFrontBoundary: function() {
+			throw new Error("getDistanceToFrontBoundary() not implemented in Shape " +
+				              "base class")
 		}
 	}
 }
