@@ -78,7 +78,7 @@ function SpecificationWriter() {
 	}
 
 	var checkAddingIsPossible = function(train) {
-		if (!train.onlyMeshingGearsTouching()) {
+		if (!train.onlyAdjacentComponentsTouching()) {
 			var errorMessage = createOverlappingGearErrorMessage(train)
 			throw new Error(errorMessage)
 		}

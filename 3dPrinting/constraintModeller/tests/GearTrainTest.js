@@ -380,17 +380,17 @@ describe('GearTrain', function() {
 		})
 	})
 
-	describe('#onlyMeshingGearsTouching', function() {
+	describe('#onlyAdjacentComponentsTouching', function() {
 		it('should return false if the GearTrain contains Gears that are '
 			 + ' overlapping', function() {
 			train = createInvalidTrainWithOverlappingGears()
-			train.onlyMeshingGearsTouching().should.be.false
+			train.onlyAdjacentComponentsTouching().should.be.false
 		})
 
 		it('should return true if the GearTrain only contains meshing Gears',
 		   function() {
 			train = createTrainWithMeshingGears()
-			train.onlyMeshingGearsTouching().should.be.true
+			train.onlyAdjacentComponentsTouching().should.be.true
 		})		
 	})
 
