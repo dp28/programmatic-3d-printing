@@ -47,7 +47,7 @@ describe('SpecificationWriter', function() {
 
 				it('should add twice the number of Specifications as the GearTrain has '
 				 + 'Gears', function() {
-					writer.getSpecifications().length.should.equal(2 * train.getGears().length)
+					writer.getSpecifications().length.should.equal(2 * train.getComponents().length)
 				})
 			})
 
@@ -62,7 +62,7 @@ describe('SpecificationWriter', function() {
 
 				it('should add the same number of Specifications as the GearTrain has '
 				 + 'Gears', function() {
-					writer.getSpecifications().length.should.equal(train.getGears().length)
+					writer.getSpecifications().length.should.equal(train.getComponents().length)
 				})
 			})	
 
@@ -78,7 +78,7 @@ describe('SpecificationWriter', function() {
 				
 				it('should add one more Specification than the GearTrain has Gears',
 				   function() {
-					writer.getSpecifications().length.should.equal(train.getGears().length + 1)
+					writer.getSpecifications().length.should.equal(train.getComponents().length + 1)
 				})
 			})
 
@@ -243,7 +243,7 @@ describe('SpecificationWriter', function() {
 			beforeEach(function(done) {
 				writer = new SpecificationWriter()
 				train = GearTrainTest.createTestGearTrain()
-				var gears = train.getGears()
+				var gears = train.getComponents()
 				array = [gears[0].toSpecification(), 
 				         gears[0].generateSpindle().toSpecification(),
 				         gears[1].toSpecification(), 

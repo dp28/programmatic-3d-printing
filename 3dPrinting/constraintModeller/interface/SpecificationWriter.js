@@ -54,7 +54,7 @@ function SpecificationWriter() {
 
 	this.addGearTrain = function(train) {
 		checkAddingIsPossible(train)
-		gears = train.getGears()
+		gears = train.getComponents()
 		for (var i = 0; i < gears.length; i++) {
 			this.addComponent(gears[i])
 			if (train.shouldGenerateSpindlesOnWrite())

@@ -290,10 +290,10 @@ describe('GearTrain', function() {
 			it('should be possible if their circular pitches are the same',
 			   function() {
 				train = new GearTrain(circularPitch)
-				train.getGears().length.should.equal(0)			
+				train.getComponents().length.should.equal(0)			
 				train.addGear(gear)
-				train.getGears().length.should.equal(1)			
-				train.getGears()[0].getTypeName().should.equal("Gear")
+				train.getComponents().length.should.equal(1)			
+				train.getComponents()[0].getTypeName().should.equal("Gear")
 			})
 		})	
 
@@ -364,7 +364,7 @@ describe('GearTrain', function() {
 		})
 
 		it('should attach the new Gear to the GearTrain', function() {
-			train.getGears().should.contain(gear)
+			train.getComponents().should.contain(gear)
 		})
 
 		it('should give the new Gear the correct circular pitch', function() {

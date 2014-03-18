@@ -29,7 +29,7 @@ function checkIfCreationIsLegal(circPitch) {
 function GearTrain(circPitch) {
 	checkIfCreationIsLegal(circPitch)
 	train = ComponentGroup()
-	var gears = []
+	var gears = train.getComponents() // rename for convenience
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
 	var generateBaseOnWrite = true
@@ -47,11 +47,13 @@ function GearTrain(circPitch) {
 		return "GearTrain"
 	}
 
+	train._componentGroupAddComponent = train.addComponent
+
 	train.addGear = function(gear) {
 		checkIfGearCanBeAdded(gear)
 		train.changeGearToHaveSameCircularPitch(gear)
 		train.checkIfGearIsValid(gear)
-		gears.push(gear)
+		train._componentGroupAddComponent(gear)
 	} 
 
 	var checkIfGearCanBeAdded = function(gear) {
@@ -112,10 +114,6 @@ function GearTrain(circPitch) {
 
 	var calculatePitchCircleRadiusFromNumberOfTeeth = function(gear) {
 		return circularPitch * gear.getNumberOfTeeth().getValue() / (2 * Math.PI)
-	}
-
-	train.getGears = function() {
-		return gears
 	}
 
 	train.getCircularPitch = function() {
