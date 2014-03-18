@@ -3,10 +3,10 @@
  *
  * A representation of a spindle for an involute gear
  */
-var Component = require('../components/Component.js').Component
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var Component = require('../../components/Component.js').Component
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var SpindleSpecification = require('../interface/SpindleSpecification.js').SpindleSpecification
-var Circle = require('../geometry/Circle.js').Circle
+var Circle = require('../../geometry/Circle.js').Circle
 
 module.exports.Spindle = Spindle
 

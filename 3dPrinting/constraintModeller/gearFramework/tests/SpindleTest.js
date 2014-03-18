@@ -4,11 +4,11 @@
  * Tests Spindle objects
  */
 var should = require('should')
-var Component = require('../components/Component.js').Component
+var Component = require('../../components/Component.js').Component
 var Spindle = require('../components/Spindle.js').Spindle
-var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var ComponentTest = require('../tests/ComponentTest.js')
+var ComponentSpecification = require('../../interface/ComponentSpecification.js').ComponentSpecification
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
+var ComponentTest = require('../../tests/ComponentTest.js')
 var SpindleSpecificationTest = require('../tests/SpindleSpecificationTest.js')
 
 module.exports.createFullySpecifiedTestSpindle = createFullySpecifiedTestSpindle

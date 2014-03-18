@@ -6,7 +6,7 @@ CONSTRAINT_MODELLER_NAME = 'constraintModeller'
 CONSTRAINT_MODELLER_LOCATION = "../#{CONSTRAINT_MODELLER_NAME}"
 TEST_DIR_NAME = "tests"
 COVERAGE_CODE_DIR = '.instrumented_code'
-COVERAGE_DOCUMENT = 'coverage.html'
+COVERAGE_DOCUMENT = 'componentFrameworkCoverage.html'
 
 def instrumentConstraintDirectory(directory)
 	`jscoverage #{CONSTRAINT_MODELLER_LOCATION}/#{directory} #{COVERAGE_CODE_DIR}/#{directory}`

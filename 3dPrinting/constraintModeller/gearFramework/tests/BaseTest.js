@@ -5,11 +5,11 @@
  */
 var should = require('should')
 var Base = require('../components/Base.js').Base
-var Component = require('../components/Component.js').Component
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var Circle = require('../geometry/Circle.js').Circle
+var Component = require('../../components/Component.js').Component
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
+var Circle = require('../../geometry/Circle.js').Circle
 var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecification
-var ComponentTest = require('../tests/ComponentTest.js')
+var ComponentTest = require('../../tests/ComponentTest.js')
 var BaseSpecificationTest = require('../tests/BaseSpecificationTest.js')
 
 

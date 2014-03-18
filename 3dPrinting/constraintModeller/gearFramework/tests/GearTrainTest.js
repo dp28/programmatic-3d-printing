@@ -5,11 +5,11 @@
  */
  var util = require('util')
 var should = require('should')
-var Component = require('../components/Component.js').Component
+var Component = require('../../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
 var Base = require('../components/Base.js').Base 
 var GearTrain = require('../components/GearTrain.js').GearTrain
-var PlaceableComponentGroupTest = require('../tests/PlaceableComponentGroupTest.js')
+var PlaceableComponentGroupTest = require('../../tests/PlaceableComponentGroupTest.js')
 var GearTest = require('../tests/GearTest.js')
 var BaseSpecificationTest = require('../tests/BaseSpecificationTest.js')
 

@@ -5,11 +5,11 @@
  * Constraint Modelling aspect and the 3D Drawing aspect
  */
 var should = require('should')
-var Point = require('../geometry/Point.js').Point
+var Point = require('../../geometry/Point.js').Point
 var Gear = require('../components/Gear.js').Gear
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var GearTest = require('../tests/GearTest.js')
-var SpecificationTest = require('../tests/SpecificationTest.js')
+var SpecificationTest = require('../../tests/SpecificationTest.js')
 
 module.exports.testGearSpecification = testGearSpecification
 

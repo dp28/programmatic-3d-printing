@@ -4,12 +4,12 @@
  * A representation of an involute gear
  */
 var util = require('util')
-var PlaceableComponent = require('../components/PlaceableComponent.js').PlaceableComponent
-var Point = require('../geometry/Point.js').Point
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var PlaceableComponent = require('../../components/PlaceableComponent.js').PlaceableComponent
+var Point = require('../../geometry/Point.js').Point
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var Utilities = require('../Utilities.js')
-var Circle = require('../geometry/Circle.js').Circle
+var Utilities = require('../../Utilities.js')
+var Circle = require('../../geometry/Circle.js').Circle
 var Spindle = require('../components/Spindle.js').Spindle
 
 // Default clearance to 2 to give space during printing

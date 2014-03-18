@@ -9,11 +9,11 @@
 var should = require('should')
 var fs = require('fs')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
+var SpecificationWriter = require('../../interface/SpecificationWriter.js').SpecificationWriter
 var GearTest = require('../tests/GearTest.js')
 var GearTrainTest = require('../tests/GearTrainTest.js')
 
-describe('SpecificationWriter', function() {
+describe('SpecificationWriter using Gear-related Components', function() {
 	var writer, gear
 
 	beforeEach(function(){

@@ -2,7 +2,7 @@
 
 # A script to auto-generate documentation from the Mocha unit tests
 
-DOCUMENTATION_FILE = 'documentation.html'
+DOCUMENTATION_FILE = 'ComponentFrameworkDocumentation.html'
 CSS_FILE = '<link rel="stylesheet" href="documentationStyles.css"/>'
 JS_LIST_FILE = '<script src="expandableLists.js"></script>'
 JQUERY = '<script src="http://code.jquery.com/jquery-latest.min.js"></script>'

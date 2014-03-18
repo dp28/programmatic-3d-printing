@@ -4,7 +4,7 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Bases
  */
-var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
+var ComponentSpecification = require('../../interface/ComponentSpecification.js').ComponentSpecification
 module.exports.BaseSpecification = BaseSpecification
 
 function BaseSpecification(base) {

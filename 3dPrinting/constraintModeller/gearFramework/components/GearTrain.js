@@ -5,14 +5,14 @@
  * properly
  */
 var util = require('util')
-var PlaceableComponentGroup = require('../components/PlaceableComponentGroup.js').PlaceableComponentGroup
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var PlaceableComponentGroup = require('../../components/PlaceableComponentGroup.js').PlaceableComponentGroup
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
 var Base = require('../components/Base.js').Base
-var Utilities = require('../Utilities.js')
-var Circle = require('../geometry/Circle.js').Circle
-var Line = require('../geometry/Line.js').Line
-var Point = require('../geometry/Point.js').Point
+var Utilities = require('../../Utilities.js')
+var Circle = require('../../geometry/Circle.js').Circle
+var Line = require('../../geometry/Line.js').Line
+var Point = require('../../geometry/Point.js').Point
 
 module.exports.GearTrain = GearTrain
 

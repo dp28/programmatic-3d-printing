@@ -5,7 +5,7 @@
  * Constraint Modelling aspect and the 3D Drawing aspect
  */
 var should = require('should')
-var SpecificationTest = require('../tests/SpecificationTest.js')
+var SpecificationTest = require('../../tests/SpecificationTest.js')
 
 module.exports.testSpindleSpecification = testSpindleSpecification
 

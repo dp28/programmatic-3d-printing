@@ -4,16 +4,16 @@
  * Tests the Gear class
  */
 var should = require('should')
-var Component = require('../components/Component.js').Component
+var Component = require('../../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
 var Spindle = require('../components/Spindle.js').Spindle
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var Circle = require('../geometry/Circle.js').Circle
+var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
+var Circle = require('../../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
-var PlaceableComponentTest = require('../tests/PlaceableComponentTest.js')
+var ComponentSpecification = require('../../interface/ComponentSpecification.js').ComponentSpecification
+var PlaceableComponentTest = require('../../tests/PlaceableComponentTest.js')
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
-var ComponentSpecificationTest = require('../tests/ComponentSpecificationTest.js')
+var ComponentSpecificationTest = require('../../tests/ComponentSpecificationTest.js')
 
 module.exports.createFullySpecifiedTestGear = createFullySpecifiedTestGear
 
