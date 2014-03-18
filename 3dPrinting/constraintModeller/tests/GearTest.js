@@ -50,12 +50,6 @@ describe('Gear', function() {
 			                                                        Circle)
 	})
 
-	describe('#getID', function() {
-		it('should have a default of null', function() {
-			should.equal(gear.getID(), null)
-		})
-	})
-
 	describe('#getTypeName', function() {
 		it('should return "Gear"', function() {
 			gear.getTypeName().should.equal("Gear")
@@ -205,7 +199,6 @@ describe('Gear', function() {
 				beforeEach(function() {
 					setExampleNumTeethAndPitchRadius()
 					var anotherGear = new Gear() 
-					anotherGear.setID(1)
 					gear.placeOnRightOf(anotherGear)
 					gearSpec = gear.toSpecification()
 				})
@@ -325,7 +318,7 @@ describe('Gear', function() {
 	})
 
 	describe('#toString', function() {
-		var id = 1
+		var id
 		var numTeeth = 10
 		var pitchCircleRadius = 15
 		var boundRadius = 18
@@ -338,7 +331,7 @@ describe('Gear', function() {
 																					centreX,
 																					centreY,
 																					centreZ)
-			gear.setID(id)
+			id = gear.getID()
 			gear.getBoundingShape().setRadius(boundRadius)
 		})
 
@@ -389,7 +382,6 @@ describe('Gear', function() {
 			it('should describe the centre hole radius', function() {
 				string.should.contain('Centre hole radius: ')
 			})
-		})
-		
+		})		
 	})
 })

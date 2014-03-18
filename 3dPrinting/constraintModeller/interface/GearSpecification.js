@@ -6,9 +6,8 @@
  */
 module.exports.GearSpecification = GearSpecification
 
-function GearSpecification(p_id, p_numTeeth, p_circularPitch, p_pressureAngle,
+function GearSpecification(p_numTeeth, p_circularPitch, p_pressureAngle,
 			                     p_clearance, p_thickness, p_centreHoleRadius) {
-	this.id = p_id
 	this.numTeeth = p_numTeeth
 	this.circularPitch = p_circularPitch
 	this.pressureAngle = p_pressureAngle

@@ -38,5 +38,11 @@ function testComponentSpecification(componentSpec, component) {
 				componentSpec.type.should.equal(component.getTypeName())
 			})
 		})
+
+		describe('#id', function() {
+			it('should have the same value as the ID of the Component', function() {
+				componentSpec.id.should.equal(component.getID())
+			})
+		})
 	})
 }

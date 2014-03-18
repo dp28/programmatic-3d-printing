@@ -20,12 +20,6 @@ function testGearSpecification(gearSpec, gear) {
 			})
 		})
 
-		describe('#ID', function() {
-			it('should have the correct ID', function() {
-				should.equal(gearSpec.ID, gear.getID())
-			})
-		})
-
 		describe('#circularPitch', function() {
 			it('should have the correct value', function() {
 				gearSpec.circularPitch.should.equal(gear.getCircularPitch())

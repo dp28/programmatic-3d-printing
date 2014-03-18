@@ -24,7 +24,6 @@ const DEFAULT_CENTRE_HOLE_RADIUS = 4
 module.exports.Gear = Gear
 
 function Gear() {
-	var id = null
 	var gear = PlaceableComponent(Circle) 
 
 	// Set up contstrainable variables
@@ -38,14 +37,6 @@ function Gear() {
 	thickness.setValue(DEFAULT_THICKNESS)
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
-
-	gear.setID = function(newID) {
-		id = newID
-	}
-
-	gear.getID = function() {
-		return id
-	}
 
 	gear.getNumberOfTeeth = function() {
 		return numTeeth
@@ -103,8 +94,7 @@ function Gear() {
 	gear.toSpecification = function() {
 		checkIfCanCalculateCircularPitch()
 		var circularPitch = calculateCircularPitch()
-		return new GearSpecification(id,
-																 numTeeth.getValue(),
+		return new GearSpecification(numTeeth.getValue(),
 		                             circularPitch, 
 			                           pressureAngle.getValue(),
 			                           clearance.getValue(),
@@ -140,8 +130,10 @@ function Gear() {
 		return Utilities.approximatelyEqual(distanceBetween, combinedRadii, 0.001)
 	}
 
+	gear._toString = gear.toString
+
 	gear.toString = function() {
-		var string = 'Gear {\n\tID: ' + id + '\n\t' 
+		var string = gear._toString().replace('}', '')
 		string += 'Number of teeth: ' + numTeeth.getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 

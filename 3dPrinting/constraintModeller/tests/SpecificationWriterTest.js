@@ -237,13 +237,11 @@ describe('SpecificationWriter', function() {
 						fileContents.should.contain(JSON.stringify(array, null, 2))
 					})
 				})
-			})
-
-		
+			})		
 		})
 
 		describe('with a test GearTrain added', function() {
-			var train, array
+			var train, array, arrayString
 
 			beforeEach(function(done) {
 				writer = new SpecificationWriter()
@@ -256,11 +254,18 @@ describe('SpecificationWriter', function() {
 				         composer.makeSpecification(train.generateBase())]
 				writer.addComponent(train)
 				writeToFileAndGetContents(specFile, done)
+				arrayString = JSON.stringify(array, null, 2)
+				arrayString = replaceIDsWithZero(arrayString)
 			})
+
+			function replaceIDsWithZero(string) {
+				return string.replace(/\"id\": \d+,/g, '"id": 0,')
+			}
 			
 			it('should contain a pretty-printed JSON String for all Specifications '
 				 + 'in an array', function() {
-				fileContents.should.contain(JSON.stringify(array, null, 2))
+				fileContents = replaceIDsWithZero(fileContents)
+				fileContents.should.contain(arrayString)
 			})
 		}) 
 	})

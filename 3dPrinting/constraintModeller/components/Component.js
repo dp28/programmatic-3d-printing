@@ -9,12 +9,24 @@ var ComponentSpecification = require('../interface/ComponentSpecification.js').C
 
 module.exports.Component = Component
 
+var nextID = 1
+
+Component.makeNextID = function() {
+	nextID++
+	return (nextID - 1)
+}
+
 function Component(boundaryShape) {
 	if (boundaryShape == undefined)
 		boundaryShape = Circle
 
+	var id = Component.makeNextID()
 	return {
 		boundingShape: new boundaryShape(),
+
+		getID: function() {
+			return id
+		},
 
 		getBoundingShape: function() {
 			return this.boundingShape
@@ -35,7 +47,7 @@ function Component(boundaryShape) {
 
 		toComponentSpecification: function() {
 			this.checkCentreFullyDefined()
-			return new ComponentSpecification(this.getCentre(), this.getTypeName())
+			return new ComponentSpecification(id, this.getCentre(), this.getTypeName())
 		},
 
 		// Should be overriden by any subclass that needs more for its Specification
@@ -50,6 +62,13 @@ function Component(boundaryShape) {
 
 		isTouching: function(otherComponent) {
 			return this.boundingShape.isTouching(otherComponent.getBoundingShape())
-		} 
+		},
+
+		toString: function() {
+			var string = this.getTypeName() + ' { ID: ' + id + '\n'
+			string += 'Centre point: ' + this.getCentre().toString() + '\n'
+			string += '}'
+			return string
+		}
 	}
 }

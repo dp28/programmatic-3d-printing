@@ -43,6 +43,18 @@ describe('Component', function() {
 		})
 	})
 
+	describe('creation', function() {
+		var otherComponent
+
+		beforeEach(function() {
+			otherComponent = new Component() 
+		})
+		
+		it('should create a Component with a unique ID', function() {
+			component.getID().should.not.equal(otherComponent.getID())
+		})
+	})
+
 	describe('#isTouching', function() {
 		var otherComponent
 
@@ -99,6 +111,42 @@ function shouldBehaveLikeComponent(component) {
 				component.getCentre().should.not.equal(point)
 			})
 		})
+
+		describe('#toString', function() {
+		var id
+		var centreX = 1
+		var centreY = 2
+		var centreZ = 3
+
+		beforeEach(function() {
+			component = new Component()
+			id = component.getID()
+			var centre = new Point()
+			centre.setAt(centreX, centreY, centreZ)
+			component.setCentre(centre)
+		})
+
+		it('should return a string', function() {
+			component.toString().should.be.type('string')
+		})
+
+		describe('the returned string', function() {
+			var string 
+
+			beforeEach(function() {
+				string = component.toString() 
+			})
+
+			it('should contain the id', function() {
+				string.should.contain('ID: ' + id)
+			})
+			
+			it('should contain the centre point', function() {
+				string.should.contain('Centre point: (' + centreX + ', ' + centreY 
+					                    + ', ' + centreZ + ')')
+			})
+		})		
+	})
 
 		describe('#toComponentSpecification', function() {
 			var centreX = 1
