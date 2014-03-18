@@ -8,7 +8,6 @@ var fs = require('fs')
 var util = require('util')
 var console = require('console')
 var util = require('util')
-var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var MainFileWriter = require('../interface/MainFileWriter.js').MainFileWriter
 
 module.exports.SpecificationWriter = SpecificationWriter
