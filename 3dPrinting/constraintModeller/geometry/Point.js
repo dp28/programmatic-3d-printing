@@ -118,4 +118,25 @@ function Point() {
 		var yDifference = y.getValue() - otherPoint.getY().getValue()
 		return Math.sqrt(xDifference * xDifference + yDifference * yDifference)
 	}
+
+	this.distanceToOnAxis = function(otherPoint, axis) {
+		var getAxis = 'get' + axis
+		var xDifference = Math.abs(this[getAxis]().getValue() - otherPoint[getAxis]().getValue())
+		if (this[getAxis]().getValue() > otherPoint[getAxis]().getValue())
+			xDifference = -xDifference
+		return xDifference
+	}
+
+	this.differOnlyOnAxis = function(otherPoint, axis) {
+		var getAxis = 'get' + axis
+		var result = this[getAxis]().getValue() != otherPoint[getAxis]().getValue()
+		var axes = Point.getAxesNamesWithout(axis)
+		for (var i = axes.length - 1; i >= 0; i--) {
+			getAxis = 'get' + axes[i]
+			result = result 
+			         && this[getAxis]().getValue() == otherPoint[getAxis]().getValue()
+		}
+
+		return result
+	}
 } 

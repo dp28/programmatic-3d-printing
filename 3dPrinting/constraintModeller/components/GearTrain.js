@@ -148,7 +148,7 @@ function GearTrain(circPitch) {
 	train.onlyAdjacentComponentsTouching = function() {
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
-				if (gears[i].isTouching(gears[j]) && !gears[i].isMeshingWith(gears[j]))
+				if (gears[i].isTouching(gears[j]) && !gears[i].isAdjacentTo(gears[j]))
 					return false
 			}
 		}
@@ -159,7 +159,7 @@ function GearTrain(circPitch) {
 		var overlapping = []
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
-				if (gears[i].isTouching(gears[j]) && !gears[i].isMeshingWith(gears[j]))
+				if (gears[i].isTouching(gears[j]) && !gears[i].isAdjacentTo(gears[j]))
 					overlapping.push(gears[i], gears[j])
 			}
 		}
@@ -202,7 +202,7 @@ function GearTrain(circPitch) {
 	var addSupportingLinesToBase = function(base) {
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
-				if (gears[i].isMeshingWith(gears[j]))
+				if (gears[i].isAdjacentTo(gears[j]))
 					addSupportingLineBetween(base, gears[i], gears[j])
 			}
 		}

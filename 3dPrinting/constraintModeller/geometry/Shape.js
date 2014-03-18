@@ -3,8 +3,10 @@
  *
  * A shape with constrainable properties.
  */
+var util = require('util')
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var Utilities = require('../Utilities.js')
 
 module.exports.Shape = Shape
 
@@ -49,7 +51,26 @@ function Shape() {
 
 		isTouching: function(otherShape) {
 			return checkIfTwoCirclesIntersect(this, otherShape)
-		} 
+		},
+
+		isAdjacentTo: function(otherShape){
+			var yAxisBoundaryDistance = this.getDistanceToFrontBoundary() - 
+			                            otherShape.getDistanceToBackBoundary()
+			var xAxisBoundaryDistance = this.getDistanceToLeftBoundary() - 
+			                            otherShape.getDistanceToRightBoundary()
+			return this.isAdjacentOnAxis(otherShape, 'X', xAxisBoundaryDistance)
+			       || this.isAdjacentOnAxis(otherShape, 'Y', yAxisBoundaryDistance)
+
+		},
+
+		isAdjacentOnAxis: function(otherShape, axis, distanceToBoundaries) {
+			var centre = this.getCentre()
+			var otherCentre = otherShape.getCentre()
+			var distanceBetween = centre.distanceToOnAxis(otherCentre, axis)
+			var differOnlyOnAxis = centre.differOnlyOnAxis(otherCentre, axis)
+			var adjacentOnAxis = Utilities.approximatelyEqual(distanceBetween, distanceToBoundaries, 0.001)
+			return adjacentOnAxis && differOnlyOnAxis
+		}
 	}
 }
 

@@ -117,7 +117,7 @@ function Gear() {
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
 
-	gear.isMeshingWith = function(otherGear) {
+	gear.isAdjacentTo = function(otherGear) {
 		var pitchRadius = pitchCircleRadius.getValue()
 		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()
 		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())

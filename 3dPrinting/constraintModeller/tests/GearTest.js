@@ -296,7 +296,7 @@ describe('Gear', function() {
 		})
 	})
 
-	describe('#isMeshingWith', function() {
+	describe('#isAdjacentTo', function() {
 		beforeEach(function() {
 			gear = new Gear()
 			gear.setPitchCircleRadius(10)
@@ -307,18 +307,18 @@ describe('Gear', function() {
 		})
 		
 		it('should be false if the Gears\' pitch circles overlap', function() {
-			gear.isMeshingWith(otherGear).should.be.false
+			gear.isAdjacentTo(otherGear).should.be.false
 		})
 
 		it('should be false if the Gears\' pitch circles do not touch', function() {
 			otherGear.setPitchCircleRadius(1)
-			gear.isMeshingWith(otherGear).should.be.false
+			gear.isAdjacentTo(otherGear).should.be.false
 		})
 
 		it('should be true if the Gears have been set to mesh', function() {
 			gear.placeOnLeftOf(otherGear)
 			otherGear.getCentre().setAt(1.6, 2.9, 30)
-			gear.isMeshingWith(otherGear).should.be.true
+			gear.isAdjacentTo(otherGear).should.be.true
 		})
 	})
 
