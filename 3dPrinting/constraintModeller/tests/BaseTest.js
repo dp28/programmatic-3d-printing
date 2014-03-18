@@ -49,11 +49,6 @@ describe('Base', function() {
 			}).should.not.throw()
  		})
 
-		it('should return a BaseSpecification Object', function() {
-			base.setHeight(10)
-			base.toSpecification().should.be.an.instanceof(BaseSpecification)
-		})
-
 		describe('the returned BaseSpecification', function() {
 			var baseSpec
 

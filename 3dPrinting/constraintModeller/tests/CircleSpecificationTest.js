@@ -5,6 +5,7 @@
  * Constraint Modelling aspect and the 3D Drawing aspect for Circles
  */
 var should = require('should')
+var SpecificationTest = require('../tests/SpecificationTest.js')
 
 module.exports.testCircleSpecification = testCircleSpecification
 
@@ -13,6 +14,10 @@ function testCircleSpecification(circleSpec, circle) {
 	describe('CircleSpecification', function() {	
 		it('should have the same radius as the Circle that created it', function() {
 			circleSpec.radius.should.equal(circle.getRadius().getValue())
+		})
+
+		it('should behave like a Specification', function() {
+			SpecificationTest.shouldBehaveLikeSpecification(circleSpec)
 		})
 
 		it('should have the same centre x coordinate as the Circle that created it',

@@ -169,11 +169,6 @@ function shouldBehaveLikeComponent(component) {
 										}).should.not.throw()
 	 		})
 
-			it('should return a ComponentSpecification Object', function() {
-				fixCentre()
-				component.toComponentSpecification().should.be.an.instanceOf(ComponentSpecification)
-			})
-
 			describe('the returned ComponentSpecification', function() {
 				var componentSpec
 

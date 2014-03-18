@@ -173,11 +173,6 @@ describe('Gear', function() {
 			gear.toSpecification.should.not.throw()
  		})
 
-		it('should return a GearSpecification Object', function() {
-			setExampleNumTeethAndPitchRadius()
-			gear.toSpecification().should.be.an.instanceOf(GearSpecification)
-		})
-
 		describe('the returned GearSpecification', function() {
 			var gearSpec
 

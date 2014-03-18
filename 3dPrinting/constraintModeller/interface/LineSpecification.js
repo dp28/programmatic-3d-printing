@@ -4,14 +4,18 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Lines
  */
+var Specification = require('../interface/Specification.js').Specification
+
 module.exports.LineSpecification = LineSpecification
 
 function LineSpecification(c, l, a, w) {
-	this.type = "Line"
-	this.centreX = c.getX().getValue()
-	this.centreY = c.getY().getValue()
-	this.centreZ = c.getZ().getValue()
-	this.length = l
-	this.width = w
-	this.angleInRadians = a
+	var spec = new Specification()
+	spec.type = "Line"
+	spec.centreX = c.getX().getValue()
+	spec.centreY = c.getY().getValue()
+	spec.centreZ = c.getZ().getValue()
+	spec.length = l
+	spec.width = w
+	spec.angleInRadians = a
+	return spec
 }

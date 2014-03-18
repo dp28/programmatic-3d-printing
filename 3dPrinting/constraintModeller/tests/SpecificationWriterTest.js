@@ -21,7 +21,7 @@ describe('SpecificationWriter', function() {
 		gear = GearTest.createFullySpecifiedTestGear()
 	})
 
-	describe('#addComponent', function() {
+	describe.skip('#addComponent', function() {
 		it('should add a new ComponentSpecification to the writer', function() {
 			writer.getSpecifications().length.should.equal(0)
 			writer.addComponent(gear)

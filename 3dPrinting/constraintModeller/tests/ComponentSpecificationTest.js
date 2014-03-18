@@ -8,6 +8,7 @@ var should = require('should')
 var Point = require('../geometry/Point.js').Point
 var Component = require('../components/Component.js').Component
 var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
+var SpecificationTest = require('../tests/SpecificationTest.js')
 
 module.exports.testComponentSpecification = testComponentSpecification
 
@@ -15,6 +16,11 @@ function testComponentSpecification(componentSpec, component) {
 	var centre = component.getCentre()
 
 	describe('ComponentSpecification',function() {		
+
+		it('should behave like a Specification', function() {
+			SpecificationTest.shouldBehaveLikeSpecification(componentSpec)
+		})
+
 		describe('#centreX', function() {
 			it('should have the correct value', function() {
 				componentSpec.centreX.should.equal(centre.getX().getValue())

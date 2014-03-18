@@ -4,11 +4,14 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Bases
  */
+var Specification = require('../interface/Specification.js').Specification
 module.exports.BaseSpecification = BaseSpecification
 
 function BaseSpecification(h, p) {
-	this.height = h
-	this.parts = makePartSpecifications(p)
+	spec = new Specification()
+	spec.height = h
+	spec.parts = makePartSpecifications(p)
+	return spec
 }
 
 function makePartSpecifications(parts) {

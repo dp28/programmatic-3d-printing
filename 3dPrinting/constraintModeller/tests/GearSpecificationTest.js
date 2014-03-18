@@ -9,11 +9,17 @@ var Point = require('../geometry/Point.js').Point
 var Gear = require('../components/Gear.js').Gear
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var GearTest = require('../tests/GearTest.js')
+var SpecificationTest = require('../tests/SpecificationTest.js')
 
 module.exports.testGearSpecification = testGearSpecification
 
 function testGearSpecification(gearSpec, gear) {
 	describe('GearSpecification', function() {
+
+		it('should behave like a Specification', function() {
+			SpecificationTest.shouldBehaveLikeSpecification(gearSpec)
+		})
+		
 		describe('#numTeeth', function() {
 			it('should have the correct value', function() {
 				gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())

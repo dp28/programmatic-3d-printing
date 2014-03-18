@@ -5,12 +5,18 @@
  * Constraint Modelling aspect and the 3D Drawing aspect for Lines
  */
 var should = require('should')
+var SpecificationTest = require('../tests/SpecificationTest.js')
 
 module.exports.testLineSpecification = testLineSpecification
 
 function testLineSpecification(lineSpec, line) {
 	
 	describe('LineSpecification', function() {	
+
+		it('should behave like a Specification', function() {
+			SpecificationTest.shouldBehaveLikeSpecification(lineSpec)
+		})
+		
 		it('should have the same length as the Line that created it', function() {
 			lineSpec.length.should.equal(line.getLength())
 		})
