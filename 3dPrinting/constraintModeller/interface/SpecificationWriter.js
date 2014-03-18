@@ -8,7 +8,6 @@ var fs = require('fs')
 var util = require('util')
 var console = require('console')
 var util = require('util')
-var GearTrain = require('../components/GearTrain.js').GearTrain
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var MainFileWriter = require('../interface/MainFileWriter.js').MainFileWriter
 
@@ -44,24 +43,20 @@ function SpecificationWriter() {
 	}
 
 	this.addComponent = function(component) {
-		if (component.getTypeName() == "GearTrain") 
-			this.addGearTrain(component)
-		else {
-			specifications.push(component.toSpecification())
-			components.push(component)
+		specifications.push(component.toSpecification())
+		components.push(component)
+	}
+
+	this.addAllComponents = function(componentArray) {
+		for (var i = 0; i < componentArray.length; i++) {
+			this.addComponent(componentArray[i])
 		}
 	}
 
-	this.addGearTrain = function(train) {
-		checkAddingIsPossible(train)
-		gears = train.getComponents()
-		for (var i = 0; i < gears.length; i++) {
-			this.addComponent(gears[i])
-			if (train.shouldGenerateSpindlesOnWrite())
-				this.addComponent(gears[i].generateSpindle())
-		}
-		if (train.shouldGenerateBaseOnWrite())
-			this.addComponent(train.generateBase())
+	this.addComponentGroup = function(group) {
+		group.checkCanBeDrawn()
+		this.addAllComponents(group.getComponents())
+		this.addAllComponents(group.getAuxillaryComponents())
 	}
 
 	this.writeSpecificationToFile = function() {
@@ -75,24 +70,6 @@ function SpecificationWriter() {
 		string += JSON.stringify(specifications, null, 2)
 		string += COMPONENT_SUFFIX
 		fs.writeFileSync(SPECIFICATION_FILE_NAME, string)
-	}
-
-	var checkAddingIsPossible = function(train) {
-		if (!train.onlyAdjacentComponentsTouching()) {
-			var errorMessage = createOverlappingGearErrorMessage(train)
-			throw new Error(errorMessage)
-		}
-	}
-
-	var createOverlappingGearErrorMessage = function(train) {
-		var string = "Invalid GearTrain - contains overlapping Gears: \n"
-		var gears = train.findTouchingNonAdjacentComponents()
-		for (var i = gears.length - 1; i >= 0; i--) {
-			string += gears[i].toString() + ',\n'
-		};
-
-		string = string.substring (0, string.length - 2) // remove trailing ,\n
-		return string
 	}
 
 	var createComponentSelectionParameter = function() {

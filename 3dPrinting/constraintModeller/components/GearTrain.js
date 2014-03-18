@@ -145,6 +145,17 @@ function GearTrain(circPitch) {
 		return gear
 	}
 
+	train.getAuxillaryComponents = function() {
+		var auxillaries = []
+		for (var i = 0; i < gears.length; i++) {
+			if (train.shouldGenerateSpindlesOnWrite())
+				auxillaries.push(gears[i].generateSpindle())
+		}
+		if (train.shouldGenerateBaseOnWrite())
+			auxillaries.push(train.generateBase())
+		return auxillaries
+	}
+
 	train.generateBase = function() {
 		var base = new Base()
 		base.getCentre().setAt(0, 0, 0)
