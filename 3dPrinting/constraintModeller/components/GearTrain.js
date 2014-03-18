@@ -145,16 +145,6 @@ function GearTrain(circPitch) {
 		return gear
 	}
 
-	train.onlyAdjacentComponentsTouching = function() {
-		for (var i = 0; i < gears.length; i++) {
-			for (var j = 0; j < gears.length && j != i; j++) {
-				if (gears[i].isTouching(gears[j]) && !gears[i].isAdjacentTo(gears[j]))
-					return false
-			}
-		}
-		return true
-	}
-
 	train.findNonMeshingTouchingGears = function() {
 		var overlapping = []
 		for (var i = 0; i < gears.length; i++) {
