@@ -86,7 +86,7 @@ function SpecificationWriter() {
 
 	var createOverlappingGearErrorMessage = function(train) {
 		var string = "Invalid GearTrain - contains overlapping Gears: \n"
-		var gears = train.findNonMeshingTouchingGears()
+		var gears = train.findTouchingNonAdjacentComponents()
 		for (var i = gears.length - 1; i >= 0; i--) {
 			string += gears[i].toString() + ',\n'
 		};

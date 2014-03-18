@@ -394,7 +394,7 @@ describe('GearTrain', function() {
 		})		
 	})
 
-	describe('#findNonMeshingTouchingGears', function() {
+	describe('#findTouchingNonAdjacentComponents', function() {
 		var firstGear, secondGear
 
 		beforeEach(function() {
@@ -406,13 +406,13 @@ describe('GearTrain', function() {
 		})
 		
 		it('should return all the overlapping Gears if there are any', function() {
-			train.findNonMeshingTouchingGears().should.contain(firstGear)
-			train.findNonMeshingTouchingGears().should.contain(secondGear)
+			train.findTouchingNonAdjacentComponents().should.contain(firstGear)
+			train.findTouchingNonAdjacentComponents().should.contain(secondGear)
 		})
 
 		it('should return an empty array if no Gears overlap', function() {
 			train = createTrainWithMeshingGears()
-			train.findNonMeshingTouchingGears().should.eql([])
+			train.findTouchingNonAdjacentComponents().should.eql([])
 		})
 	})
 })

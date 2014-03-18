@@ -98,7 +98,7 @@ describe('SpecificationWriter', function() {
 					var errorMessage, overlappingGears
 
 					beforeEach(function() {
-						overlappingGears = train.findNonMeshingTouchingGears()
+						overlappingGears = train.findTouchingNonAdjacentComponents()
 						try {
 							writer.addComponent(train)
 						} 
