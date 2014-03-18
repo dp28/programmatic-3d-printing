@@ -3,9 +3,9 @@
  *
  * Holds a group of Components.
  */
-module.exports.ComponentGroup = ComponentGroup
+module.exports.PlaceableComponentGroup = PlaceableComponentGroup
 
-function ComponentGroup() {
+function PlaceableComponentGroup() {
 	var components = []
 
 	return {

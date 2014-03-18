@@ -6,10 +6,14 @@
 var util = require('util')
 var Component = require('../components/Component.js').Component
 var Point = require('../geometry/Point.js').Point
+var Circle = require('../geometry/Circle.js').Circle
 
 module.exports.PlaceableComponent = PlaceableComponent
 
 function PlaceableComponent(boundaryShape, placementShapeType) {
+	// Defaults
+	if (boundaryShape == undefined)
+		boundaryShape = Circle
 	if (placementShapeType == undefined)
 		placementShapeType = boundaryShape
 

@@ -5,7 +5,7 @@
  * properly
  */
 var util = require('util')
-var ComponentGroup = require('../components/ComponentGroup.js').ComponentGroup
+var PlaceableComponentGroup = require('../components/PlaceableComponentGroup.js').PlaceableComponentGroup
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
 var Base = require('../components/Base.js').Base
@@ -28,7 +28,7 @@ function checkIfCreationIsLegal(circPitch) {
  */ 
 function GearTrain(circPitch) {
 	checkIfCreationIsLegal(circPitch)
-	train = ComponentGroup()
+	train = PlaceableComponentGroup()
 	var gears = train.getComponents() // rename for convenience
 	var circularPitch = circPitch
 	var generateSpindlesOnWrite = true
