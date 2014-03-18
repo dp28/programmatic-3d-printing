@@ -12,6 +12,25 @@ var ComponentTest = require('../tests/ComponentTest.js')
 var ShapeTest = require('../tests/ShapeTest.js')
 
 module.exports.shouldBehaveLikePlaceableComponent = shouldBehaveLikePlaceableComponent
+module.exports.createFullySpecifiedTestComponent = createFullySpecifiedTestComponent
+
+function createFullySpecifiedTestComponent(x, y, z, radius) {
+	x = defaultTo(x, 1)
+	y = defaultTo(y, 2)
+	z = defaultTo(z, 3)
+	radius = defaultTo(radius, 1)
+	var placeable = new PlaceableComponent() 
+	placeable.getCentre().setAt(x, y, z)
+	placeable.getBoundingShape().setRadius(radius)
+	return placeable
+}
+
+function defaultTo(variable, defaultValue) {
+	if (variable == undefined)
+		return defaultValue
+	else
+		return variable
+}
 
 describe('PlaceableComponent', function() {
 	it('should behave like a PlaceableComponent', function() {
