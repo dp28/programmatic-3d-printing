@@ -30,13 +30,6 @@ describe('Component', function() {
 	})
 
 	// Overidden by subclasses
-	describe('#toSpecification', function() {
-		it('should return null', function() {
-			should(component.toSpecification()).be.null
-		})
-	})
-
-	// Overidden by subclasses
 	describe('#getTypeName', function() {
 		it('should return "Component"', function() {
 			component.getTypeName().should.equal('Component')
@@ -148,7 +141,7 @@ function shouldBehaveLikeComponent(component) {
 		})		
 	})
 
-		describe('#toComponentSpecification', function() {
+		describe('#toSpecification', function() {
 			var centreX = 1
 			var centreY = 2
 			var centreZ = 3
@@ -159,13 +152,13 @@ function shouldBehaveLikeComponent(component) {
 
 			it('should not be possible if the centre Point is not fully defined',
 				 function() {
-				component.toComponentSpecification.should.throw()
+				component.toSpecification.should.throw()
 			})
 
 			it('should be possible if the centre Point is fully defined ', function() {
 				(function() {
 											fixCentre()
-											component.toComponentSpecification()
+											component.toSpecification()
 										}).should.not.throw()
 	 		})
 
@@ -174,7 +167,7 @@ function shouldBehaveLikeComponent(component) {
 
 				beforeEach(function() {
 					fixCentre()			
-					componentSpec = component.toComponentSpecification()				
+					componentSpec = component.toSpecification()				
 				})
 
 				it('should behave like a ComponentSpecification derived from the '

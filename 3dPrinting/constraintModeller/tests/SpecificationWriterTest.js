@@ -7,26 +7,23 @@
 var should = require('should')
 var fs = require('fs')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var SpecificationWriter = require('../interface/SpecificationWriter.js').SpecificationWriter
 var GearTest = require('../tests/GearTest.js')
 var GearTrainTest = require('../tests/GearTrainTest.js')
 
 describe('SpecificationWriter', function() {
-	var writer, gear, composer
+	var writer, gear
 
 	beforeEach(function(){
-		composer = new SpecificationComposer()
 		writer = new SpecificationWriter()
 		gear = GearTest.createFullySpecifiedTestGear()
 	})
 
-	describe.skip('#addComponent', function() {
-		it('should add a new ComponentSpecification to the writer', function() {
+	describe('#addComponent', function() {
+		it('should add a new Specification to the writer', function() {
 			writer.getSpecifications().length.should.equal(0)
 			writer.addComponent(gear)
 			writer.getSpecifications().length.should.equal(1)
-			writer.getSpecifications()[0].should.eql(composer.makeSpecification(gear))
 		})
 
 		describe('When the Component is a GearTrain', function() {
@@ -209,8 +206,8 @@ describe('SpecificationWriter', function() {
 
 				it('should contain a pretty-printed JSON String for both '
 					 + 'GearSpecifications in an array', function() {
-					var array = [composer.makeSpecification(gear), 
-					 	           composer.makeSpecification(otherGear)]
+					var array = [gear.toSpecification(), 
+					 	           otherGear.toSpecification()]
 					fileContents.should.contain(JSON.stringify(array, null, 2))
 				})
 
@@ -230,10 +227,10 @@ describe('SpecificationWriter', function() {
 
 					it('should contain a pretty-printed JSON String for all Specifications '
 						 + 'in an array', function() {
-						var array = [composer.makeSpecification(gear), 
-						 	           composer.makeSpecification(otherGear),
-						 	           composer.makeSpecification(spindle),
-						 	           composer.makeSpecification(otherSpindle)]
+						var array = [gear.toSpecification(), 
+						 	           otherGear.toSpecification(),
+						 	           spindle.toSpecification(),
+						 	           otherSpindle.toSpecification()]
 						fileContents.should.contain(JSON.stringify(array, null, 2))
 					})
 				})
@@ -247,11 +244,11 @@ describe('SpecificationWriter', function() {
 				writer = new SpecificationWriter()
 				train = GearTrainTest.createTestGearTrain()
 				var gears = train.getGears()
-				array = [composer.makeSpecification(gears[0]), 
-				         composer.makeSpecification(gears[0].generateSpindle()),
-				         composer.makeSpecification(gears[1]), 
-				         composer.makeSpecification(gears[1].generateSpindle()),
-				         composer.makeSpecification(train.generateBase())]
+				array = [gears[0].toSpecification(), 
+				         gears[0].generateSpindle().toSpecification(),
+				         gears[1].toSpecification(), 
+				         gears[1].generateSpindle().toSpecification(),
+				         train.generateBase().toSpecification()]
 				writer.addComponent(train)
 				writeToFileAndGetContents(specFile, done)
 				arrayString = JSON.stringify(array, null, 2)

@@ -34,11 +34,20 @@ function Spindle() {
 		spindle.getBoundingShape().setRadius(radius)
 	}
 
+	spindle._componentToSpecification = spindle.toSpecification
+
 	spindle.toSpecification = function() {
+		checkFullySpecified()
+		var componentSpec = spindle._componentToSpecification()
+		var spindleSpec = SpindleSpecification(height.getValue(), 
+			                                     spindle.getRadius().getValue())
+		spindleSpec.addSpecification(componentSpec)
+		return spindleSpec
+	}
+
+	var checkFullySpecified = function() {
 		if (height.isNotSet()) throw new Error("Height not set")
 		if (spindle.getRadius().isNotSet()) throw new Error("Radius not set")
-		return new SpindleSpecification(height.getValue(), 
-			                              spindle.getRadius().getValue())
 	}
 
 	return spindle

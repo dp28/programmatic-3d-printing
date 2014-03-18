@@ -91,15 +91,20 @@ function Gear() {
 		return Math.PI * pitchCircleRadius.getValue() * 2 / numTeeth.getValue()
 	}
 
+	gear._componentToSpecification = gear.toSpecification
+
 	gear.toSpecification = function() {
 		checkIfCanCalculateCircularPitch()
+		var componentSpec = gear._componentToSpecification()
 		var circularPitch = calculateCircularPitch()
-		return new GearSpecification(numTeeth.getValue(),
+		var gearSpec = GearSpecification(numTeeth.getValue(),
 		                             circularPitch, 
 			                           pressureAngle.getValue(),
 			                           clearance.getValue(),
 			                           thickness.getValue(),
 			                           centreHoleRadius.getValue())
+		gearSpec.addSpecification(componentSpec)
+		return gearSpec
 	}
 
 	gear.getTypeName = function() {
@@ -130,10 +135,10 @@ function Gear() {
 		return Utilities.approximatelyEqual(distanceBetween, combinedRadii, 0.001)
 	}
 
-	gear._toString = gear.toString
+	gear._componentToString = gear.toString
 
 	gear.toString = function() {
-		var string = gear._toString().replace('}', '')
+		var string = gear._componentToString().replace('}', '')
 		string += 'Number of teeth: ' + numTeeth.getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 

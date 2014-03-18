@@ -10,7 +10,6 @@ var console = require('console')
 var util = require('util')
 var GearTrain = require('../components/GearTrain.js').GearTrain
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var SpecificationComposer = require('../interface/SpecificationComposer.js').SpecificationComposer
 var MainFileWriter = require('../interface/MainFileWriter.js').MainFileWriter
 
 module.exports.SpecificationWriter = SpecificationWriter
@@ -37,7 +36,6 @@ const DEFAULT_SELECTION_VALUES = ['"All"', '"Gears only"', '"Base only"']
 
 function SpecificationWriter() {
 	var specifications = []
-	var composer = new SpecificationComposer()
 	var mainFileWriter = new MainFileWriter()
 	var components = []
  
@@ -49,7 +47,7 @@ function SpecificationWriter() {
 		if (component.getTypeName() == "GearTrain") 
 			this.addGearTrain(component)
 		else {
-			specifications.push(composer.makeSpecification(component))
+			specifications.push(component.toSpecification())
 			components.push(component)
 		}
 	}

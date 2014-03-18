@@ -150,6 +150,11 @@ describe('Gear', function() {
 	})
 
 	describe('#toSpecification', function() {
+
+		beforeEach(function() {
+			gear.getCentre().setAt(1, 2, 3) // Necessary for component.toSpecification 
+		})
+		
 		it('should not be possible if neither the number of teeth nor the pitch '
 			 + ' radius has been set', function() {
 			gear.toSpecification.should.throw("Number of teeth not set")
@@ -184,6 +189,11 @@ describe('Gear', function() {
 			it('should behave like a GearSpecification created by the Gear',
 			   function() {
 				GearSpecificationTest.testGearSpecification(gearSpec, gear)
+			})
+
+			it('should behave like a ComponentSpecification created by the Gear',
+				 function() {
+				ComponentSpecificationTest.testComponentSpecification(gearSpec, gear)
 			})
 		})
 

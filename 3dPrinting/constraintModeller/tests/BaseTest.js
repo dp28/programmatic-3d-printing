@@ -38,6 +38,10 @@ describe('Base', function() {
 	
 	describe('#toSpecification', function() {
 
+		beforeEach(function() {
+			base.getCentre().setAt(1, 2, 3) // Necessary for component.toSpecification 
+		})
+
 		it('should not be possible if the height has not been set', function() {
 			base.toSpecification.should.throw("Height not set")
 		})

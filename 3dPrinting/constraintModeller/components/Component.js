@@ -45,14 +45,9 @@ function Component(boundaryShape) {
 				throw "Point not fully defined"
 		},
 
-		toComponentSpecification: function() {
+		toSpecification: function() {
 			this.checkCentreFullyDefined()
 			return new ComponentSpecification(id, this.getCentre(), this.getTypeName())
-		},
-
-		// Should be overriden by any subclass that needs more for its Specification
-		toSpecification: function() {
-			return null
 		},
 
 		// Should be overriden by all subclassed to give their name
