@@ -8,12 +8,22 @@ var Specification = require('../interface/Specification.js').Specification
 
 module.exports.ComponentSpecification = ComponentSpecification
 
-function ComponentSpecification(component_id, centre, t) {
+function ComponentSpecification(component) {
 	var spec = new Specification()
-	spec.id = component_id
-	spec.centreX = centre.getX().getValue()
-	spec.centreY = centre.getY().getValue()
-	spec.centreZ = centre.getZ().getValue()
-	spec.type = t
+	convertToProperties(component)
+
+	function convertToProperties(component) {
+		spec.id = component.getID()
+		spec.type = component.getTypeName()
+		addCentreValues()
+	}
+
+	function addCentreValues() {
+		var centre = component.getCentre()
+		spec.centreX = centre.getX().getValue()
+		spec.centreY = centre.getY().getValue()
+		spec.centreZ = centre.getZ().getValue()
+	}
+
 	return spec
 }

@@ -34,15 +34,9 @@ function Spindle() {
 		spindle.getBoundingShape().setRadius(radius)
 	}
 
-	spindle._componentToSpecification = spindle.toSpecification
-
 	spindle.toSpecification = function() {
 		checkFullySpecified()
-		var componentSpec = spindle._componentToSpecification()
-		var spindleSpec = SpindleSpecification(height.getValue(), 
-			                                     spindle.getRadius().getValue())
-		spindleSpec.addSpecification(componentSpec)
-		return spindleSpec
+		return new SpindleSpecification(spindle)
 	}
 
 	var checkFullySpecified = function() {

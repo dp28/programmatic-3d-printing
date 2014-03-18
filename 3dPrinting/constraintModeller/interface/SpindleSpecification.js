@@ -4,13 +4,13 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Spindles
  */
-var Specification = require('../interface/Specification.js').Specification
+var ComponentSpecification = require('../interface/ComponentSpecification.js').ComponentSpecification
 
 module.exports.SpindleSpecification = SpindleSpecification
 
-function SpindleSpecification(h, r) {
-	var spec = new Specification()
-	spec.height = h
-	spec.radius = r
+function SpindleSpecification(spindle) {
+	var spec = new ComponentSpecification(spindle)
+	spec.height = spindle.getHeight().getValue()
+	spec.radius = spindle.getRadius().getValue()
 	return spec
 }

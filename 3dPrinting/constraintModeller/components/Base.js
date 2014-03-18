@@ -62,14 +62,9 @@ function Base() {
 			throw new Error("Height not set")
 	}
 
-	base._componentToSpecification = base.toSpecification
-
 	base.toSpecification = function() {
 		checkCanGenerateSpecification(base)
-		var componentSpec = base._componentToSpecification()
-		var baseSpec = BaseSpecification(height.getValue(), parts)
-		baseSpec.addSpecification(componentSpec)
-		return baseSpec
+		return new BaseSpecification(base)
 	}
 
 	return base

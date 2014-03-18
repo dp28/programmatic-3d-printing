@@ -47,7 +47,7 @@ function Component(boundaryShape) {
 
 		toSpecification: function() {
 			this.checkCentreFullyDefined()
-			return new ComponentSpecification(id, this.getCentre(), this.getTypeName())
+			return new ComponentSpecification(this)
 		},
 
 		// Should be overriden by all subclassed to give their name

@@ -91,20 +91,10 @@ function Gear() {
 		return Math.PI * pitchCircleRadius.getValue() * 2 / numTeeth.getValue()
 	}
 
-	gear._componentToSpecification = gear.toSpecification
-
 	gear.toSpecification = function() {
 		checkIfCanCalculateCircularPitch()
-		var componentSpec = gear._componentToSpecification()
 		var circularPitch = calculateCircularPitch()
-		var gearSpec = GearSpecification(numTeeth.getValue(),
-		                             circularPitch, 
-			                           pressureAngle.getValue(),
-			                           clearance.getValue(),
-			                           thickness.getValue(),
-			                           centreHoleRadius.getValue())
-		gearSpec.addSpecification(componentSpec)
-		return gearSpec
+		return new GearSpecification(gear)
 	}
 
 	gear.getTypeName = function() {
