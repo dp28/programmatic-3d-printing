@@ -117,14 +117,6 @@ function Gear() {
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
 
-	gear.isAdjacentTo = function(otherGear) {
-		var pitchRadius = pitchCircleRadius.getValue()
-		var otherPitchRadius = otherGear.getPitchCircleRadius().getValue()
-		var distanceBetween = gear.getCentre().distanceToOnXYPlane(otherGear.getCentre())
-		var combinedRadii = pitchRadius + otherPitchRadius
-		return Utilities.approximatelyEqual(distanceBetween, combinedRadii, 0.001)
-	}
-
 	gear._componentToString = gear.toString
 
 	gear.toString = function() {

@@ -34,6 +34,11 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		return adjacentComponents
 	}
 
+	placeable.isAdjacentTo = function(otherPlaceable) {
+		var place
+		return placementShape.isAdjacentTo(otherPlaceable.getPlacementShape())
+	}
+
 	placeable.placeOnRightOf = function(otherPlaceable) {
 		placeable.placeAdjacentTo(otherPlaceable, 'X', 'Right', 'Left')
 	}
