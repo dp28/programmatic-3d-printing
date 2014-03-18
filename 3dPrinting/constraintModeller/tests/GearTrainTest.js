@@ -55,7 +55,7 @@ describe('GearTrain', function() {
 	})
 
 	it('should behave like a Component', function() {
-		ComponentGroupTest.shouldBehaveLikeComponentGroup(train)
+		ComponentGroupTest.shouldBehaveLikeComponentGroup(train, Gear)
 	})
 
 	describe('#getTypeName', function() {

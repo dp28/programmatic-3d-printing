@@ -23,13 +23,15 @@ describe('ComponentGroup', function() {
 	})
 })	
 
-function shouldBehaveLikeComponentGroup(group) {
+function shouldBehaveLikeComponentGroup(group, ComponentType) {
+	if (ComponentType == undefined)
+		ComponentType = Component
 	describe('Anything inheriting from ComponentGroup', function() {
 		var component, placeable
 
 		beforeEach(function() {
-		 	component = new Component()
-		 	placeable = new PlaceableComponent(Circle)
+		 	component = new ComponentType()
+		 	placeable = new ComponentType()
 		})
 		 
 		describe('#addComponent', function() {
