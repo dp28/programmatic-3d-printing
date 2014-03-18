@@ -9,7 +9,7 @@ var Component = require('../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
 var Base = require('../components/Base.js').Base 
 var GearTrain = require('../components/GearTrain.js').GearTrain
-var ComponentTest = require('../tests/ComponentTest.js')
+var ComponentGroupTest = require('../tests/ComponentGroupTest.js')
 var GearTest = require('../tests/GearTest.js')
 var BaseSpecificationTest = require('../tests/BaseSpecificationTest.js')
 
@@ -55,7 +55,7 @@ describe('GearTrain', function() {
 	})
 
 	it('should behave like a Component', function() {
-		ComponentTest.shouldBehaveLikeComponent(train)
+		ComponentGroupTest.shouldBehaveLikeComponentGroup(train)
 	})
 
 	describe('#getTypeName', function() {
