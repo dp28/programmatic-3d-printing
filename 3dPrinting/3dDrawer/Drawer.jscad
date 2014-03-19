@@ -1,9 +1,17 @@
-include("Gear.jscad");
-include("Spindle.jscad");
-include("Base.jscad");
 include("Specification.jscad")
+include("ComponentFactory.jscad")
+
 
 Drawer = function() {};
+
+Drawer.makeComponent = function(componentSpec, params) { 
+	// Allows the component to be specified by its type
+	var component = eval(componentSpec.type + '.make(componentSpec, params);');
+  component = component.translate([componentSpec.centreX,
+  																 componentSpec.centreY,
+  																 componentSpec.centreZ]);  
+  return component
+};
 
 Drawer.drawComponents = function(params) {
 	checkParamsAreValid(params);
@@ -12,7 +20,7 @@ Drawer.drawComponents = function(params) {
 	var components = [] 
 	var component
 	for (var i = 0; i < componentSpecs.length; i++) {
-		component = makeComponent(componentSpecs[i], params)
+		component = ComponentFactory.makeComponent(componentSpecs[i], params)
 		components.push(component)
 	}
   return components;   
@@ -42,13 +50,4 @@ function filterByShowParameter(show, componentSpecs) {
 
 function checkParamsAreValid(params) {
 	if (params.printerMinRes < 0) throw "Printer resolution must be positive"
-};
-
-function makeComponent(componentSpec, params) { 
-	// Allows the component to be specified by its type
-	var component = eval(componentSpec.type + '.make(componentSpec, params);');
-  component = component.translate([componentSpec.centreX,
-  																 componentSpec.centreY,
-  																 componentSpec.centreZ]);  
-  return component
 };

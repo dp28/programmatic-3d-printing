@@ -105,6 +105,10 @@ describe('BaseFactory', function() {
 				containsSupportingCirlce(base, thirdGear).should.be.true
 			})
 
+			it('should contain a Spindle for each Gear', function() {
+				base.getSpindles().length.should.equal(3)
+			})
+
 			it('should contain a Line between each meshing Gear', function() {
 				containsSupportingLineBetween(base, firstGear, secondGear).should.be.true
 				containsSupportingLineBetween(base, thirdGear, secondGear).should.be.true

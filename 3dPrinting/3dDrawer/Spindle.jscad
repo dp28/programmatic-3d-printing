@@ -1,10 +1,8 @@
-include("Utils.jscad");
-
 Spindle = function() {};
 
 Spindle.make = function(specification, params) {
-	var radius = specification.radius - params.printerMinRes
-  var spindle = Utils.makeCylinder(radius, specification.height, params.circleRes);
+	specification.radius = specification.radius - params.printerMinRes
+  var spindle = Circle.make(specification, params);
   spindle = spindle.setColor(0.8, 0.8, 0.8);
   return spindle;
 };

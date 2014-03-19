@@ -19,12 +19,23 @@ function BaseFactory() {
 
 	this.makeBase = function(gearsToMakeFrom) {
 		gears = gearsToMakeFrom
-		base = new Base()
-		base.getCentre().setAt(0, 0, 0)
-		base.setHeight(1)
+		createBase()
+		addSupportingSpindlesToBase()
 		addSupportingCirclesToBase()
 		addSupportingLinesToBase()
 		return base
+	}
+
+	var createBase = function() {		
+		base = new Base()
+		base.getCentre().setAt(0, 0, 0)
+		base.setHeight(1)
+	}
+
+	var addSupportingSpindlesToBase = function() {		
+		for (var i = 0; i < gears.length; i++) {
+			base.addPart(gears[i].generateSpindle())
+		}
 	}
 
 	var addSupportingCirclesToBase = function() {		

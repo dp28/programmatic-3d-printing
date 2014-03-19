@@ -87,12 +87,6 @@ describe('GearTrain', function() {
 		})
 	})
 
-	describe('#shouldGenerateSpindlesOnWrite', function() {
-		it('should have a default value of true', function() {
-			train.shouldGenerateSpindlesOnWrite().should.be.true
-		})
-	})
-
 	describe('#shouldGenerateBaseOnWrite', function() {
 		it('should have a default value of true', function() {
 			train.shouldGenerateBaseOnWrite().should.be.true

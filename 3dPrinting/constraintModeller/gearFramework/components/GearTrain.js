@@ -32,7 +32,6 @@ function GearTrain(circPitch) {
 	var train = PlaceableComponentGroup()
 	var gears = train.getComponents() // rename for convenience
 	var circularPitch = circPitch
-	var generateSpindlesOnWrite = true
 	var generateBaseOnWrite = true
 	var baseFactory = new BaseFactory()
 
@@ -118,14 +117,6 @@ function GearTrain(circPitch) {
 		return circularPitch
 	}
 
-	train.shouldGenerateSpindlesOnWrite = function() {
-		return generateSpindlesOnWrite
-	}
-
-	train.setGenerateSpindlesOnWrite = function(flag) {
-		generateSpindlesOnWrite = flag
-	}
-
 	train.shouldGenerateBaseOnWrite = function() {
 		return generateBaseOnWrite
 	}
@@ -145,10 +136,6 @@ function GearTrain(circPitch) {
 
 	train.getAuxillaryComponents = function() {
 		var auxillaries = []
-		for (var i = 0; i < gears.length; i++) {
-			if (train.shouldGenerateSpindlesOnWrite())
-				auxillaries.push(gears[i].generateSpindle())
-		}
 		if (train.shouldGenerateBaseOnWrite())
 			auxillaries.push(train.generateBase())
 		return auxillaries

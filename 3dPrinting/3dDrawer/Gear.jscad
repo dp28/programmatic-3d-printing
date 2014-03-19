@@ -1,5 +1,5 @@
 include("InvoluteGear.jscad");
-include("Utils.jscad");
+include("Circle.jscad");
 
 Gear = function() {};
 
@@ -18,9 +18,10 @@ Gear.make = function(specification, params) {
 
 function removeCentreHole(gear, specification, params) {
   if(specification.centreHoleRadius > 0) {
-    var centerHole = Utils.makeCylinder(specification.centreHoleRadius,
-                                        specification.thickness,
-                                        params.circleRes)
+    var spec = {}
+    spec.radius = specification.centreHoleRadius
+    spec.height = specification.thickness
+    var centerHole = Circle.make(spec, params)
     gear = gear.subtract(centerHole);
   } 
   return gear
