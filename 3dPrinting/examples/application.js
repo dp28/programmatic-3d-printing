@@ -1,8 +1,8 @@
 /*
  * A sample application that creates a simple GearTrain
  */
-var GearTrain = require('../constraintModeller/components/GearTrain.js').GearTrain
-var Gear = require('../constraintModeller/components/Gear.js').Gear
+var GearTrain = require('../constraintModeller/gearFramework/components/GearTrain.js').GearTrain
+var Gear = require('../constraintModeller/gearFramework/components/Gear.js').Gear
 var SpecificationWriter = require('../constraintModeller/interface/SpecificationWriter.js').SpecificationWriter
 
 var gearTrain = new GearTrain(10)
@@ -19,5 +19,5 @@ thirdGear.placeAtFrontOf(fourthGear)
 fifthGear.placeOnRightOf(fourthGear)
 
 thirdGear.getCentre().setAt(0, 0, 0)
-writer.addComponent(gearTrain)
+writer.addComponentGroup(gearTrain)
 writer.writeSpecificationToFile()
