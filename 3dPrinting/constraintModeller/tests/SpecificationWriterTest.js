@@ -11,6 +11,8 @@ var SpecificationWriter = require('../interface/SpecificationWriter.js').Specifi
 var PlaceableComponentTest = require('../tests/PlaceableComponentTest.js')
 var PlaceableComponentGroup = require('../components/PlaceableComponentGroup.js').PlaceableComponentGroup
 
+module.exports.shouldWriteSpecificationsToFile = shouldWriteSpecificationsToFile
+
 describe('SpecificationWriter', function() {
 	var writer, component
 	var specFile = Configuration.specFileTarget
@@ -29,13 +31,36 @@ describe('SpecificationWriter', function() {
 	})
 
 	describe('#writeSpecificationToFile', function() {
-		var fileContents
+		function writeToFile() {
+			writer.writeSpecificationToFile()
+		}
+
+		function addComponents(components) {
+			writer.addAllComponents(components)
+		}
+
+		it('should write the OpenJSCAD Specification to a file', function() {
+			shouldWriteSpecificationsToFile(writeToFile, addComponents, specFile)
+		})
+	})
+})
+
+function shouldWriteSpecificationsToFile(writeFunction, 
+	                                       addComponentsFunction,
+	                                       specFile) {
+	describe('Anything calling SpecificationWriter#writeSpecificationToFile',
+	         function() {
+		var fileContents, component
+
+		beforeEach(function() {			
+			component = PlaceableComponentTest.createFullySpecifiedTestComponent() 
+		})		
 
 		function writeToFileAndGetContents(fileName, done) {
 			if (fs.existsSync(fileName))
 				fs.unlinkSync(fileName)			
-			writer.writeSpecificationToFile()
-			fs.readFile(fileName, 'utf8', function(err, data) { 
+				writeFunction()
+				fs.readFile(fileName, 'utf8', function(err, data) { 
 				fileContents = data
 				done()
 			})
@@ -80,7 +105,7 @@ describe('SpecificationWriter', function() {
 
 				beforeEach(function(done) { 
 					otherComponent = PlaceableComponentTest.createFullySpecifiedTestComponent(10, 20, 30)
-					writer.addAllComponents([component, otherComponent])
+					addComponentsFunction([component, otherComponent])
 					writeToFileAndGetContents(specFile,done)
 				})
 
@@ -93,4 +118,4 @@ describe('SpecificationWriter', function() {
 			})					
 		})
 	})
-})
+}
