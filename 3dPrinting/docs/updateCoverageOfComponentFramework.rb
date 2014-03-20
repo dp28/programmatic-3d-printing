@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Updates the code coverage document
 DIRECTORIES_TO_IGNORE = ['node-jscoverage']
-FILES_NOT_TO_INSTRUMENT = ['node_modules', 'tests', 'Utilities.js']
+FILES_NOT_TO_INSTRUMENT = ['node_modules', 'tests', 'Utilities.js', 'Configuration.js']
 CONSTRAINT_MODELLER_NAME = 'constraintModeller'
 CONSTRAINT_MODELLER_LOCATION = "../#{CONSTRAINT_MODELLER_NAME}"
 TEST_DIR_NAME = "tests"
