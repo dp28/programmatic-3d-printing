@@ -41,21 +41,11 @@ function SpecificationWriter() {
 		return specifications
 	}
 
-	this.addComponent = function(component) {
-		specifications.push(component.toSpecification())
-		components.push(component)
-	}
-
 	this.addAllComponents = function(componentArray) {
 		for (var i = 0; i < componentArray.length; i++) {
-			this.addComponent(componentArray[i])
+			specifications.push(componentArray[i].toSpecification())
+			components.push(componentArray[i])
 		}
-	}
-
-	this.addComponentGroup = function(group) {
-		group.checkCanBeDrawn()
-		this.addAllComponents(group.getComponents())
-		this.addAllComponents(group.getAuxillaryComponents())
 	}
 
 	this.writeSpecificationToFile = function() {

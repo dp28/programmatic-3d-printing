@@ -18,67 +18,11 @@ describe('SpecificationWriter', function() {
 		component = PlaceableComponentTest.createFullySpecifiedTestComponent()
 	})
 
-	describe('#addComponent', function() {
-		it('should add a new Specification to the writer', function() {
+	describe('#addAllComponents', function() {
+		it('should add new Specifications to the SpecificationWriter', function() {
 			writer.getSpecifications().length.should.equal(0)
-			writer.addComponent(component)
+			writer.addAllComponents([component])
 			writer.getSpecifications().length.should.equal(1)
-		})
-	})
-
-	describe('#addComponentGroup', function() {
-		var group, otherComponent
-
-		beforeEach(function() {
-			writer = new SpecificationWriter()
-			group = new PlaceableComponentGroup()
-			component = PlaceableComponentTest.createFullySpecifiedTestComponent(0, 0, 0, 1)
-			group.addComponent(component)
-		})
-
-		describe('when the Components do not overlap', function() {
-			beforeEach(function() {
-				otherComponent = PlaceableComponentTest.createFullySpecifiedTestComponent(2, 2, 0, 1)
-				group.addComponent(otherComponent)				
-				writer.addComponentGroup(group) 
-			})
-
-			it('should add two ComponentSpecifications to the writer', function() {
-				writer.getSpecifications().length.should.equal(2)
-			})			
-		})
-
-		describe('when the Components do overlap', function() {
-			beforeEach(function() {
-				otherComponent = PlaceableComponentTest.createFullySpecifiedTestComponent(2, 2, 0, 10)
-				group.addComponent(otherComponent)	
-			})		
-		
-			it('should not be possible', function() {
-				(function() {
-					writer.addComponentGroup(group)
-				}).should.throw()
-			})
-
-			describe('the error message generated', function() {
-				var errorMessage, overlappingComponents
-					beforeEach(function() {
-					overlappingComponents = group.findTouchingNonAdjacentComponents()
-					try {
-						writer.addComponentGroup(group)
-					} 
-					catch(err) {
-						errorMessage = err.message
-					}
-				})
-
-				it('should contain a string representation of the overlapping gears',
-				   function() {
-					for (var i = overlappingComponents.length - 1; i >= 0; i--) {
-						errorMessage.should.contain(overlappingComponents[i].toString())
-					};
-				})
-			})	
 		})
 	})
 
@@ -163,8 +107,7 @@ describe('SpecificationWriter', function() {
 
 				beforeEach(function(done) { 
 					otherComponent = PlaceableComponentTest.createFullySpecifiedTestComponent(10, 20, 30)
-					writer.addComponent(component)
-					writer.addComponent(otherComponent)
+					writer.addAllComponents([component, otherComponent])
 					writeToFileAndGetContents(specFile,done)
 				})
 
@@ -175,32 +118,6 @@ describe('SpecificationWriter', function() {
 					fileContents.should.contain(JSON.stringify(array, null, 2))
 				})
 			})					
-		})
-
-		describe('with a ComponentGroup added', function() {
-			var group, array, arrayString
-
-			beforeEach(function(done) {
-				writer = new SpecificationWriter()
-
-				group = new PlaceableComponentGroup()
-				component = PlaceableComponentTest.createFullySpecifiedTestComponent(0, 0, 0, 1)
-				group.addComponent(component)
-				otherComponent = PlaceableComponentTest.createFullySpecifiedTestComponent(2, 2, 0, 1)
-				group.addComponent(otherComponent)
-				
-				var components = group.getComponents()
-				array = [components[0].toSpecification(), 
-				         components[1].toSpecification()]
-				writer.addComponentGroup(group)
-				writeToFileAndGetContents(specFile, done)
-				arrayString = JSON.stringify(array, null, 2)
-			})
-			
-			it('should contain a pretty-printed JSON String for all Specifications '
-				 + 'in an array', function() {
-				fileContents.should.contain(arrayString)
-			})
 		})
 	})
 })
