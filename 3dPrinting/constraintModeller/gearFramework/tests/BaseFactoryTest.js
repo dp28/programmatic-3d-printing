@@ -75,9 +75,9 @@ describe('BaseFactory', function() {
 			function isSupporting(gear, pointOnBase, base) {
 				var baseHeight = base.getHeight().getValue()
 				var gearZ = gear.getCentre().getZ().getValue()
-				var gearThickness = gear.getThickness().getValue()
+				var gearHeight = gear.getHeight().getValue()
 				var pointZ = pointOnBase.getZ().getValue()
-				return pointZ == gearZ - gearThickness / 2 - baseHeight / 2 
+				return pointZ == gearZ - gearHeight / 2 - baseHeight / 2 
 			}
 
 			function containsSupportingLineBetween(base, startGear, endGear) {

@@ -33,8 +33,8 @@ function Gear() {
 	pressureAngle.setValue(DEFAULT_PRESSURE_ANGLE)
 	var clearance = new ConstrainableValue()
 	clearance.setValue(DEFAULT_CLEARANCE)	
-	var thickness = new ConstrainableValue()
-	thickness.setValue(DEFAULT_THICKNESS)
+	var height = new ConstrainableValue()
+	height.setValue(DEFAULT_THICKNESS)
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
 
@@ -69,8 +69,8 @@ function Gear() {
 		return clearance 
 	}
 
-	gear.getThickness = function() {
-		return thickness 
+	gear.getHeight = function() {
+		return height 
 	}
 
 	gear.getCentreHoleRadius = function() {
@@ -104,7 +104,7 @@ function Gear() {
 	gear.generateSpindle = function() {
 		gear.checkCanGenerateSpindle()
 		var spindle = new Spindle()
-		spindle.setHeight(thickness.getValue())
+		spindle.setHeight(height.getValue())
 		spindle.setRadius(centreHoleRadius.getValue())
 		spindle.setCentre(gear.getCentre())
 		return spindle
@@ -112,7 +112,7 @@ function Gear() {
 
 	gear.checkCanGenerateSpindle = function() {		
 		if (gear.getCentre().isNotFullyDefined()) throw "Point not fully defined"
-		if (thickness.isNotSet()) throw "Thickness not set"
+		if (height.isNotSet()) throw "Height not set"
 		if (centreHoleRadius.isNotSet()) throw "Centre hole radius not set"
 		if (centreHoleRadius.getValue() == 0) throw "No centre hole in this Gear"
 	}
@@ -125,7 +125,7 @@ function Gear() {
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 
 		string += gear.getBoundingShape().getRadius().getValue() + '\n\t'
-		string += 'Thickness: ' + thickness.getValue() + '\n\t'
+		string += 'Height: ' + height.getValue() + '\n\t'
 		string += 'Clearance: ' + clearance.getValue() + '\n\t'
 		string += 'Centre hole radius: ' + centreHoleRadius.getValue() + '\n\t'
 		string += 'Pressure angle: ' + pressureAngle.getValue() + '\n\t'
