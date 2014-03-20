@@ -1,8 +1,8 @@
 include("Utils.jscad")
 
-Line = function() {};
+Rectangle = function() {};
 
-Line.make = function(specification, params) {
+Rectangle.make = function(specification, params) {
   var angleInDegrees = Utils.toDegrees(specification.angleInRadians)
   return CSG.cube({
           center: [0, 0, 0],
