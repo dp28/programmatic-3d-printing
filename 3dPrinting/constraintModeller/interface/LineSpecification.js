@@ -8,14 +8,11 @@ var Specification = require('../interface/Specification.js').Specification
 
 module.exports.LineSpecification = LineSpecification
 
-function LineSpecification(c, l, a, w) {
-	var spec = new Specification()
+function LineSpecification(line) {
+	var spec = new Specification(line)
 	spec.type = "Line"
-	spec.centreX = c.getX().getValue()
-	spec.centreY = c.getY().getValue()
-	spec.centreZ = c.getZ().getValue()
-	spec.length = l
-	spec.width = w
-	spec.angleInRadians = a
+	spec.length = line.getLength()
+	spec.width = line.getWidth()
+	spec.angleInRadians = line.getAngleInRadians()
 	return spec
 }

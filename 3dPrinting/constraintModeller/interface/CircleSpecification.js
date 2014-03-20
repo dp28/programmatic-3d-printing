@@ -8,12 +8,9 @@ var Specification = require('../interface/Specification.js').Specification
 
 module.exports.CircleSpecification = CircleSpecification
 
-function CircleSpecification(c, r) {
-	var spec = new Specification()
+function CircleSpecification(circle) {
+	var spec = new Specification(circle)
 	spec.type = "Circle"
-	spec.centreX = c.getX().getValue()
-	spec.centreY = c.getY().getValue()
-	spec.centreZ = c.getZ().getValue()
-	spec.radius = r.getValue()
+	spec.radius = circle.getRadius().getValue()
 	return spec
 }

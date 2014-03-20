@@ -5,14 +5,17 @@
  */
 var should = require('should')
 var Specification = require('../interface/Specification.js').Specification 
+var Component = require('../components/Component.js').Component
 
 module.exports.shouldBehaveLikeSpecification = shouldBehaveLikeSpecification
 
 describe('Specification', function() {
-	var specification
+	var specification, component
 
 	beforeEach(function() {
-		specification = new Specification() 
+		component = new Component()
+		component.getCentre().setAt(0, 0, 0)
+		specification = new Specification(component) 
 	})
 	
 	it('should behave like a Specification', function() {
@@ -22,10 +25,12 @@ describe('Specification', function() {
 
 function shouldBehaveLikeSpecification(specification) {
 	describe('Anything inheriting from Specification', function() {
-		var otherSpecification
+		var otherSpecification, component
 
 		beforeEach(function() {
-			otherSpecification = new Specification()
+			component = new Component()
+			component.getCentre().setAt(0, 0, 0)
+			otherSpecification = new Specification(component)
 
 			specification.firstTestProperty = 'first'
 			otherSpecification.secondTestProperty = 'second' 

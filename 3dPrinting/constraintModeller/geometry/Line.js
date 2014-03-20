@@ -64,9 +64,6 @@ function Line(point1, point2) {
 	}
 
 	this.toSpecification = function() {
-		return new LineSpecification(centre, 
-			                           this.getLength(), 
-			                           this.getAngleInRadians(),
-			                           width)
+		return new LineSpecification(this)
 	}
 }

@@ -35,7 +35,7 @@ function Circle() {
 
 	circle.toSpecification = function() {
 		checkCanGenerateSpecification()
-		return new CircleSpecification(circle.getCentre(), radius)
+		return new CircleSpecification(circle)
 	}
 
 	var checkCanGenerateSpecification = function() {		
