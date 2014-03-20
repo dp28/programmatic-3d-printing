@@ -46,7 +46,7 @@ function testGearSpecification(gearSpec, gear) {
 
 		describe('#height', function() {
 			it('should have the correct value', function() {
-				gearSpec.height.should.equal(gear.getThickness().getValue())
+				gearSpec.height.should.equal(gear.getHeight().getValue())
 			})
 		})
 

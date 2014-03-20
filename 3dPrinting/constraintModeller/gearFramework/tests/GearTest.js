@@ -88,13 +88,13 @@ describe('Gear', function() {
 		})
 	})
 
-	describe('#getThickness', function() {
+	describe('#getHeight', function() {
 		it('should return a ConstrainableValue', function() {
-			gear.getThickness().should.be.an.instanceOf(ConstrainableValue)
+			gear.getHeight().should.be.an.instanceOf(ConstrainableValue)
 		})
 
 		it('should have a default value', function() {
-			gear.getThickness().getValue().should.not.be.undefined
+			gear.getHeight().getValue().should.not.be.undefined
 		})
 	})
 
@@ -231,15 +231,15 @@ describe('Gear', function() {
 				}
 		}) 
 
-		it('should not be possible if the thickness of the Gear is not defined',
+		it('should not be possible if the height of the Gear is not defined',
 			 function() {
-			gear.getThickness().setValue(null)
+			gear.getHeight().setValue(null)
 			gear.getCentre().fixAt(0, 0, 0)
 			try {
-				gear.generateSpindle().should.throw("Thickness not set")
+				gear.generateSpindle().should.throw("Height not set")
 			}
 			catch(err) {
-				err.should.equal("Thickness not set")
+				err.should.equal("Height not set")
 			} 
 		})
 
@@ -280,9 +280,9 @@ describe('Gear', function() {
 				spindle = gear.generateSpindle()
 			})
 
-			it('should have a height at least as large as the thickness of the Gear',
+			it('should have a height at least as large as the height of the Gear',
 				 function() {
-				spindle.getHeight().getValue().should.not.be.lessThan(gear.getThickness().getValue())
+				spindle.getHeight().getValue().should.not.be.lessThan(gear.getHeight().getValue())
 			})
 
 			it('should have a radius at most as large as the centre hole radius of '
@@ -372,8 +372,8 @@ describe('Gear', function() {
 					                    + ', ' + centreZ + ')')
 			})
 
-			it('should describe the thickness', function() {
-				string.should.contain('Thickness: ')
+			it('should describe the height', function() {
+				string.should.contain('Height: ')
 			})
 
 			it('should describe the clearance', function() {

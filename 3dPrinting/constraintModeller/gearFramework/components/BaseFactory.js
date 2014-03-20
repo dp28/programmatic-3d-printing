@@ -54,9 +54,9 @@ function BaseFactory() {
 
 	var calculateBaseCentreZ = function(gear) {
 		var gearCentreZ = gear.getCentre().getZ().getValue()
-		var gearThickness = gear.getThickness().getValue()
+		var gearHeight = gear.getHeight().getValue()
 		var baseHeight = base.getHeight().getValue()
-		return gearCentreZ - (gearThickness / 2) - (baseHeight / 2)
+		return gearCentreZ - (gearHeight / 2) - (baseHeight / 2)
 	}
 
 	var addSupportingLinesToBase = function() {
