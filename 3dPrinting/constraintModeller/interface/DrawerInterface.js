@@ -12,7 +12,7 @@ var DrawerComponentCopier = require('../interface/DrawerComponentCopier.js').Dra
 module.exports.DrawerInterface = DrawerInterface
 
 function DrawerInterface() {
-	const DEFAULT_SELECTION_VALUES = ['"All"', '"Gears only"', '"Base only"']
+	const DEFAULT_SELECTION_VALUES = ['"All"']
 
 	var components = []
 	var specificationWriter = new SpecificationWriter(Configuration.specFileTarget)
@@ -60,24 +60,57 @@ function DrawerInterface() {
 											+ '\t\tcaption: "Show: ",\n'
 											+ '\t\tinitial: "All"\n'
 										+ '\t}\n'
-		return definition
+		return definition 
 	}
 
 	var makeComponentSelectionValues = function() {
-		var values = DEFAULT_SELECTION_VALUES.slice()
+		var values = DEFAULT_SELECTION_VALUES		
+		values = values.concat(makeComponentTypeSelecionValues())
+		values = values.concat(makeIndividualComponentSelectionValues())
+		return values
+	}
+
+	var makeIndividualComponentSelectionValues = function() {
+		var values = []
 		for (var i = components.length - 1; i >= 0; i--) { 
 			values.push(components[i].getID())
-		};
+		}
+		return values
+	}
+
+	var makeComponentTypeSelecionValues = function() {
+		var values = []
+		for (var i = components.length - 1; i >= 0; i--) { 
+			var typeString = '"' + components[i].getTypeName() + '"'
+			if (values.indexOf(typeString) < 0)
+				values.push(typeString)
+		}
 		return values
 	}
 
 	var makeCaptionsFrom = function(values) {
-		var captions = DEFAULT_SELECTION_VALUES.slice()
-
-		// Skip default values, include captions for rest
-		for (var i = 3; i < values.length; i++) {
-			captions.push('"Just Component ID #' + values[i] + '"')
-		};
+		var captions = DEFAULT_SELECTION_VALUES
+		captions = captions.concat(makeComponentSelectionCaptions())
+		captions = captions.concat(makeIndividualComponentSelectionCaptions())
 		return captions
+	}
+
+	var makeIndividualComponentSelectionCaptions = function() {
+		var captions = []
+		for (var i = components.length - 1; i >= 0; i--) { 
+			captions.push('"Just Component ID #' + components[i].getID() + '"')
+		}
+		return captions
+	}
+
+	var makeComponentSelectionCaptions = function() {	
+		var captions = []
+		for (var i = components.length - 1; i >= 0; i--) { 
+			var typeCaption = '"Only ' + components[i].getTypeName() + ' Components"'
+			if (captions.indexOf(typeCaption) < 0)
+				captions.push(typeCaption)
+		}
+		return captions
+
 	}
 }

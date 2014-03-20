@@ -15,6 +15,6 @@
 		  name: 'showID',
 		  type: 'choice',
 		  values: ["No", "Yes"],   // Booleans don't work
-		  caption: 'Display Gear IDs:',                           
+		  caption: 'Display Component IDs:',                           
 		  initial: "No"                            
 		}

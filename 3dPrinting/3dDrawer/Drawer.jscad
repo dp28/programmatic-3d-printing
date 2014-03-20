@@ -27,23 +27,17 @@ Drawer.drawComponents = function(params) {
 };
 
 function filterByShowParameter(show, componentSpecs) {
-	switch(show) {
-		case "All":
-			return componentSpecs
-
-		case "Gears only":
-			return componentSpecs.filter(function(element) {
-				return element.type == "Gear"
-			})
-
-		case "Base only":
-			return componentSpecs.filter(function(element) {
-				return element.type != "Gear"
-			})
-
-		default:
-			return componentSpecs.filter(function(element) {
+	if (show == "All") {
+			return componentSpecs		
+	}
+	else if (show.match(/\d+/)) { // is an id
+		return componentSpecs.filter(function(element) {
 				return element.id == show
+			})
+	}
+	else {
+		return componentSpecs.filter(function(element) {
+				return element.type == show
 			})
 	}
 }
