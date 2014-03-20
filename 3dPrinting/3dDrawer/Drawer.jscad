@@ -43,7 +43,7 @@ function filterByShowParameter(show, componentSpecs) {
 
 		default:
 			return componentSpecs.filter(function(element) {
-				return element.type == "Gear" && element.id == show
+				return element.id == show
 			})
 	}
 }

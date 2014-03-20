@@ -3,6 +3,8 @@ include("Circle.jscad");
 
 Gear = function() {};
 
+Gear.colour = [1, 1, 0]
+
 Gear.make = function(specification, params) {
   var gear = InvoluteGear.involuteGear(specification.numTeeth,
                                        specification.circularPitch,

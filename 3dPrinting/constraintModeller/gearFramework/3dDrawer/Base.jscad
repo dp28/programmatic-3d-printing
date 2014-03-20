@@ -1,9 +1,10 @@
 Base = function() {};
 
+Base.colour = [0.4, 0.4, 0.4]
+
 Base.make = function(specification, params) {
   var parts = makeParts(specification, params)
   var base = union(parts)
-  base = base.setColor(0.4, 0.4, 0.4);
   return base;
 };
 
