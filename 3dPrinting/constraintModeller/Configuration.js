@@ -11,7 +11,8 @@
  * COMPONENTS
  */
 exports.sourceDirectories = [
-															'../3dDrawer/'
+															'../3dDrawer/',
+															'gearFramework/3dDrawer'
 														]
 
 /* 

@@ -114,7 +114,6 @@ describe('DrawerComponentCopier', function() {
 				fs.readdirSync(directory).forEach(function(file) {
 					fs.unlinkSync(directory + '/' + file)
 				})
-				fs.rmdirSync(directory) 
 			}
 
 			it('should ensure the target directory exists', function() {

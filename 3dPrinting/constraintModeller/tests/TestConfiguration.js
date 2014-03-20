@@ -11,7 +11,8 @@
  * COMPONENTS
  */
 exports.sourceDirectories = [
-															'../3dDrawer/'
+															'../3dDrawer/',
+															'gearFramework/3dDrawer'
 														]
 
 /* 
@@ -26,7 +27,7 @@ exports.targetDirectory = 'tests/test_output/'
  * Drawer
  */
 exports.paramFilePath = '../../3dDrawer/parameterDefinitions.txt'
-
+ 
 /*
  * The target location of the Specification file
  */
