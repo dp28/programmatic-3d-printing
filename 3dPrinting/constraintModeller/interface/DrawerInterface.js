@@ -17,7 +17,8 @@ function DrawerInterface() {
 	var components = []
 	var specificationWriter = new SpecificationWriter(Configuration.specFileTarget)
 	var mainFileWriter = new MainFileWriter(Configuration.mainFileTarget)
-	var copier = new DrawerComponentCopier()
+	var copier = new DrawerComponentCopier(Configuration.targetDirectory, 
+		                                     Configuration.sourceDirectories)
 
 	this.addComponent = function(component) {
 		components.push(component)

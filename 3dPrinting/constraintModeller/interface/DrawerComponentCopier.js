@@ -5,18 +5,16 @@
  */
 var fs = require('fs')
 var util = require('util')
-var Configuration = require('../Configuration.js')
 
 module.exports.DrawerComponentCopier = DrawerComponentCopier
 
-function DrawerComponentCopier() {
-	var targetDirectory = Configuration.targetDirectory
+function DrawerComponentCopier(targetDirectory, sourceDirectories) {
 	const HEADER_COMMENT = "// [COPIED VERSION OF FILE] \n"
 	const SOURCE_LABEL = "// Source: "
 
 	this.copyComponentsToTargetDirectory = function() {
 		this.createTargetDirectory()
-		Configuration.sourceDirectories.forEach(function(directory) {
+		sourceDirectories.forEach(function(directory) {
 			copyDirectoryJscadContentsToTarget(directory)
 		})
 	}

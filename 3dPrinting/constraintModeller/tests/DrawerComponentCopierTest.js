@@ -7,15 +7,15 @@
  */
 var should = require('should')
 var fs = require('fs')
-var util = require('util')
 var DrawerComponentCopier = require('../interface/DrawerComponentCopier.js').DrawerComponentCopier
-var Configuration = require('../Configuration.js')
+var Configuration = require('../tests/TestConfiguration.js')
 
 describe('DrawerComponentCopier', function() {
 	var copier, targetPath
 
 	beforeEach(function() {
-		copier = new DrawerComponentCopier() 
+		copier = new DrawerComponentCopier(Configuration.targetDirectory,
+			                                 Configuration.sourceDirectories) 
 		targetPath = Configuration.targetDirectory
 	})
 	
