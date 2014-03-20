@@ -65,9 +65,8 @@ function DrawerInterface() {
 
 	var makeComponentSelectionValues = function() {
 		var values = DEFAULT_SELECTION_VALUES.slice()
-		for (var i = components.length - 1; i >= 0; i--) {
-			if (components[i].getTypeName() == "Gear" && components[i].getID() != null) 
-				values.push(components[i].getID())
+		for (var i = components.length - 1; i >= 0; i--) { 
+			values.push(components[i].getID())
 		};
 		return values
 	}
@@ -77,7 +76,7 @@ function DrawerInterface() {
 
 		// Skip default values, include captions for rest
 		for (var i = 3; i < values.length; i++) {
-			captions.push('"Just Gear ID #' + values[i] + '"')
+			captions.push('"Just Component ID #' + values[i] + '"')
 		};
 		return captions
 	}
