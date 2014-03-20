@@ -14,7 +14,7 @@ function makeParts(specification, params) {
   for (var i = partSpecs.length - 1; i >= 0; i--) {
     if (partSpecs[i].height == undefined)
       partSpecs[i].height = specification.height
-    return(makePart(partSpecs[i], params))
+    parts.push(makePart(partSpecs[i], params))
   };
 
   return parts
