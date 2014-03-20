@@ -4,3 +4,4 @@
 docs/*Documentation.html
 docs/*Coverage.html
 constraintModeller/node-jscoverage/
+*_output
