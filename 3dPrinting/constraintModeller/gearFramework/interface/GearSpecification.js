@@ -14,7 +14,7 @@ function GearSpecification(gear) {
 	spec.circularPitch = gear.getCircularPitch()
 	spec.pressureAngle = gear.getPressureAngle().getValue()
 	spec.clearance = gear.getClearance().getValue()
-	spec.thickness = gear.getThickness().getValue()
+	spec.height = gear.getThickness().getValue()
 	spec.centreHoleRadius = gear.getCentreHoleRadius().getValue()
 	return spec
 }

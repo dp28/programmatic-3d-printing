@@ -14,8 +14,13 @@ function makeParts(specification, params) {
   for (var i = partSpecs.length - 1; i >= 0; i--) {
     if (partSpecs[i].height == undefined)
       partSpecs[i].height = specification.height
-    parts.push(ComponentFactory.makeComponent(partSpecs[i], params))
+    return(makePart(partSpecs[i], params))
   };
 
   return parts
+}
+
+function makePart(specification, params) {
+  specification.id = undefined // suppress IDs of non top-level components
+  return ComponentFactory.makeComponent(specification, params)
 }
