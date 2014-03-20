@@ -35,7 +35,7 @@ exports.targetDirectory = 'tests/test_output/'
  * The location of the static parameters that are always included in the 3D
  * Drawer
  */
-exports.paramFilePath = '../3dDrawer/parameterDefinitions.txt'
+exports.paramFilePath = '../../../3dDrawer/parameterDefinitions.txt'
  
 /*
  * The target location of the Specification file

@@ -11,12 +11,15 @@ var DrawerComponentCopier = require('../interface/DrawerComponentCopier.js').Dra
 
 module.exports.DrawerInterface = DrawerInterface
 
-function DrawerInterface() {
+function DrawerInterface(preferredConfiguration) {
+	if (preferredConfiguration != undefined)
+		Configuration = preferredConfiguration
 	const DEFAULT_SELECTION_VALUES = ['"All"']
 
 	var components = []
 	var specificationWriter = new SpecificationWriter(Configuration.specFileTarget)
-	var mainFileWriter = new MainFileWriter(Configuration.mainFileTarget)
+	var mainFileWriter = new MainFileWriter(Configuration.mainFileTarget,
+																					Configuration.sourceDirectories)
 	var copier = new DrawerComponentCopier(Configuration.targetDirectory, 
 		                                     Configuration.sourceDirectories)
 

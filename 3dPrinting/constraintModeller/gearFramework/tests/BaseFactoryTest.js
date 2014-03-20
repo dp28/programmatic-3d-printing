@@ -70,7 +70,7 @@ describe('BaseFactory', function() {
 				var pointX = point.getX().getValue()
 				var pointY = point.getY().getValue() 
 				return pointX == gearX && pointY == gearY
-			}
+			} 
 
 			function isSupporting(gear, pointOnBase, base) {
 				var baseHeight = base.getHeight().getValue()

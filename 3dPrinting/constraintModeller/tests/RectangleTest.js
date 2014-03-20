@@ -7,7 +7,7 @@ var Point = require('../geometry/Point.js').Point
 var Rectangle = require('../geometry/Rectangle.js').Rectangle
 var RectangleSpecificationTest = require('../tests/RectangleSpecificationTest.js')
 
-describe('Rectangle', function() {
+describe('Rectangle', function() { 
 	var rectangle, firstPoint, secondPoint
 	var startX = 1
 	var startY = 2

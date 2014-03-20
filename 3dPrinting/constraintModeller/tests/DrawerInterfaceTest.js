@@ -6,7 +6,7 @@
  */
 var should = require('should')
 var fs = require('fs')
-var Configuration = require('../Configuration.js')
+var Configuration = require('../tests/TestConfiguration.js')
 var DrawerInterface = require('../interface/DrawerInterface.js').DrawerInterface
 var PlaceableComponentTest = require('../tests/PlaceableComponentTest.js')
 var PlaceableComponentGroup = require('../components/PlaceableComponentGroup.js').PlaceableComponentGroup
@@ -16,7 +16,7 @@ describe('DrawerInterface', function() {
 	var controller, component
 
 	beforeEach(function() {
-		controller = new DrawerInterface() 
+		controller = new DrawerInterface(Configuration) 
 		component = PlaceableComponentTest.createFullySpecifiedTestComponent()
 	})
 
@@ -135,7 +135,7 @@ describe('DrawerInterface', function() {
 				}
 
 				function addComponents(components) {
-					controller = new DrawerInterface()
+					controller = new DrawerInterface(Configuration)
 					components.forEach(function(component) {
 						controller.addComponent(component)
 					})
@@ -192,7 +192,7 @@ describe('DrawerInterface', function() {
 			var group, array, arrayString
 
 			beforeEach(function(done) {
-				controller = new DrawerInterface()
+				controller = new DrawerInterface(Configuration)
 
 				group = new PlaceableComponentGroup()
 				component = PlaceableComponentTest.createFullySpecifiedTestComponent(0, 0, 0, 1)

@@ -1,10 +1,3 @@
-include("Gear.jscad");
-include("Spindle.jscad");
-include("Rectangle.jscad")
-include("Circle.jscad");
-include("Base.jscad");
- 
-
 ComponentFactory = function() {};
 
 const DEFAULT_COLOUR = [0.5, 0.5, 0.5]

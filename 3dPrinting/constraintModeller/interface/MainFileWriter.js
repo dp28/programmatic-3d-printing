@@ -16,16 +16,16 @@ const COMMENT_HEADER = '/*\n * [GENERATED FILE]\n *\n * This is the point of '
                        + '*/\n'
 
 // Link the main file to the static parts of the 3D Drawer
-const INCLUDES = 'include("Drawer.jscad")\n\n'
+const DRAWER_INCLUDE = 'include("Drawer.jscad")\n'
 
 // The function that allows the 3D Drawer access to user input
-const GET_PARAMS_START = 'function getParameterDefinitions() {\n\treturn ['
+const GET_PARAMS_START = '\nfunction getParameterDefinitions() {\n\treturn ['
 const GET_PARAMS_END = '];\n}\n\n'
 
 const MAIN_METHOD = 'function main(params) {\n\t' 
                     + 'return Drawer.drawComponents(params)\n}'
 
-function MainFileWriter(mainFilePath) {
+function MainFileWriter(mainFilePath, jscadDirectories) {
 
 	this.generateMainFile = function(dynamicParameterDefinitions) {
 		var content = buildFileContent(dynamicParameterDefinitions) 
@@ -34,7 +34,9 @@ function MainFileWriter(mainFilePath) {
 	}
 
 	var buildFileContent = function(dynamicParameterDefinitions) {		
-		var contents = COMMENT_HEADER + INCLUDES + GET_PARAMS_START
+		var contents = COMMENT_HEADER + DRAWER_INCLUDE 
+		contents += generateIncludesFromJscadDirectories()
+		contents += GET_PARAMS_START
 		contents += getStaticParameterDefinitions() + dynamicParameterDefinitions
 		contents += GET_PARAMS_END + MAIN_METHOD
 		return contents
@@ -42,5 +44,26 @@ function MainFileWriter(mainFilePath) {
 
 	var getStaticParameterDefinitions = function() {
 		return fs.readFileSync(STATIC_PARAMETER_DEFINITIONS, 'utf8')
+	}
+
+	/*
+	 * Dynamically includes components specified in the Configuration file into 
+	 * the main file.
+	 */
+	var generateIncludesFromJscadDirectories = function() {
+		var includeString = ""
+		jscadDirectories.forEach(function(directory) {
+			includeString += generateIncludesFromJscadDirectory(directory)
+		})
+		return includeString
+	}
+
+	var generateIncludesFromJscadDirectory = function(directory) {
+		var includeString = ""
+		fs.readdirSync(directory).forEach(function(file) {
+			if (file.match(/\.jscad$/))
+				includeString += 'include("' + file + '")\n'
+		})
+		return includeString
 	}
 }

@@ -5,15 +5,24 @@
  */
 
 /*
- * The locations of files that are necessary for the execution of the 3D Drawer.
- *
+ * The locations of the OpenJSCAD files for drawing components
+ * 
  * ADD TO THIS LIST IF ADDING DIFFERENT SOURCE DIRECTORIES FOR 3D DRAWER 
  * COMPONENTS
  */
+exports.jscadComponentDirectories = [
+																			'../3dDrawer/components',
+																			'gearFramework/3dDrawer'
+																		]
+
+/*
+ * The locations of all files that are necessary for the execution of the 3D 
+ * Drawer.
+ */
 exports.sourceDirectories = [
-															'../3dDrawer/',
-															'gearFramework/3dDrawer'
+															'../3dDrawer/core'
 														]
+														.concat(exports.jscadComponentDirectories)
 
 /* 
  * The directory that should be populated with all the OpenJSCAD files when the
