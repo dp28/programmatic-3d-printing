@@ -11,7 +11,7 @@
  * COMPONENTS
  */
 exports.sourceDirectories = [
-															'../3dDrawer/'
+															'../../3dDrawer/'
 														]
 
 /* 
@@ -19,13 +19,13 @@ exports.sourceDirectories = [
  * program executes successfully. These are the files that are used to generate
  * the 3D CAD product.
  */
-exports.targetDirectory = '../examples/application_output/'
+exports.targetDirectory = 'tests/test_output/'
 
 /*
  * The location of the static parameters that are always included in the 3D
  * Drawer
  */
-exports.paramFilePath = '../3dDrawer/parameterDefinitions.txt'
+exports.paramFilePath = '../../3dDrawer/parameterDefinitions.txt'
 
 /*
  * The target location of the Specification file

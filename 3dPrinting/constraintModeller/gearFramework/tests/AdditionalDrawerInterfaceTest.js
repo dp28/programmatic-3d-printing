@@ -8,6 +8,7 @@
  */
 var should = require('should')
 var fs = require('fs')
+var Configuration = require('../../Configuration.js')
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var DrawerInterface = require('../../interface/DrawerInterface.js').DrawerInterface
 var GearTest = require('../tests/GearTest.js')
@@ -92,9 +93,9 @@ describe('DrawerInterface using Gear-related Components', function() {
 	describe('#translateTo3dDrawer', function() {
 		var fileContents
 		var drawerPath = '../3dDrawer/'
-		var specFile = drawerPath + 'Specification.jscad'
-		var mainFile = drawerPath + 'main.jscad'
-		var paramFile = drawerPath + 'parameterDefinitions.txt'
+		var specFile = Configuration.specFileTarget
+		var mainFile = Configuration.mainFileTarget
+		var paramFile = Configuration.paramFilePath
 
 		function writeToFileAndGetContents(fileName, done) {			
 			controller.translateTo3dDrawer()

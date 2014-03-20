@@ -7,8 +7,6 @@
 var fs = require('fs')
 
 module.exports.MainFileWriter = MainFileWriter
-
-const MAIN_FILE_NAME = '../3dDrawer/main.jscad'
 const STATIC_PARAMETER_DEFINITIONS = '../3dDrawer/parameterDefinitions.txt'
 
 // A header comment for the generated file
@@ -27,11 +25,11 @@ const GET_PARAMS_END = '];\n}\n\n'
 const MAIN_METHOD = 'function main(params) {\n\t' 
                     + 'return Drawer.drawComponents(params)\n}'
 
-function MainFileWriter() {
+function MainFileWriter(mainFilePath) {
 
 	this.generateMainFile = function(dynamicParameterDefinitions) {
 		var content = buildFileContent(dynamicParameterDefinitions) 
-		fs.writeFileSync(MAIN_FILE_NAME, content)
+		fs.writeFileSync(mainFilePath, content)
 
 	}
 

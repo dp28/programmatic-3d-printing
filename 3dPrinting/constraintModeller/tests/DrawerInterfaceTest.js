@@ -6,6 +6,7 @@
  */
 var should = require('should')
 var fs = require('fs')
+var Configuration = require('../Configuration.js')
 var DrawerInterface = require('../interface/DrawerInterface.js').DrawerInterface
 var PlaceableComponentTest = require('../tests/PlaceableComponentTest.js')
 var PlaceableComponentGroup = require('../components/PlaceableComponentGroup.js').PlaceableComponentGroup
@@ -83,10 +84,9 @@ describe('DrawerInterface', function() {
 
 	describe('#translateTo3dDrawer', function() {
 		var fileContents
-		var drawerPath = '../3dDrawer/'
-		var specFile = drawerPath + 'Specification.jscad'
-		var mainFile = drawerPath + 'main.jscad'
-		var paramFile = drawerPath + 'parameterDefinitions.txt'
+		var specFile = Configuration.specFileTarget
+		var mainFile = Configuration.mainFileTarget
+		var paramFile = Configuration.paramFilePath
 
 		function writeToFileAndGetContents(fileName, done) {			
 			controller.translateTo3dDrawer()
