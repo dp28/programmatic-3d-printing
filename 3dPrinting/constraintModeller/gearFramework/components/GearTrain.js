@@ -11,8 +11,6 @@ var Gear = require('../components/Gear.js').Gear
 var Base = require('../components/Base.js').Base
 var BaseFactory = require('../components/BaseFactory.js').BaseFactory
 var Utilities = require('../../Utilities.js')
-var Circle = require('../../geometry/Circle.js').Circle
-var Line = require('../../geometry/Line.js').Line
 var Point = require('../../geometry/Point.js').Point
 
 module.exports.GearTrain = GearTrain

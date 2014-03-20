@@ -80,21 +80,21 @@ describe('BaseFactory', function() {
 				return pointZ == gearZ - gearHeight / 2 - baseHeight / 2 
 			}
 
-			function containsSupportingLineBetween(base, startGear, endGear) {
-				var lines = base.getLines()
-				for (var i = lines.length - 1; i >= 0; i--) {
-					if (isSupportingLineFor(lines[i], startGear, endGear, base))
+			function containsSupportingRectangleBetween(base, startGear, endGear) {
+				var rectangles = base.getRectangles()
+				for (var i = rectangles.length - 1; i >= 0; i--) {
+					if (isSupportingRectangleFor(rectangles[i], startGear, endGear, base))
 						return true
 				};
 
 				return false
 			}
 
-			function isSupportingLineFor(line, startGear, endGear, base) {
-				return (gearSupportedByPointOnBase(startGear, line.getStart(), base) 
-				       && gearSupportedByPointOnBase(endGear, line.getEnd(), base))
-				       ||  (gearSupportedByPointOnBase(endGear, line.getStart(), base) 
-				           && gearSupportedByPointOnBase(startGear, line.getEnd(), base))
+			function isSupportingRectangleFor(rectangle, startGear, endGear, base) {
+				return (gearSupportedByPointOnBase(startGear, rectangle.getStart(), base) 
+				       && gearSupportedByPointOnBase(endGear, rectangle.getEnd(), base))
+				       ||  (gearSupportedByPointOnBase(endGear, rectangle.getStart(), base) 
+				           && gearSupportedByPointOnBase(startGear, rectangle.getEnd(), base))
 			}
 
 
@@ -109,9 +109,9 @@ describe('BaseFactory', function() {
 				base.getSpindles().length.should.equal(3)
 			})
 
-			it('should contain a Line between each meshing Gear', function() {
-				containsSupportingLineBetween(base, firstGear, secondGear).should.be.true
-				containsSupportingLineBetween(base, thirdGear, secondGear).should.be.true
+			it('should contain a Rectangle between each meshing Gear', function() {
+				containsSupportingRectangleBetween(base, firstGear, secondGear).should.be.true
+				containsSupportingRectangleBetween(base, thirdGear, secondGear).should.be.true
 			})
 
 			describe('#toSpecification', function() {

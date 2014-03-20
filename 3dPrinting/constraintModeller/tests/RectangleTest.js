@@ -1,14 +1,14 @@
 /*
  * author: Daniel Patterson
  *
- * Tests the geometry of a Line built from two Points
+ * Tests the geometry of a Rectangle built from two Points
  */
 var Point = require('../geometry/Point.js').Point
-var Line = require('../geometry/Line.js').Line
-var LineSpecificationTest = require('../tests/LineSpecificationTest.js')
+var Rectangle = require('../geometry/Rectangle.js').Rectangle
+var RectangleSpecificationTest = require('../tests/RectangleSpecificationTest.js')
 
-describe('Line', function() {
-	var line, firstPoint, secondPoint
+describe('Rectangle', function() {
+	var rectangle, firstPoint, secondPoint
 	var startX = 1
 	var startY = 2
 	var startZ = 3
@@ -24,27 +24,27 @@ describe('Line', function() {
 		firstPoint.setAt(startX, startY, startZ)
 		secondPoint = new Point()
 		secondPoint.setAt(endX, endY, endZ)
-		line = new Line(firstPoint, secondPoint)
+		rectangle = new Rectangle(firstPoint, secondPoint)
 	})
 
 	describe('construction', function() {
 		it('should not be possible without two Points as arguments', function() {
 			(function(){
-				new Line()
+				new Rectangle()
 			}).should.throw("Two Points required")
 		})
 	})
 
 	describe('#getCentre', function() {
 		it('should return a Point', function() {
-			line.getCentre().should.be.an.instanceof(Point)
+			rectangle.getCentre().should.be.an.instanceof(Point)
 		})
 
 		describe('the returned Point', function() {
 			var centre 
 
 			beforeEach(function() {
-				centre = line.getCentre() 
+				centre = rectangle.getCentre() 
 			})
 			
 			it('should have an x coordinate at half the distance between the two '
@@ -66,7 +66,7 @@ describe('Line', function() {
 
 	describe('#getWidth', function() {
 		it('should have a default value of 1', function() {
-			line.getWidth().should.equal(1)
+			rectangle.getWidth().should.equal(1)
 		})
 	})
 
@@ -76,27 +76,27 @@ describe('Line', function() {
 			var length = Math.sqrt(xDifference * xDifference 
 								             + yDifference * yDifference
 								             + zDifference * zDifference)
-			line.getLength().should.equal(length)
+			rectangle.getLength().should.equal(length)
 		})
 	})
 
 	describe('#getAngleInRadians', function() {
-		it('should return the angle this line makes with the x axis', function() {
+		it('should return the angle this rectangle makes with the x axis', function() {
 			var angle = Math.atan2(yDifference, xDifference)
-			line.getAngleInRadians().should.be.approximately(angle, 0.001)
+			rectangle.getAngleInRadians().should.be.approximately(angle, 0.001)
 		})
 	})
 
 	describe('#toSpecification', function() {
-		describe('the returned LineSpecification', function() {
-			var lineSpec
+		describe('the returned RectangleSpecification', function() {
+			var rectangleSpec
 
 			beforeEach(function() {
-				lineSpec = line.toSpecification() 
+				rectangleSpec = rectangle.toSpecification() 
 			})
 
-			it('should behave like a LineSpecification', function() {
-				LineSpecificationTest.testLineSpecification(lineSpec, line)
+			it('should behave like a RectangleSpecification', function() {
+				RectangleSpecificationTest.testRectangleSpecification(rectangleSpec, rectangle)
 			})			
 		})
 	})

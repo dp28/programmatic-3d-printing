@@ -7,7 +7,7 @@ var Component = require('../../components/Component.js').Component
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecification
 var Circle = require('../../geometry/Circle.js').Circle
-var Line = require('../../geometry/Line.js').Line
+var Rectangle = require('../../geometry/Rectangle.js').Rectangle
 
 
 module.exports.Base = Base
@@ -27,9 +27,9 @@ function Base() {
 		})
 	}
 
-	base.getLines = function() {
+	base.getRectangles = function() {
 		return parts.filter(function(element) {
-			return element instanceof Line
+			return element instanceof Rectangle
 		})
 	}
 	
