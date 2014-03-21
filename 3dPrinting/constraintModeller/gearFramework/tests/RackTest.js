@@ -46,8 +46,8 @@ describe('Rack', function() {
 			var placeSize, boundSize
 
 			beforeEach(function() {
-				rack.setLength(2)
-				rack.setWidth(1) 
+				rack.setLength(20)
+				rack.setWidth(5) 
 				rack.setLinearPitch(2)
 				var boundingShape = rack.getBoundingShape()
 				var placeLength = placementShape.getLength().getValue()
@@ -63,10 +63,20 @@ describe('Rack', function() {
 				placeSize.should.be.equal(boundSize - 2 * rack.getAddendum())
 			})
 
-			it.skip('should change depending on which face is the toothed face', function() {
-				
+			it('should change depending on which face is the toothed face', function() {
+				var addendum = rack.getAddendum()
+				var bounds = rack.getBoundingShape()
+				var frontAndBack = ["Front", "Back"]
+				frontAndBack.forEach(function(face) {
+					rack.setToothedFace(face)
+					placementShape.getWidth().getValue().should.equal(bounds.getWidth().getValue() - 2 * addendum)
+				})
+				var leftAndRight = ["Left", "Right"]
+				leftAndRight.forEach(function(face) {
+					rack.setToothedFace(face)
+					placementShape.getLength().getValue().should.equal(bounds.getLength().getValue() - 2 * addendum)
+				})
 			})
-
 		})
 	})
 
