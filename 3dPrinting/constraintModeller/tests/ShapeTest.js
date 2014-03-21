@@ -7,6 +7,7 @@ var should = require('should')
 var util = require('util')
 var Shape = require('../geometry/Shape.js').Shape
 var Point = require('../geometry/Point.js').Point
+var Rectangle = require('../geometry/Rectangle.js').Rectangle
 
 module.exports.shouldBehaveLikeShape = shouldBehaveLikeShape
 
@@ -133,6 +134,17 @@ function shouldBehaveLikeShape(shape) {
 			}
 
 			shouldBeAbleToBeAdjacentTo(shape, createCircle)
+		})
+
+		describe('#isAdjacentTo Rectangle', function() {
+			function createRectangle() {
+				var rectangle = new Rectangle()
+				rectangle.setLength(2)
+				rectangle.setWidth(2)
+				return rectangle
+			}
+
+			shouldBeAbleToBeAdjacentTo(shape, createRectangle)
 		})
 
 		function shouldBeAbleToBeAdjacentTo(testShape, adjacentShapeTypeCreation) {
