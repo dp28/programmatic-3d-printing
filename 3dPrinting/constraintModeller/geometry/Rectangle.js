@@ -12,7 +12,6 @@ module.exports.Rectangle = Rectangle
 
 function Rectangle() {
 	const DEFAULT_WIDTH = 0
-
 	var rectangle = new Shape()
 	var width = new ConstrainableValue()
 	var length = new ConstrainableValue()

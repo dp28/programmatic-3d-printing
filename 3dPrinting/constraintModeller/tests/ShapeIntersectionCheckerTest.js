@@ -85,5 +85,38 @@ describe('ShapeIntersectionChecker', function() {
 				intersectionShouldBeDetected()
 			})		
 		})
+
+		describe('if one argument is a Circle and the other is a Rectangle', function() {
+			beforeEach(function() {
+				secondCentreIntersecting.setAt(0.5, 0.5, 0)
+				secondCentreJustTouching.setAt(2, 0, 0)
+				secondCentreNotIntersecting.setAt(11.5, 11.5, 0)
+			})
+			
+			it('should detect any intersections by treating the Circle as a ' 
+				 + 'Rectangle', function() {	
+				first = new Rectangle()
+				first.setLength(2)
+				first.setWidth(2)			
+				first.getCentre().setAt(0, 0, 0)
+
+				second = new Circle()
+				second.setRadius(1)
+
+				intersectionShouldBeDetected()
+			})		
+			
+			it('should be independent of order', function() {	
+				second = new Rectangle()
+				second.setLength(2)
+				second.setWidth(2)			
+
+				first = new Circle()
+				first.setRadius(1)
+				first.getCentre().setAt(0, 0, 0)
+
+				intersectionShouldBeDetected()
+			})
+		})
 	})	
 })
