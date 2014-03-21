@@ -1,7 +1,7 @@
 /*
  * author: Daniel Patterson
  *
- * A rectangle. 
+ * A rectangle with constrainable parameters which cannot be rotated. 
  */
 var Point = require('../geometry/Point.js').Point
 var Shape = require('../geometry/Shape.js').Shape

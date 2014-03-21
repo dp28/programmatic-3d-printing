@@ -5,6 +5,7 @@
  */
 var util = require('util')
 var Point = require('../geometry/Point.js').Point
+var ShapeIntersectionChecker = require('../geometry/ShapeIntersectionChecker.js').ShapeIntersectionChecker
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var Utilities = require('../Utilities.js')
 
@@ -12,6 +13,7 @@ module.exports.Shape = Shape
 
 function Shape() {
 	var centre = new Point()
+	var intersectionChecker = new ShapeIntersectionChecker()
 
 	return {  
 		setCentre: function(point) {
@@ -50,7 +52,7 @@ function Shape() {
 		},
 
 		isTouching: function(otherShape) {
-			return checkIfTwoShapesIntersect(this, otherShape)
+			return intersectionChecker.areIntersecting(this, otherShape)
 		},
 
 		isAdjacentTo: function(otherShape){
@@ -72,31 +74,5 @@ function Shape() {
 			return adjacentOnAxis && differOnlyOnAxis
 		}
 	}
-}
-
-function checkIfTwoShapesIntersect(firstShape, secondShape) {
-	if (firstShape.getType() == "Circle") {
-		if (secondShape.getType() == "Circle") {
-			return checkIfTwoCirclesIntersect(firstShape, secondShape)
-		}
-		else if (secondShape.getType() == "Rectangle") {
-			return checkIfCircleAndRectangleIntersect(firstShape, secondShape)
-		}
-	}
-	else if (firstShape.getType() == "Rectangle") {
-		if (secondShape.getType() == "Circle") {
-			return checkIfCircleAndRectangleIntersect(secondShape, firstShape)
-		}
-		else if (secondShape.getType() == "Rectangle") {
-			return checkIfTwoRectanglesIntersect(firstShape, secondShape)			
-		}
-	}
-}
-
-function checkIfTwoCirclesIntersect(firstCircle, secondCircle) {
-	var firstRadius = firstCircle.getRadius().getValue()
-	var secondRadius = secondCircle.getRadius().getValue()
-	var distanceBetween = firstCircle.getCentre().distanceToOnXYPlane(secondCircle.getCentre())
-	return distanceBetween < (firstRadius + secondRadius)
 }
 

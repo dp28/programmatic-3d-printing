@@ -4,7 +4,6 @@
  * Tests the geometry of a constrainable shape
  */
 var should = require('should')
-var util = require('util')
 var Shape = require('../geometry/Shape.js').Shape
 var Point = require('../geometry/Point.js').Point
 var Rectangle = require('../geometry/Rectangle.js').Rectangle
@@ -167,7 +166,6 @@ function shouldBehaveLikeShape(shape) {
 					it('should return true if the adjacent Shape is to it\'s left', function() {				
 						point.setAt(centreX - 1, centreY, centreZ)
 						adjacentShape.setCentre(point)
-						util.puts()
 						shape.isAdjacentTo(adjacentShape).should.be.true
 					})
 
