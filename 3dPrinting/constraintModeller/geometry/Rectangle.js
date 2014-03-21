@@ -12,15 +12,12 @@ module.exports.Rectangle = Rectangle
 
 function Rectangle() {
 	const DEFAULT_WIDTH = 0
-	const DEFAULT_ANGLE = 0
 
 	var rectangle = new Shape()
 	var width = new ConstrainableValue()
 	var length = new ConstrainableValue()
-	var angleInRadians = new ConstrainableValue()
 
 	width.setValue(DEFAULT_WIDTH)
-	angleInRadians.setValue(DEFAULT_ANGLE)
 
 	rectangle.getType = function() {
 		return "Rectangle"
@@ -40,14 +37,6 @@ function Rectangle() {
 
 	rectangle.setLength = function(len) {
 		length.setValue(len)
-	}
-
-	rectangle.getAngleInRadians = function() {
-		return angleInRadians
-	}
-
-	rectangle.setAngleInRadians = function(angle) {
-		angleInRadians.setValue(angle)
 	}
 
 	rectangle.getDistanceToRightBoundary = function() {
@@ -72,7 +61,6 @@ function Rectangle() {
 	}
 
 	var checkCanGenerateSpecification = function() {
-		if (angleInRadians.isNotSet()) throw new Error("Angle not set")
 		if (rectangle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
 		if (length.isNotSet()) throw new Error("Length not set")
 		if (width.isNotSet()) throw new Error("Width not set")

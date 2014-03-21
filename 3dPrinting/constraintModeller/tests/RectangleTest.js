@@ -26,35 +26,27 @@ describe('Rectangle', function() {
 	})
 
 	describe('#toSpecification', function() {
-		
-		it('should not be possible if the angle is not set', function() {
-			rectangle.setAngleInRadians(null)
-			rectangle.toSpecification.should.throw("Angle not set")
-		})
 
 		it('should not be possible if the centre is not set even if the angle is',
 		   function() {
-			rectangle.setAngleInRadians(1)
 			rectangle.toSpecification.should.throw("Centre not fully defined")
 		})
 
 		it('should not be possible if the length is not set even if the angle and '
 			 + 'centre are set', function() {
-			rectangle.setAngleInRadians(1)
 			rectangle.getCentre().setAt(0, 0, 0)
 			rectangle.toSpecification.should.throw("Length not set")
 		})
 
 		it('should not be possible if the width is not set even if the angle, width'
 			 + ' and centre are set', function() {
-			rectangle.setAngleInRadians(1)
 			rectangle.getCentre().setAt(0, 0, 0)
 			rectangle.setLength(1)
 			rectangle.setWidth(null)
 			rectangle.toSpecification.should.throw("Width not set")
 		})
 
-		it('should be possible if both the centre and radius are set', function() {
+		it('should be possible if the centre, length and width are set', function() {
 			(function() {
 				rectangle.getCentre().setAt(0, 0, 0)
 				rectangle.setLength(1)

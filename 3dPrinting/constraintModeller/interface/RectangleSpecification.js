@@ -13,6 +13,5 @@ function RectangleSpecification(rectangle) {
 	spec.type = "Rectangle"
 	spec.length = rectangle.getLength()
 	spec.width = rectangle.getWidth()
-	spec.angleInRadians = rectangle.getAngleInRadians()
 	return spec
 }

@@ -21,10 +21,6 @@ function testRectangleSpecification(rectangleSpec, rectangle) {
 			rectangleSpec.length.should.equal(rectangle.getLength())
 		})
 
-		it('should have the same angle as the Rectangle that created it', function() {
-			rectangleSpec.angleInRadians.should.equal(rectangle.getAngleInRadians())
-		})
-
 		it('should have the same centre x coordinate as the Rectangle that created it',
 		   function() {
 			rectangleSpec.centreX.should.equal(rectangle.getCentre().getX().getValue())
