@@ -4,17 +4,14 @@
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Gears
  */
-var ComponentSpecification = require('../../interface/ComponentSpecification.js').ComponentSpecification
+var ToothedComponentSpecification = require('../interface/ToothedComponentSpecification.js').ToothedComponentSpecification
 
 module.exports.GearSpecification = GearSpecification
 
 function GearSpecification(gear) {
-	var spec = new ComponentSpecification(gear)
-	spec.numTeeth = gear.getNumberOfTeeth().getValue()
+	var spec = new ToothedComponentSpecification(gear)
 	spec.circularPitch = gear.getCircularPitch()
-	spec.pressureAngle = gear.getPressureAngle().getValue()
 	spec.clearance = gear.getClearance().getValue()
-	spec.height = gear.getHeight().getValue()
 	spec.centreHoleRadius = gear.getCentreHoleRadius().getValue()
 	return spec
 }

@@ -22,6 +22,10 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 	placementShape.getCentre().sameAs(placeable.getBoundingShape().getCentre())
 	var adjacentComponents = []
 
+	placeable.getTypeName = function() {
+		return "PlaceableComponent"
+	}
+
 	placeable.getPlacementShape = function() {
 		return placementShape
 	}

@@ -4,14 +4,12 @@
  * Tests the Gear class
  */
 var should = require('should')
-var Component = require('../../components/Component.js').Component
 var Gear = require('../components/Gear.js').Gear 
 var Spindle = require('../components/Spindle.js').Spindle
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var Circle = require('../../geometry/Circle.js').Circle
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var ComponentSpecification = require('../../interface/ComponentSpecification.js').ComponentSpecification
-var PlaceableComponentTest = require('../../tests/PlaceableComponentTest.js')
+var ToothedComponentTest = require('../tests/ToothedComponentTest.js')
 var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
 var ComponentSpecificationTest = require('../../tests/ComponentSpecificationTest.js')
 
@@ -39,15 +37,21 @@ describe('Gear', function() {
 		gear = new Gear()
 	})
 
-	it('should behave like a Component', function() {
+	it('should behave like a ToothedComponent', function() {
 
 		function setupTestBoundaries(gear) {			
 			gear.setPitchCircleRadius(10)
 		}
 
-		PlaceableComponentTest.shouldBehaveLikePlaceableComponent(Gear, 
-			                                                        setupTestBoundaries, 
-			                                                        Circle)
+		function fullySpecify(gear) {
+			gear.setNumberOfTeeth(10) 
+			gear.setPitchCircleRadius(5)	
+		}
+
+		ToothedComponentTest.shouldBehaveLikeToothedComponent(Gear, 
+			                                                    setupTestBoundaries, 
+			                                                    Circle,
+			                                                    fullySpecify)
 	})
 
 	describe('#getTypeName', function() {
@@ -56,25 +60,9 @@ describe('Gear', function() {
 		})
 	})
 
-	describe('#getNumberOfTeeth', function() {
-		it('should return a ConstrainableValue', function() {
-			gear.getNumberOfTeeth().should.be.an.instanceOf(ConstrainableValue)
-		})
-	})
-
 	describe('#getPitchCircleRadius', function() {
 		it('should return a ConstrainableValue', function() {
 			gear.getPitchCircleRadius().should.be.an.instanceOf(ConstrainableValue)
-		})
-	})
-
-	describe('#getPressureAngle', function() {
-		it('should return a ConstrainableValue', function() {
-			gear.getPressureAngle().should.be.an.instanceOf(ConstrainableValue)
-		})
-
-		it('should have a default value', function() {
-			gear.getPressureAngle().getValue().should.not.be.undefined
 		})
 	})
 
@@ -85,16 +73,6 @@ describe('Gear', function() {
 
 		it('should have a default value', function() {
 			gear.getClearance().getValue().should.not.be.undefined
-		})
-	})
-
-	describe('#getHeight', function() {
-		it('should return a ConstrainableValue', function() {
-			gear.getHeight().should.be.an.instanceOf(ConstrainableValue)
-		})
-
-		it('should have a default value', function() {
-			gear.getHeight().getValue().should.not.be.undefined
 		})
 	})
 

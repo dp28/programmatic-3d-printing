@@ -33,6 +33,13 @@ function defaultTo(variable, defaultValue) {
 }
 
 describe('PlaceableComponent', function() {
+	var placeable
+
+	beforeEach(function() {
+		placeable = new PlaceableComponent(Circle) 
+	})
+	
+
 	it('should behave like a PlaceableComponent', function() {
 
 		function setupBoundaries(placeable) {
@@ -42,6 +49,12 @@ describe('PlaceableComponent', function() {
 		shouldBehaveLikePlaceableComponent(PlaceableComponent, 
 			                                 setupBoundaries, 
 			                                 Circle)
+	})
+
+	describe('#getTypeName', function() {
+		it('should return "PlaceableComponent"', function() {
+			placeable.getTypeName().should.equal("PlaceableComponent")
+		})
 	})
 })
 
