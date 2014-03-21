@@ -6,6 +6,7 @@
 var should = require('should')
 var ShapeIntersectionChecker = require('../geometry/ShapeIntersectionChecker.js').ShapeIntersectionChecker
 var Rectangle = require('../geometry/Rectangle.js').Rectangle
+var Point = require('../geometry/Point.js').Point
 
 describe('ShapeIntersectionChecker', function() {
 	var checker
@@ -15,7 +16,39 @@ describe('ShapeIntersectionChecker', function() {
 	})
 
 	describe('#areIntersecting', function() {
-		var first, second
+		var first, second, secondCentreIntersecting
+		var secondCentreJustTouching, secondCentreNotIntersecting
+
+		beforeEach(function() {
+			secondCentreIntersecting = new Point() 
+			secondCentreJustTouching = new Point() 
+			secondCentreNotIntersecting = new Point() 
+		})
+
+		function intersectionShouldBeDetected() {	
+			describe('ShapeIntersectionChecker#areIntersecting', function() {		
+				describe('if the Shapes are intersecting', function() {
+					it('should return true', function() {
+						second.setCentre(secondCentreIntersecting)
+						checker.areIntersecting(first, second).should.be.true
+					})
+				})
+				
+				describe('if the Shapes are just touching', function() {
+					it('should return true', function() {
+						second.setCentre(secondCentreJustTouching)
+						checker.areIntersecting(first, second).should.be.true
+					})
+				})
+				
+				describe('if the Shapes are not intersecting', function() {
+					it('should return false', function() {
+						second.setCentre(secondCentreNotIntersecting)
+						checker.areIntersecting(first, second).should.be.false
+					})
+				})		
+			})
+		}
 
 		describe('if both arguments are Circles', function() {
 			beforeEach(function() {
@@ -23,28 +56,14 @@ describe('ShapeIntersectionChecker', function() {
 				first.getCentre().setAt(0, 0, 0)
 				first.setRadius(1)
 				second = new Circle()
-				second.setRadius(1) 
+				second.setRadius(1)
+				secondCentreIntersecting.setAt(0.5, 0.5, 0)
+				secondCentreJustTouching.setAt(2, 0, 0)
+				secondCentreNotIntersecting.setAt(11.5, 11.5, 0)
 			})
-			
-			describe('if the Circles are intersecting', function() {
-				it('should return true', function() {
-					second.getCentre().setAt(0.5, 0.5, 0)
-					checker.areIntersecting(first, second).should.be.true
-				})
-			})
-			
-			describe('if the Circles are just touching', function() {
-				it('should return true', function() {
-					second.getCentre().setAt(2, 0, 0)
-					checker.areIntersecting(first, second).should.be.true
-				})
-			})
-			
-			describe('if the Circles are not intersecting', function() {
-				it('should return false', function() {
-					second.getCentre().setAt(11.5, 11.5, 0)
-					checker.areIntersecting(first, second).should.be.false
-				})
+
+			it('should detect any intersections', function() {
+				intersectionShouldBeDetected()
 			})
 		})
 
@@ -57,30 +76,14 @@ describe('ShapeIntersectionChecker', function() {
 				second = new Rectangle()
 				second.setLength(2)
 				second.setWidth(2)
+				secondCentreIntersecting.setAt(0.5, 0.5, 0)
+				secondCentreJustTouching.setAt(2, 0, 0)
+				secondCentreNotIntersecting.setAt(11.5, 11.5, 0)
 			})
 			
-			describe('if the Rectangles are intersecting', function() {
-				it('should return true', function() {
-					second.getCentre().setAt(0.5, 0.5, 0)
-					checker.areIntersecting(first, second).should.be.true
-				})
-			})
-			
-			describe('if the Rectangles are just touching', function() {
-				it('should return true', function() {
-					second.getCentre().setAt(2, 0, 0)
-					checker.areIntersecting(first, second).should.be.true
-				})
-			})
-			
-			describe('if the Rectangles are not intersecting', function() {
-				it('should return false', function() {
-					second.getCentre().setAt(11.5, 11.5, 0)
-					checker.areIntersecting(first, second).should.be.false
-				})
-			})
-			
+			it('should detect any intersections', function() {
+				intersectionShouldBeDetected()
+			})		
 		})
-	})
-	
+	})	
 })

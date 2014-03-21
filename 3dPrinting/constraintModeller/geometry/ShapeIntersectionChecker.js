@@ -41,16 +41,24 @@ function ShapeIntersectionChecker() {
 	}
 
 	var checkIfTwoRectanglesIntersect = function() {
-		var combinedWidth = first.getWidth().getValue() 
-		                    + second.getWidth().getValue()
-		var combinedLength = second.getLength().getValue() 
-		                     + second.getLength().getValue()
-		var xDistanceBetween = first.getCentre().distanceToOnAxis(second.getCentre(),
-			                                                        'X')
-		var yDistanceBetween = first.getCentre().distanceToOnAxis(second.getCentre(),
-			                                                        'Y')
-		return xDistanceBetween < (combinedLength / 2) 
-		       || yDistanceBetween < (combinedWidth / 2)
+		return checkIfTwoRectanglesIntersectHorizontally()
+		       && checkIfTwoRectanglesIntersectVertically()
 	}
 
+	var checkIfTwoRectanglesIntersectHorizontally = function() {
+		var combinedLength = second.getLength().getValue() 
+		                     + second.getLength().getValue()
+		var centreXDifference = first.getCentre().distanceToOnAxis(second.getCentre(),
+			                                                        'X')
+
+		return Math.abs(centreXDifference) <= (combinedLength / 2)
+	}
+
+	var checkIfTwoRectanglesIntersectVertically = function() {
+		var combinedWidth = first.getWidth().getValue() 
+		                    + second.getWidth().getValue()
+		var centreYDifference = first.getCentre().distanceToOnAxis(second.getCentre(),
+			                                                        'Y')
+		return Math.abs(centreYDifference) <= (combinedWidth / 2)
+	}
 }
