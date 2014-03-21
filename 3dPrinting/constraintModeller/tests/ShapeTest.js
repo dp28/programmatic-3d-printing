@@ -125,47 +125,59 @@ function shouldBehaveLikeShape(shape) {
 			}
 		})
 
-		describe('#isAdjacentTo', function() {
-			if (shape.getType() != "Shape") {
-				var circle
+		describe('#isAdjacentTo Circle', function() {
+			function createCircle() {
+				var circle = new Circle()
+				circle.setRadius(1)
+				return circle
+			}
 
-				beforeEach(function() {
-					circle = new Circle()
-					point = new Point()
-					circle.setRadius(1)
-				})
-
-				it('should return false if the Circle is not touching the Shape', function() {
-					point.setAt(centreX - 100, centreY, centreZ)
-					circle.setCentre(point)
-					shape.isAdjacentTo(circle).should.be.false
-				})
-
-				it('should return true if the Circle is to it\'s left', function() {				
-					point.setAt(centreX - 1, centreY, centreZ)
-					circle.setCentre(point)
-					util.puts()
-					shape.isAdjacentTo(circle).should.be.true
-				})
-
-				it('should return true if the Circle is to it\'s right', function() {				
-					point.setAt(centreX + 1, centreY, centreZ)
-					circle.setCentre(point)
-					shape.isAdjacentTo(circle).should.be.true
-				})
-
-				it('should return true if the Circle is to it\'s front', function() {				
-					point.setAt(centreX, centreY + 1, centreZ)
-					circle.setCentre(point)
-					shape.isAdjacentTo(circle).should.be.true
-				})
-
-				it('should return true if the Circle is to it\'s back', function() {				
-					point.setAt(centreX, centreY - 1, centreZ)
-					circle.setCentre(point)
-					shape.isAdjacentTo(circle).should.be.true
-				})
-			}			
+			shouldBeAbleToBeAdjacentTo(shape, createCircle)
 		})
+
+		function shouldBeAbleToBeAdjacentTo(testShape, adjacentShapeTypeCreation) {
+			describe('#isAdjacentTo with specific adjacent Shape', function() {
+				if (shape.getType() != "Shape") {
+					var adjacentShape
+
+					beforeEach(function() {
+						point = new Point()
+						adjacentShape = adjacentShapeTypeCreation()
+					})
+
+					it('should return false if the adjacent Shape is not touching the '
+						 + 'test Shape', function() {
+						point.setAt(centreX - 100, centreY, centreZ)
+						adjacentShape.setCentre(point)
+						shape.isAdjacentTo(adjacentShape).should.be.false
+					})
+
+					it('should return true if the adjacent Shape is to it\'s left', function() {				
+						point.setAt(centreX - 1, centreY, centreZ)
+						adjacentShape.setCentre(point)
+						util.puts()
+						shape.isAdjacentTo(adjacentShape).should.be.true
+					})
+
+					it('should return true if the adjacent Shape is to it\'s right', function() {				
+						point.setAt(centreX + 1, centreY, centreZ)
+						adjacentShape.setCentre(point)
+						shape.isAdjacentTo(adjacentShape).should.be.true
+					})
+
+					it('should return true if the adjacent Shape is to it\'s front', function() {				
+						point.setAt(centreX, centreY + 1, centreZ)
+						adjacentShape.setCentre(point)
+						shape.isAdjacentTo(adjacentShape).should.be.true
+					})
+
+					it('should return true if the adjacent Shape is to it\'s back', function() {				
+						point.setAt(centreX, centreY - 1, centreZ)
+						adjacentShape.setCentre(point)
+						shape.isAdjacentTo(adjacentShape).should.be.true
+					})
+				}			
+			})
+		}
 	})
 }
