@@ -51,6 +51,10 @@ function ToothedComponent(boundaryShapeType) {
 		return height 
 	}
 
+	toothed.getAddendum = function() {
+		throw new Error("Not implemented in this instance")
+	}
+
 	toothed.toSpecification = function() {
 		checkFullySpecified()
 		return new ToothedComponentSpecification(toothed)

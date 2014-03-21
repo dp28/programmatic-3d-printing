@@ -51,6 +51,11 @@ function Gear() {
 		return calculateCircularPitch()
 	}
 
+	// From http://www.cage-gear.com/spur_gear_calculations.htm
+	gear.getAddendum = function() {
+		return gear.getCircularPitch() / Math.PI
+	}
+
 	var checkIfCanCalculateCircularPitch = function() {		
 		if (!gear.getNumberOfTeeth().isSet()) throw new Error("Number of teeth not set")
 		if (!pitchCircleRadius.isSet())	throw new Error("Pitch radius not set")

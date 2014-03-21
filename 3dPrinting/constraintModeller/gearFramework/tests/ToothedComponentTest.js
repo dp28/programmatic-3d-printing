@@ -34,6 +34,14 @@ describe('ToothedComponent', function() {
 			toothed.getTypeName().should.equal("ToothedComponent")
 		})
 	})
+
+	describe('#getAddendum', function() {
+		it('should only be implemented by subclasses', function() {
+			(function() {
+				toothed.getAddendum()
+			}).should.throw("Not implemented in this instance")
+		})
+	})
 })
 
 function shouldBehaveLikeToothedComponent(toothedType, 
@@ -80,6 +88,18 @@ function shouldBehaveLikeToothedComponent(toothedType,
 				toothed.getHeight().getValue().should.not.be.undefined
 			})
 		})
+
+		if (toothedType != ToothedComponent) {
+			describe('#getAddendum', function() {
+				beforeEach(function() {
+					fullySpecify(toothed) 
+				})
+				
+				it('should return a number', function() {
+						toothed.getAddendum().should.be.a.Number
+				})
+			})
+		}
 
 		describe('#toSpecification', function() {
 			

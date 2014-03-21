@@ -93,13 +93,6 @@ describe('GearTrain', function() {
 		})
 	})
 
-	describe('#getAddendum', function() {
-		it('should return the the circular pitch divided by PI', function() {
-			train.getAddendum().should.be.approximately(train.getCircularPitch() /
-				                                          Math.PI, 0.001)
-		})
-	})
-
 	describe('#addGear', function() {
 		var gear
 		var numberOfTeeth = 15
@@ -279,8 +272,9 @@ describe('GearTrain', function() {
 			 + 'circle radius by the addendum of all Gears in this GearTrain', function() {
 			var boundRadius = gear.getBoundingShape().getRadius().getValue()
 			var pitchRadius = gear.getPitchCircleRadius().getValue()
-			boundRadius.should.be.approximately(pitchRadius + train.getAddendum(), 
+			boundRadius.should.be.approximately(pitchRadius + gear.getAddendum(), 
 				                                  0.001)
+			gear.getAddendum().should.be.greaterThan(0)
 		})
 	})
 

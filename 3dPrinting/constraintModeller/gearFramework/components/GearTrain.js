@@ -33,11 +33,6 @@ function GearTrain(circPitch) {
 	var generateBaseOnWrite = true
 	var baseFactory = new BaseFactory()
 
-	// From http://www.cage-gear.com/spur_gear_calculations.htm
-	train.getAddendum = function() {
-		return circularPitch / Math.PI
-	}
-
 	train.getTypeName = function() {
 		return "GearTrain"
 	}
@@ -88,7 +83,7 @@ function GearTrain(circPitch) {
 	}
 
 	train.calculateGearRootRadius = function(gear, gearTrain) {
-		return gear.getPitchCircleRadius().getValue() - train.getAddendum() 
+		return gear.getPitchCircleRadius().getValue() - gear.getAddendum() 
 		       - gear.getClearance().getValue()
 	}
 
@@ -127,7 +122,7 @@ function GearTrain(circPitch) {
 		var gear = new Gear()
 		gear.setNumberOfTeeth(numTeeth)
 		train.addGear(gear)
-		var boundRadius = gear.getPitchCircleRadius().getValue() + train.getAddendum()
+		var boundRadius = gear.getPitchCircleRadius().getValue() + gear.getAddendum()
 		gear.getBoundingShape().setRadius(boundRadius)
 		return gear
 	}

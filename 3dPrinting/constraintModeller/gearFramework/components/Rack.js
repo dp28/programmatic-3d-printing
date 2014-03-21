@@ -36,6 +36,10 @@ function Rack() {
 		width.setValue(w)
 	}
 
+	rack.getAddendum = function() {
+		return rack.getLinearPitch().getValue() / Math.PI
+	}
+
 	rack.setToothedFace = function(face) {
 		if (Rack.FACES.indexOf(face) < 0)
 			throw new Error("Invalid face")
