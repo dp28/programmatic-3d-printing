@@ -21,11 +21,11 @@ function testBaseSpecification(baseSpec, base) {
 		})
 
 		describe('.parts', function() {
-			it('should contain the specifications of all the Rectangles in the Base',
+			it('should contain the specifications of all the Lines in the Base',
 			   function() {
-			  var rectangles = base.getRectangles()
-				for (var i = rectangles.length - 1; i >= 0; i--) {
-					containsSpecificationOf(baseSpec.parts, rectangles[i]).should.be.true
+			  var lines = base.getLines()
+				for (var i = lines.length - 1; i >= 0; i--) {
+					containsSpecificationOf(baseSpec.parts, lines[i]).should.be.true
 				};
 			})
 

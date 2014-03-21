@@ -4,7 +4,7 @@
  * Creates Base Components from an array of Gear Components
  */
 var Base = require('../components/Base.js').Base
-var Rectangle = require('../../geometry/Rectangle.js').Rectangle
+var Line = require('../../geometry/Line.js').Line
 var Point = require('../../geometry/Point.js').Point
 var Circle = require('../../geometry/Circle.js').Circle
 
@@ -22,7 +22,7 @@ function BaseFactory() {
 		createBase()
 		addSupportingSpindlesToBase()
 		addSupportingCirclesToBase()
-		addSupportingRectanglesToBase()
+		addSupportingLinesToBase()
 		return base
 	}
 
@@ -59,22 +59,22 @@ function BaseFactory() {
 		return gearCentreZ - (gearHeight / 2) - (baseHeight / 2)
 	}
 
-	var addSupportingRectanglesToBase = function() {
+	var addSupportingLinesToBase = function() {
 		for (var i = 0; i < gears.length; i++) {
 			for (var j = 0; j < gears.length && j != i; j++) {
 				if (gears[i].isAdjacentTo(gears[j]))
-					addSupportingRectangleBetween(gears[i], gears[j])
+					addSupportingLineBetween(gears[i], gears[j])
 			}
 		}
 	}
 
-	var addSupportingRectangleBetween = function(startGear, endGear) {
+	var addSupportingLineBetween = function(startGear, endGear) {
 		var baseCentreZ = calculateBaseCentreZ(startGear)	
 		var startPoint = makePointBelow(startGear, baseCentreZ)
 		var endPoint = makePointBelow(endGear, baseCentreZ)
-		var rectangle = new Rectangle(startPoint, endPoint)
-		rectangle.setWidth(GEAR_LIP)
-		base.addPart(rectangle)
+		var line = new Line(startPoint, endPoint)
+		line.setWidth(GEAR_LIP)
+		base.addPart(line)
 	}
 
 	var makePointBelow = function(gear, baseCentreZ) {

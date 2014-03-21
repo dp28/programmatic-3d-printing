@@ -1,15 +1,15 @@
 /*
  * author: Daniel Patterson
  *
- * A 3D rectangle built from two Points with a width.
+ * A 3D line built from two Points with a width.
  */
 var Point = require('../geometry/Point.js').Point
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
-var RectangleSpecification = require('../interface/RectangleSpecification.js').RectangleSpecification
+var LineSpecification = require('../interface/LineSpecification.js').LineSpecification
 
-module.exports.Rectangle = Rectangle
+module.exports.Line = Line
 
-function Rectangle(point1, point2) {
+function Line(point1, point2) {
 	if (!(point1 instanceof Point) || !(point2 instanceof Point))
 		throw new Error("Two Points required")
 	var start = point1
@@ -64,6 +64,6 @@ function Rectangle(point1, point2) {
 	}
 
 	this.toSpecification = function() {
-		return new RectangleSpecification(this)
+		return new LineSpecification(this)
 	}
 }
