@@ -72,7 +72,7 @@ function BaseFactory() {
 		var baseCentreZ = calculateBaseCentreZ(startGear)	
 		var startPoint = makePointBelow(startGear, baseCentreZ)
 		var endPoint = makePointBelow(endGear, baseCentreZ)
-		var rectangle = new Rectangle(startPoint, endPoint)
+		var rectangle = Rectangle.createFromPoints(startPoint, endPoint)
 		rectangle.setWidth(GEAR_LIP)
 		base.addPart(rectangle)
 	}

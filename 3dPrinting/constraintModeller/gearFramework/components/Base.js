@@ -29,7 +29,7 @@ function Base() {
 
 	base.getRectangles = function() {
 		return parts.filter(function(element) {
-			return element instanceof Rectangle
+			return element.getType != undefined && element.getType() == "Rectangle"
 		})
 	}
 	

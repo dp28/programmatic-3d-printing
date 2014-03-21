@@ -50,7 +50,7 @@ function Shape() {
 		},
 
 		isTouching: function(otherShape) {
-			return checkIfTwoCirclesIntersect(this, otherShape)
+			return checkIfTwoShapesIntersect(this, otherShape)
 		},
 
 		isAdjacentTo: function(otherShape){
@@ -70,6 +70,25 @@ function Shape() {
 			var differOnlyOnAxis = centre.differOnlyOnAxis(otherCentre, axis)
 			var adjacentOnAxis = Utilities.approximatelyEqual(distanceBetween, distanceToBoundaries, 0.001)
 			return adjacentOnAxis && differOnlyOnAxis
+		}
+	}
+}
+
+function checkIfTwoShapesIntersect(firstShape, secondShape) {
+	if (firstShape.getType() == "Circle") {
+		if (secondShape.getType() == "Circle") {
+			return checkIfTwoCirclesIntersect(firstShape, secondShape)
+		}
+		else if (secondShape.getType() == "Rectangle") {
+			return checkIfCircleAndRectangleIntersect(firstShape, secondShape)
+		}
+	}
+	else if (firstShape.getType() == "Rectangle") {
+		if (secondShape.getType() == "Circle") {
+			return checkIfCircleAndRectangleIntersect(secondShape, firstShape)
+		}
+		else if (secondShape.getType() == "Rectangle") {
+			return checkIfTwoRectanglesIntersect(firstShape, secondShape)			
 		}
 	}
 }

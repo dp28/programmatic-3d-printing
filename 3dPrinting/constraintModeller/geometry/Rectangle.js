@@ -1,20 +1,25 @@
 /*
  * author: Daniel Patterson
  *
- * A 3D rectangle built from two Points with a width.
+ * A rectangle. 
  */
 var Point = require('../geometry/Point.js').Point
+var Shape = require('../geometry/Shape.js').Shape
 var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
 var RectangleSpecification = require('../interface/RectangleSpecification.js').RectangleSpecification
 
 module.exports.Rectangle = Rectangle
 
-function Rectangle(point1, point2) {
-	if (!(point1 instanceof Point) || !(point2 instanceof Point))
+Rectangle.createFromPoints = function(start, end) {
+	if (!(start instanceof Point) || !(end instanceof Point))
 		throw new Error("Two Points required")
-	var start = point1
-	var end = point2
 
+	const DEFAULT_WIDTH = 1
+
+	var rectangle = new Rectangle()
+
+				var util = require('util')
+				util.puts(JSON.stringify(rectangle))
 	var startX = start.getX().getValue()
 	var endX = end.getX().getValue()
 	var startY = start.getY().getValue()
@@ -26,44 +31,93 @@ function Rectangle(point1, point2) {
 	var yDifference = endY - startY
 	var zDifference = endZ - startZ
 
+	var length = Math.sqrt(xDifference * xDifference 
+					               + yDifference * yDifference
+					               + zDifference * zDifference)
+
+	var angle = Math.atan2(yDifference, xDifference)
+
 	var centre = new Point()
-	const DEFAULT_WIDTH = 1
-	var width = DEFAULT_WIDTH
 	centre.setAt(startX + xDifference / 2,
 	             startY + yDifference / 2,
 	             startZ + zDifference / 2)
+	rectangle.setLength(length)
+	rectangle.setCentre(centre)
+	rectangle.setWidth(DEFAULT_WIDTH)
+	rectangle.setAngleInRadians(angle)
 
-	this.getCentre = function() {
-		return centre
+				var util = require('util')
+				util.puts(JSON.stringify(rectangle))
+	return rectangle
+}
+
+function Rectangle() {
+	const DEFAULT_WIDTH = 0
+	const DEFAULT_ANGLE = 0
+
+	var rectangle = new Shape()
+	var width = new ConstrainableValue()
+	var length = new ConstrainableValue()
+	var angleInRadians = new ConstrainableValue()
+
+	width.setValue(DEFAULT_WIDTH)
+	angleInRadians.setValue(DEFAULT_ANGLE)
+
+	rectangle.getType = function() {
+		return "Rectangle"
 	}
 
-	this.getStart = function() {
-		return start
-	}
-
-	this.getEnd = function() {
-		return end
-	}
-
-	this.getWidth = function() {
+	rectangle.getWidth = function() {
 		return width
 	}
 
-	this.setWidth = function(w) {
-		width = w
+	rectangle.setWidth = function(w) {
+		width.setValue(w)
 	}
 
-	this.getLength = function() {
-		return Math.sqrt(xDifference * xDifference 
-			              + yDifference * yDifference
-			              + zDifference * zDifference) 
+	rectangle.getLength = function() {
+		return length
 	}
 
-	this.getAngleInRadians = function() {
-		return Math.atan2(yDifference, xDifference)
+	rectangle.setLength = function(len) {
+		length.setValue(len)
 	}
 
-	this.toSpecification = function() {
+	rectangle.getAngleInRadians = function() {
+		return angleInRadians
+	}
+
+	rectangle.setAngleInRadians = function(angle) {
+		angleInRadians.setValue(angle)
+	}
+
+	rectangle.getDistanceToRightBoundary = function() {
+		return length.getValue() / 2
+	}
+
+	rectangle.getDistanceToLeftBoundary = function() {
+		return -length.getValue() / 2
+	}
+
+	rectangle.getDistanceToFrontBoundary = function() {
+		return width.getValue() / 2
+	}
+
+	rectangle.getDistanceToBackBoundary = function() {
+		return -width.getValue() / 2
+	}
+
+	rectangle.toSpecification = function() {
+		checkCanGenerateSpecification()
 		return new RectangleSpecification(this)
 	}
+
+	var checkCanGenerateSpecification = function() {
+		if (angleInRadians.isNotSet()) throw new Error("Angle not set")
+		if (rectangle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
+		if (length.isNotSet()) throw new Error("Length not set")
+		if (width.isNotSet()) throw new Error("Width not set")
+	}
+
+	return rectangle
 }
