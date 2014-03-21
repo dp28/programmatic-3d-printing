@@ -89,6 +89,34 @@ function Rack() {
 		setShapeSizes()
 	}
 
+	rack._placeablePlaceAtFrontOf = rack.placeAtFrontOf
+
+	rack.placeAtFrontOf = function(placeableComponent) {
+		rack.setToothedFace("Back")
+		rack._placeablePlaceAtFrontOf(placeableComponent)
+	}
+
+	rack._placeablePlaceAtBackOf = rack.placeAtBackOf
+
+	rack.placeAtBackOf = function(placeableComponent) {
+		rack.setToothedFace("Front")
+		rack._placeablePlaceAtBackOf(placeableComponent)
+	}
+
+	rack._placeablePlaceOnLeftOf = rack.placeOnLeftOf
+
+	rack.placeOnLeftOf = function(placeableComponent) {
+		rack.setToothedFace("Right")
+		rack._placeablePlaceOnLeftOf(placeableComponent)
+	}
+
+	rack._placeablePlaceOnRightOf = rack.placeOnRightOf
+
+	rack.placeOnRightOf = function(placeableComponent) {
+		rack.setToothedFace("Left")
+		rack._placeablePlaceOnRightOf(placeableComponent)
+	}
+
 	var setShapeSizes = function() {
 		var bound = rack.getBoundingShape()
 		var placement = rack.getPlacementShape()

@@ -5,6 +5,7 @@
  */
 var should = require('should')
 var Rack = require('../components/Rack.js').Rack
+var PlaceableComponent = require('../../components/PlaceableComponent.js').PlaceableComponent
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var ToothedComponentTest = require('../tests/ToothedComponentTest.js')
 
@@ -107,4 +108,58 @@ describe('Rack', function() {
 			})
 		})
 	})
+
+	describe('placement methods', function() {
+		var otherToothed
+
+		beforeEach(function() {
+			otherComponent= new PlaceableComponent() 
+		})
+
+		describe('#placeOnRightOf', function() {
+
+			beforeEach(function() {
+				rack.placeOnRightOf(otherComponent)
+			})
+
+			it('should set the Rack\'s toothed face to "Left"', function() {
+				rack.getToothedFace().should.equal("Left")
+			})
+		})
+
+		describe('#placeOnLeftOf', function() {
+
+			beforeEach(function() {
+				rack.placeOnLeftOf(otherComponent)
+			})
+			
+			it('should set the Rack\'s toothed face to "Right"', function() {
+				rack.getToothedFace().should.equal("Right")
+			})
+		})
+
+		describe('#placeAtBackOf', function() {
+
+			beforeEach(function() {
+				rack.placeAtBackOf(otherComponent)
+			})
+
+			it('should set the Rack\'s toothed face to "Front"', function() {
+				rack.getToothedFace().should.equal("Front")
+			})
+		})
+
+		describe('#placeAtFrontOf', function() {
+
+			beforeEach(function() {
+				rack.placeAtFrontOf(otherComponent)
+			})
+
+			it('should set the Rack\'s toothed face to "Back"', function() {
+				rack.getToothedFace().should.equal("Back")
+			})
+		})
+		
+	})
+
 })
