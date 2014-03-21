@@ -66,4 +66,26 @@ describe('Rack', function() {
 			rack.getBoundingShape().getType().should.equal("Rectangle")
 		})
 	})
+
+	describe('#setToothedFace', function() {
+		var toothedFace = "FRONT"
+		
+		it('should set which face of the Rack the teeth will be on', function() {
+			rack.setToothedFace(toothedFace)
+			rack.getToothedFace().should.equal(toothedFace)
+		})
+
+		it('should not be possible to set to an arbitrary value', function() {
+			(function() {
+				rack.setToothedFace("arbitrary")
+			}).should.throw("Invalid face")
+		})
+
+		it('should be possible to set the face to any of Rack.FACES', function() {
+			Rack.FACES.forEach(function(face) {
+				rack.setToothedFace(face)
+				rack.getToothedFace().should.equal(face)				
+			})
+		})
+	})
 })

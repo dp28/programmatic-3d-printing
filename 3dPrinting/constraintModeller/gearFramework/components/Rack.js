@@ -9,11 +9,16 @@ var ConstrainableValue = require('../../constraints/ConstrainableValue.js').Cons
 
 module.exports.Rack = Rack 
 
+Rack.FACES = ["FRONT", "BACK", "LEFT", "RIGHT"]
+
 function Rack() {
+	const DEFAULT_TOOTH_FACE = Rack.FACES[0]
+
 	var rack = new ToothedComponent(Rectangle)
 	var linearPitch = new ConstrainableValue()
 	var length = new ConstrainableValue()
 	var width = new ConstrainableValue()
+	var toothedFace = DEFAULT_TOOTH_FACE
 
 	rack.setLinearPitch = function(pitch) {
 		linearPitch.setValue(pitch)
@@ -29,6 +34,16 @@ function Rack() {
 
 	rack.setWidth = function(w) {
 		width.setValue(w)
+	}
+
+	rack.setToothedFace = function(face) {
+		if (Rack.FACES.indexOf(face) < 0)
+			throw new Error("Invalid face")
+		toothedFace = face
+	}
+
+	rack.getToothedFace = function() {
+		return toothedFace
 	}
 
 	return rack
