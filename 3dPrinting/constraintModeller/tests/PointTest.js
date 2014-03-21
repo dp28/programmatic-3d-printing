@@ -142,35 +142,6 @@ describe('Point', function() {
 	  			                                   + otherPoint.getZ().getValue())
 	  	})
   	})
-
-		describe.skip('when the indpendent Point is set before the constraints are ' 
-  		       + 'created', function() {
-	  	beforeEach(function() {
-	  		point = new Point()
-	  		otherPoint = new Point()
-	  		otherPoint.setAt(1, 2, 3)
-	  		offsets = [1, 2, 3]
-	  		point.offsetFrom(otherPoint, offsets)
-	  	})
-
-	  	it('should set the x coordinate of the dependent Point to the combination' 
-	  		 + ' of the x offset and the indpendent x coordinate', function() {
-	  		point.getX().getValue().should.equal(offsets[0] 
-	  			                                   + otherPoint.getX().getValue())
-	  	})
-
-	  	it('should set the y coordinate of the dependent Point to the combination' 
-	  		 + ' of the y offset and the indpendent y coordinate', function() {
-	  		point.getY().getValue().should.equal(offsets[1] 
-	  			                                   + otherPoint.getY().getValue())
-	  	})
-
-	  	it('should set the z coordinate of the dependent Point to the combination' 
-	  		 + ' of the z offset and the indpendent z coordinate', function() {
-	  		point.getZ().getValue().should.equal(offsets[2] 
-	  			                                   + otherPoint.getZ().getValue())
-	  	})
-  	})
   })
 
   describe('#isFullyDefined', function() {
