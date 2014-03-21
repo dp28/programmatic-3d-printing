@@ -42,22 +42,31 @@ describe('Rack', function() {
 			placementShape.getType().should.equal("Rectangle")
 		})
 
-		describe.skip('the returned placement shape', function() {
+		describe('the returned placement shape', function() {
+			var placeSize, boundSize
+
 			beforeEach(function() {
 				rack.setLength(2)
 				rack.setWidth(1) 
-			})
-			
-			
-			it('should be smaller than the bounding shape', function() {
+				rack.setLinearPitch(2)
 				var boundingShape = rack.getBoundingShape()
 				var placeLength = placementShape.getLength().getValue()
 				var placeWidth = placementShape.getWidth().getValue()
 				var boundLength = boundingShape.getLength().getValue()
 				var boundWidth = boundingShape.getWidth().getValue()
-				var placeSize = placeWidth + placeLength
-				placeSize.should.be.lessThan(boundWidth + boundLength)
+				placeSize = placeWidth + placeLength
+				boundSize = boundWidth + boundLength
 			})
+
+			it('should be smaller than the bounding shape by twice the Rack\'s '
+				 + 'addendum', function() {
+				placeSize.should.be.equal(boundSize - 2 * rack.getAddendum())
+			})
+
+			it.skip('should change depending on which face is the toothed face', function() {
+				
+			})
+
 		})
 	})
 
@@ -68,7 +77,7 @@ describe('Rack', function() {
 	})
 
 	describe('#setToothedFace', function() {
-		var toothedFace = "FRONT"
+		var toothedFace = "Front"
 		
 		it('should set which face of the Rack the teeth will be on', function() {
 			rack.setToothedFace(toothedFace)

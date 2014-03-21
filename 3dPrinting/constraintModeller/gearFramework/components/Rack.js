@@ -9,7 +9,7 @@ var ConstrainableValue = require('../../constraints/ConstrainableValue.js').Cons
 
 module.exports.Rack = Rack 
 
-Rack.FACES = ["FRONT", "BACK", "LEFT", "RIGHT"]
+Rack.FACES = ["Front", "Back", "Left", "Right"]
 
 function Rack() {
 	const DEFAULT_TOOTH_FACE = Rack.FACES[0]
@@ -22,6 +22,7 @@ function Rack() {
 
 	rack.setLinearPitch = function(pitch) {
 		linearPitch.setValue(pitch)
+		setShapeSizes()
 	}
 
 	rack.getLinearPitch = function() {
@@ -30,10 +31,12 @@ function Rack() {
 
 	rack.setLength = function(len) {
 		length.setValue(len)
+		setShapeSizes()
 	}
 
 	rack.setWidth = function(w) {
 		width.setValue(w)
+		setShapeSizes()
 	}
 
 	rack.getAddendum = function() {
@@ -44,6 +47,21 @@ function Rack() {
 		if (Rack.FACES.indexOf(face) < 0)
 			throw new Error("Invalid face")
 		toothedFace = face
+	}
+
+	var swapLengthAndWidth = function() {
+		var len = length.getValue()
+		length.setValue(width.getValue())
+		width.setValue(len)
+	}
+
+	var setShapeSizes = function() {
+		var bound = rack.getBoundingShape()
+		var placement = rack.getPlacementShape()
+		bound.setLength(length.getValue())
+		bound.setWidth(width.getValue())
+		placement.setLength(length.getValue())
+		placement.setWidth(width.getValue() - 2 * rack.getAddendum())
 	}
 
 	rack.getToothedFace = function() {
