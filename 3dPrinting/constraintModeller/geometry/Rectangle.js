@@ -10,47 +10,6 @@ var RectangleSpecification = require('../interface/RectangleSpecification.js').R
 
 module.exports.Rectangle = Rectangle
 
-Rectangle.createFromPoints = function(start, end) {
-	if (!(start instanceof Point) || !(end instanceof Point))
-		throw new Error("Two Points required")
-
-	const DEFAULT_WIDTH = 1
-
-	var rectangle = new Rectangle()
-
-				var util = require('util')
-				util.puts(JSON.stringify(rectangle))
-	var startX = start.getX().getValue()
-	var endX = end.getX().getValue()
-	var startY = start.getY().getValue()
-	var endY = end.getY().getValue()
-	var startZ = start.getZ().getValue()
-	var endZ = end.getZ().getValue()
-
-	var xDifference = endX - startX
-	var yDifference = endY - startY
-	var zDifference = endZ - startZ
-
-	var length = Math.sqrt(xDifference * xDifference 
-					               + yDifference * yDifference
-					               + zDifference * zDifference)
-
-	var angle = Math.atan2(yDifference, xDifference)
-
-	var centre = new Point()
-	centre.setAt(startX + xDifference / 2,
-	             startY + yDifference / 2,
-	             startZ + zDifference / 2)
-	rectangle.setLength(length)
-	rectangle.setCentre(centre)
-	rectangle.setWidth(DEFAULT_WIDTH)
-	rectangle.setAngleInRadians(angle)
-
-				var util = require('util')
-				util.puts(JSON.stringify(rectangle))
-	return rectangle
-}
-
 function Rectangle() {
 	const DEFAULT_WIDTH = 0
 	const DEFAULT_ANGLE = 0
