@@ -5,12 +5,8 @@
  */
 var should = require('should')
 var ToothedComponent = require('../components/ToothedComponent.js').ToothedComponent
-var Spindle = require('../components/Spindle.js').Spindle
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
-var Circle = require('../../geometry/Circle.js').Circle
-var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
 var PlaceableComponentTest = require('../../tests/PlaceableComponentTest.js')
-var GearSpecificationTest = require('../tests/GearSpecificationTest.js')
 var ToothedComponentSpecificationTest = require('../tests/ToothedComponentSpecificationTest.js')
 
 module.exports.shouldBehaveLikeToothedComponent = shouldBehaveLikeToothedComponent
