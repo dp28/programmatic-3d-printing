@@ -18,12 +18,15 @@ describe('Rack', function() {
 	
   it('should behave like a ToothedComponent', function() {
 
-		function setupTestBoundaries(gear) {
+		function setupTestBoundaries(rack) {
 		}
 
-		function fullySpecify(gear) {
+		function fullySpecify(rack) {
 			rack.setNumberOfTeeth(10) 			
 			rack.setLinearPitch(4)
+			rack.getCentre().fixAt(0, 0, 0)
+			rack.setLength(1)
+			rack.setWidth(1)
 		}
 
 		ToothedComponentTest.shouldBehaveLikeToothedComponent(Rack, 
@@ -173,6 +176,7 @@ describe('Rack', function() {
 			rack.setLength(1)
 			rack.setWidth(1)
 			rack.setLinearPitch(4)
+			rack.getCentre().setAt(0, 0, 0)
 		})
 
 		it('should return an Array containing a single RackSupport', function() {
@@ -182,17 +186,75 @@ describe('Rack', function() {
 	})
 
 	describe('#generateSupport', function() {
-		var support 
 
 		beforeEach(function() {
 			rack = new Rack()
+		})
+
+		it('should not be possible if the centre of the Rack is not defined',
+			 function() {
+				try {
+					rack.generateSupport().should.throw("Point not fully defined")
+				}
+				catch(err) {
+					err.should.equal("Point not fully defined")
+				}
+		}) 
+
+		it('should not be possible if the height of the Rack is not defined',
+			 function() {
+			rack.getHeight().setValue(null)
+			rack.getCentre().fixAt(0, 0, 0)
+			try {
+				rack.generateSupport().should.throw("Height not set")
+			}
+			catch(err) {
+				err.should.equal("Height not set")
+			} 
+		})
+
+		it('should not be possible if the linear pitch of the Rack is not defined',
+			 function() {
+			rack.getCentre().fixAt(0, 0, 0)
+			try {
+				rack.generateSupport().should.throw("Linear pitch not set")
+			}
+			catch(err) {
+				err.should.equal("Linear pitch not set")
+			} 
+		})
+
+		it('should not be possible if the length of the Rack is not defined',
+			 function() {
+			rack.getCentre().fixAt(0, 0, 0)
+			rack.setLinearPitch(1)
+			try {
+				rack.generateSupport().should.throw("Length not set")
+			}
+			catch(err) {
+				err.should.equal("Length not set")
+			} 
+		})
+
+		it('should not be possible if the width of the Rack is not defined',
+			 function() {
+			rack.getCentre().fixAt(0, 0, 0)
+			rack.setLinearPitch(1)
 			rack.setLength(1)
-			rack.setWidth(1)
-			rack.setLinearPitch(4)
-			support = rack.generateSupport() 
+			try {
+				rack.generateSupport().should.throw("Width not set")
+			}
+			catch(err) {
+				err.should.equal("Width not set")
+			} 
 		})
 
 		it('should generate a RackSupport for the Rack', function() {
+			rack.setLength(1)
+			rack.setWidth(1)
+			rack.setLinearPitch(4)
+			rack.getCentre().fixAt(0, 0, 0)
+			var support = rack.generateSupport() 
 			shouldBeAMatchingRackSupport(rack, support)
 		})
 	})

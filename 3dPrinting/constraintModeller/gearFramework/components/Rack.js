@@ -152,6 +152,7 @@ function Rack() {
 	}
 
 	rack.generateSupport = function() {
+		checkFullySpecified()
 		var support = new RackSupport()
 		support.setLength(length.getValue())
 		support.getLength().sameAs(length)
@@ -161,6 +162,14 @@ function Rack() {
 		support.setWallHeight(rack.getHeight())
 		support.setWallWidth(rack.getAddendum())
 		return support
+	}
+
+	var checkFullySpecified = function() {
+		if(rack.getCentre().isNotFullyDefined()) throw "Point not fully defined"
+		if(rack.getHeight().isNotSet()) throw "Height not set"
+		if(rack.getLinearPitch().isNotSet()) throw "Linear pitch not set"
+		if(rack.getLength().isNotSet()) throw "Length not set"
+		if(rack.getWidth().isNotSet()) throw "Width not set"
 	}
 
 	rack.generateAuxillaryComponents = function() {
