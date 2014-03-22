@@ -3,7 +3,6 @@
  *
  * A representation of an involute gear
  */
-var util = require('util')
 var ToothedComponent = require('../components/ToothedComponent.js').ToothedComponent
 var Point = require('../../geometry/Point.js').Point
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
@@ -35,18 +34,8 @@ function Gear() {
 	}
 
 	gear.setPitchCircleRadius = function(r) {
-		setPitchCircleRadius(r)
-	}
-
-	var setPitchCircleRadius = function(r) {
 		pitchCircleRadius.setValue(r)
 		gear.getPlacementShape().setRadius(r)		
-	}
-
-	gear._toothedSetNumberOfTeeth = gear.setNumberOfTeeth 
-
-	gear.setNumberOfTeeth = function(n) {
-		gear._toothedSetNumberOfTeeth(n)
 	}
 
 	gear.getClearance = function() {
@@ -62,22 +51,26 @@ function Gear() {
 	}
 
 	gear.setCircularPitch = function(p) {
-		checkHasNumberOfTeethOrPitchCircleRadius()
+		checkHasEitherNumberOfTeethOrPitchCircleRadius()
 		circularPitch = p
 		if (gear.getNumberOfTeeth().isNotSet()) {
 			var numTeeth = calculateNumberOfTeethFromPitchCircleRadius(gear)
-			gear._toothedSetNumberOfTeeth(numTeeth)
+			gear.setNumberOfTeeth(numTeeth)
 		}
 		else if (gear.getPitchCircleRadius().isNotSet()) {
 			var radius = calculatePitchCircleRadiusFromNumberOfTeeth(gear)
-			setPitchCircleRadius(radius)
+			gear.setPitchCircleRadius(radius)
 		}
 	}
 
-	var checkHasNumberOfTeethOrPitchCircleRadius = function() {
+	var checkHasEitherNumberOfTeethOrPitchCircleRadius = function() {
 		if (gear.getNumberOfTeeth().isNotSet() 
 			  && gear.getPitchCircleRadius().isNotSet()) {
 			throw new Error("Number of teeth or pitch circle radius not set")
+		}
+		else if (gear.getNumberOfTeeth().isSet() 
+			  && gear.getPitchCircleRadius().isSet()) {
+			throw new Error("Circular pitch already set")
 		}
 	}
 

@@ -22,10 +22,9 @@ describe('Rack', function() {
 		}
 
 		function fullySpecify(rack) {
-			rack.setNumberOfTeeth(10) 			
-			rack.setLinearPitch(4)
+			rack.setNumberOfTeeth(10) 		
+			rack.setLinearPitch(4)	
 			rack.getCentre().fixAt(0, 0, 0)
-			rack.setLength(1)
 			rack.setWidth(1)
 		}
 
@@ -38,6 +37,12 @@ describe('Rack', function() {
 	describe('#getTypeName', function() {
 		it('should return "Rack"', function() {
 			rack.getTypeName().should.equal("Rack")
+		})
+	})
+
+	describe('#getWidth', function() {
+		it('should have a default value of 10', function() {
+			rack.getWidth().getValue().should.equal(10)
 		})
 	})
 
@@ -216,6 +221,7 @@ describe('Rack', function() {
 		it('should not be possible if the linear pitch of the Rack is not defined',
 			 function() {
 			rack.getCentre().fixAt(0, 0, 0)
+			rack.setLength(1)
 			try {
 				rack.generateSupport().should.throw("Linear pitch not set")
 			}
@@ -224,23 +230,9 @@ describe('Rack', function() {
 			} 
 		})
 
-		it('should not be possible if the length of the Rack is not defined',
-			 function() {
-			rack.getCentre().fixAt(0, 0, 0)
-			rack.setLinearPitch(1)
-			try {
-				rack.generateSupport().should.throw("Length not set")
-			}
-			catch(err) {
-				err.should.equal("Length not set")
-			} 
-		})
-
 		it('should not be possible if the width of the Rack is not defined',
 			 function() {
-			rack.getCentre().fixAt(0, 0, 0)
-			rack.setLinearPitch(1)
-			rack.setLength(1)
+			rack.setWidth(null)
 			try {
 				rack.generateSupport().should.throw("Width not set")
 			}

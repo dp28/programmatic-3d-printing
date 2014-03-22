@@ -58,6 +58,7 @@ describe('GearTrain', function() {
 
 	function exampleComponent() {
 		var component = new Rack()
+		component.setNumberOfTeeth(3)
 		component.setCircularPitch(8)
 		return component
 	}
@@ -116,11 +117,11 @@ describe('GearTrain', function() {
 
 	describe('#addComponent', function() {
 		var numberOfTeeth = 15
-		var pitchCircleRadius = 20
+		var length = 200
 
 		// Formula for circular pitch, see
 		// http://www.cs.cmu.edu/~rapidproto/mechanisms/chpt7.html#HDR116A 
-		var circularPitch = Math.PI * pitchCircleRadius * 2 / numberOfTeeth
+		var circularPitch = length / numberOfTeeth
 
 		beforeEach(function() {
 			gear = new Gear()
@@ -132,14 +133,72 @@ describe('GearTrain', function() {
 
 			beforeEach(function() {
 				rack = new Rack() 
-				rack.setCircularPitch(train.getCircularPitch())
 			})
 
-			it('should set the linear pitch of the Rack', function() {
-				train.addComponent(rack)
-				rack.getLinearPitch().should.equal(circularPitch)
+			describe('with neither its number of teeth or length radius set', function() {
+				it ('should not be possible', function() {
+					var error = "Number of teeth or length not set"
+					try {
+						train.addComponent(rack).should.throw(error)
+					}
+					catch(err) {
+						err.message.should.eql(error)
+					}
+				})
 			})
-			
+
+			describe('with its number of teeth set but length not yet set', function() {
+				beforeEach(function() {
+					rack.setNumberOfTeeth(numberOfTeeth)
+					train.addComponent(rack)
+				})
+
+				it('should set the length of the Rack to the value '
+					 + 'corresponding to the circular pitch of the GearTrain', function() {
+					rack.getLength().getValue().should.be.approximately(length, 0.001)
+				})
+			})
+
+			describe('with its pitch circle radius set but its number of '
+				       + 'teeth not set', function() {
+				beforeEach(function() {
+					rack.setLength(length)
+					train.addComponent(rack)
+				})
+
+				it('should set the pitch circle radius of the Rack to the value '
+					 + 'corresponding to the circular pitch of the GearTrain', function() {
+					rack.getNumberOfTeeth().getValue().should.be.approximately(numberOfTeeth, 0.001)
+				})
+				
+			})
+
+			describe('with both its number of teeth and pitch circle ' 
+				       + 'radius set', function() {
+				beforeEach(function() {
+					rack.setNumberOfTeeth(numberOfTeeth)
+					rack.setLength(length)
+				})
+
+				it('should not be possible if the circular pitch of the Rack is different '
+					 + 'from that of the GearTrain', function() {
+					train = new GearTrain(circularPitch + 1)
+					var error = "Circular pitch of ToothedComponent does not match GearTrain";
+					(function() {
+						train.addComponent(rack)
+					}
+					).should.throw(error)
+				})
+
+				it('should be possible if their circular pitches are the same',
+				   function() {
+					train = new GearTrain(circularPitch)
+					train.getComponents().length.should.equal(0)			
+					train.addComponent(rack)
+					train.getComponents().length.should.equal(1)			
+					train.getComponents()[0].getTypeName().should.equal("Rack")
+				})
+			})
 		})
 
 		describe('Adding a ToothedComponents with a different pressure angle', 
@@ -162,6 +221,7 @@ describe('GearTrain', function() {
 
 		describe('adding a Gear', function() {
 			var gear
+			var pitchCircleRadius = circularPitch * numberOfTeeth / (2 * Math.PI)
 
 			beforeEach(function() {
 				gear = new Gear()
@@ -204,6 +264,7 @@ describe('GearTrain', function() {
 			         + ' not yet set', function() {
 				beforeEach(function() {
 					gear.setNumberOfTeeth(numberOfTeeth)
+					gear.setCentreHoleRadius(0)
 					train.addComponent(gear)
 				})
 
@@ -251,31 +312,6 @@ describe('GearTrain', function() {
 					train.addComponent(gear)
 					train.getComponents().length.should.equal(1)			
 					train.getComponents()[0].getTypeName().should.equal("Gear")
-				})
-			})
-
-			describe('successfully adding a Gear', function() {	
-				beforeEach(function() {
-					gear.setPitchCircleRadius(pitchCircleRadius)
-					train.addComponent(gear)
-				})			
-
-				it('should give the Gear an id', function() {
-					gear.getID().should.not.equal(null)
-				})		
-
-				describe('then adding another Gear', function() {
-					var secondGear
-
-					beforeEach(function() {
-						secondGear = new Gear()
-						secondGear.setPitchCircleRadius(pitchCircleRadius)
-						train.addComponent(secondGear)
-					})
-					
-					it('should give the second Gear a different id', function() {
-						secondGear.getID().should.not.equal(gear.getID())
-					})
 				})
 			})
 		})

@@ -4,7 +4,6 @@
  * A collection of Gears that are standardised so that they can interact 
  * properly
  */
-var util = require('util')
 var PlaceableComponentGroup = require('../../components/PlaceableComponentGroup.js').PlaceableComponentGroup
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
@@ -47,14 +46,20 @@ function GearTrain(circPitch, presAngle) {
 
 	train._componentGroupAddComponent = train.addComponent
 	train.addComponent = function(component) {
-		checkIfGearCanBeAdded(component)
-		component.setCircularPitch(circularPitch)		
+		checkIfComponentCanBeAdded(component)	
 		component.checkIsValid()
 		train._componentGroupAddComponent(component)
 	} 
 
-	var checkIfGearCanBeAdded = function(component) {
+	var checkIfComponentCanBeAdded = function(component) {
 		checkPressureAngle(component)
+		try {
+			component.setCircularPitch(circularPitch)	
+		}
+		catch (err){
+			if (err.message != "Circular pitch already set")
+				throw err
+		}
 		checkCircularPitchMatches(component)
 	}
 

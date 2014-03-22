@@ -150,17 +150,6 @@ function shouldBehaveLikeToothedComponent(toothedType,
 					toothed.getCircularPitch().should.be.a.Number
 				})
 			})
-
-			describe('setCircularPitch when fully specified', function() {
-				beforeEach(function() {
-					fullySpecify(toothed) 
-					toothed.setCircularPitch(1)
-				})
-				
-				it('should change the circular pitch', function() {
-					toothed.getCircularPitch().should.equal(1)
-				})
-			})
 		}
 
 		describe('#toSpecification', function() {

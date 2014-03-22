@@ -50,11 +50,13 @@ Rack.FACE_TO_AXIS.Right = "Y"
 
 function Rack() {
 	const DEFAULT_TOOTH_FACE = Rack.FACES[0]
+	const DEFAULT_WIDTH = 10
 
 	var rack = new ToothedComponent(Rectangle)
 	var linearPitch = null
 	var length = new ConstrainableValue()
 	var width = new ConstrainableValue()
+	width.setValue(DEFAULT_WIDTH)
 	var toothedFace = DEFAULT_TOOTH_FACE
 	var lengthAxis = Rack.FACE_TO_AXIS[toothedFace]
 
@@ -62,21 +64,50 @@ function Rack() {
 		return "Rack"
 	}
 
-	rack.setLinearPitch = function(pitch) {
-		linearPitch = pitch
-		setShapeSizes()
-	}
-
-	rack.getCircularPitch = function() {
-		return linearPitch
-	}
-
-	rack.setCircularPitch = function(p) {
-		linearPitch = p
+	rack.setCircularPitch = function(pitch) {
+		rack.setLinearPitch(pitch)
 	}
 
 	rack.getLinearPitch = function() {
 		return linearPitch
+	}
+
+	rack.getCircularPitch = function() {
+		return rack.getLinearPitch()
+	}
+
+	rack.setLinearPitch = function(p) {
+		checkHasEitherNumberOfTeethOrLength()
+		linearPitch = p
+		if (rack.getNumberOfTeeth().isNotSet()) {
+			var numTeeth = calculateNumberOfTeethFromLength()
+			rack.setNumberOfTeeth(numTeeth)
+		}
+		else if (rack.getLength().isNotSet()) {
+			var len = calculateLengthFromNumberOfTeeth()
+			rack.setLength(len)
+		}
+		setShapeSizes()
+	}
+
+	var checkHasEitherNumberOfTeethOrLength = function() {
+		if (rack.getNumberOfTeeth().isNotSet() 
+			  && rack.getLength().isNotSet()) {
+			throw new Error("Number of teeth or length not set")
+		}
+		else if (rack.getNumberOfTeeth().isSet() 
+			  && rack.getLength().isSet()) { 
+			linearPitch = length.getValue() / rack.getNumberOfTeeth().getValue()
+			throw new Error("Circular pitch already set")
+		}
+	}
+
+	var calculateNumberOfTeethFromLength = function() {
+		return rack.getLength().getValue() / linearPitch
+	}
+
+	var calculateLengthFromNumberOfTeeth = function() {
+		return linearPitch * rack.getNumberOfTeeth().getValue()
 	}
 
 	rack.getWidth = function() {
@@ -173,11 +204,11 @@ function Rack() {
 	}
 
 	var checkFullySpecified = function() {
+		if(rack.getWidth().isNotSet()) throw "Width not set"
 		if(rack.getCentre().isNotFullyDefined()) throw "Point not fully defined"
 		if(rack.getHeight().isNotSet()) throw "Height not set"
-		if(rack.getLinearPitch() == null) throw "Linear pitch not set"
 		if(rack.getLength().isNotSet()) throw "Length not set"
-		if(rack.getWidth().isNotSet()) throw "Width not set"
+		if(rack.getLinearPitch() == null) throw "Linear pitch not set"
 	}
 
 	rack.generateAuxillaryComponents = function() {
