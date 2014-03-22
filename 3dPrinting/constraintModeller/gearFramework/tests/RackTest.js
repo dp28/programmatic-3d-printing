@@ -8,6 +8,7 @@ var Rack = require('../components/Rack.js').Rack
 var PlaceableComponent = require('../../components/PlaceableComponent.js').PlaceableComponent
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var ToothedComponentTest = require('../tests/ToothedComponentTest.js')
+var RackSpecificationTest = require('../tests/RackSpecificationTest.js')
 
 describe('Rack', function() {
 	var rack 
@@ -218,18 +219,6 @@ describe('Rack', function() {
 			} 
 		})
 
-		it('should not be possible if the linear pitch of the Rack is not defined',
-			 function() {
-			rack.getCentre().fixAt(0, 0, 0)
-			rack.setLength(1)
-			try {
-				rack.generateSupport().should.throw("Linear pitch not set")
-			}
-			catch(err) {
-				err.should.equal("Linear pitch not set")
-			} 
-		})
-
 		it('should not be possible if the width of the Rack is not defined',
 			 function() {
 			rack.setWidth(null)
@@ -283,4 +272,49 @@ describe('Rack', function() {
 		})
 	}
 
+	describe('#toSpecification', function() {
+
+		beforeEach(function() {
+			rack.getCentre().setAt(1, 2, 3) // Necessary for component.toSpecification 
+		})
+		
+		it('should not be possible if neither the number of teeth nor the pitch '
+			 + ' radius has been set', function() {
+			rack.toSpecification.should.throw("Number of teeth not set")
+		})
+
+		it('should not be possible if the number of teeth has not been set even if '
+			 + ' the length has been', function() {
+			rack.setLength(10)
+			rack.toSpecification.should.throw("Number of teeth not set")
+		})
+
+		it('should not be possible if the length has not been set even if'
+			 + ' the number of teeth has been', function() {
+			rack.setNumberOfTeeth(5)
+			rack.toSpecification.should.throw("Length not set")
+		})
+
+		it('should be possible if both the number of teeth and length are '
+			 + 'set', function() {
+			rack.setLength(10)
+			rack.setNumberOfTeeth(5)
+			rack.toSpecification.should.not.throw()
+ 		})
+
+		describe('the returned RackSpecification', function() {
+			var rackSpec
+
+			beforeEach(function() {
+			rack.setLength(10)
+			rack.setNumberOfTeeth(5)		
+				rackSpec = rack.toSpecification()				
+			})
+
+			it('should behave like a RackSpecification created by the Rack',
+			   function() {
+				RackSpecificationTest.testRackSpecification(rackSpec, rack)
+			})
+		})
+	})
 })

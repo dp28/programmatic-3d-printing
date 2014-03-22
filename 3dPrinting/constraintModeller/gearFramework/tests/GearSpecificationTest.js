@@ -8,21 +8,15 @@ var should = require('should')
 var Point = require('../../geometry/Point.js').Point
 var Gear = require('../components/Gear.js').Gear
 var GearSpecification = require('../interface/GearSpecification.js').GearSpecification
-var SpecificationTest = require('../../tests/SpecificationTest.js')
+var ToothedComponentSpecificationTest = require('../tests/ToothedComponentSpecificationTest.js')
 
 module.exports.testGearSpecification = testGearSpecification
 
 function testGearSpecification(gearSpec, gear) {
 	describe('GearSpecification', function() {
 
-		it('should behave like a Specification', function() {
-			SpecificationTest.shouldBehaveLikeSpecification(gearSpec)
-		})
-		
-		describe('#numTeeth', function() {
-			it('should have the correct value', function() {
-				gearSpec.numTeeth.should.equal(gear.getNumberOfTeeth().getValue())
-			})
+		it('should behave like a ToothedSpecification', function() {
+			ToothedComponentSpecificationTest.testToothedComponentSpecification(gearSpec, gear)
 		})
 
 		describe('#circularPitch', function() {
@@ -31,21 +25,9 @@ function testGearSpecification(gearSpec, gear) {
 			})
 		})
 
-		describe('#pressureAngle', function() {
-			it('should have the correct value', function() {
-				gearSpec.pressureAngle.should.equal(gear.getPressureAngle().getValue())
-			})
-		})
-
 		describe('#clearance', function() {
 			it('should have the correct value', function() {
 				gearSpec.clearance.should.equal(gear.getClearance().getValue())
-			})
-		})
-
-		describe('#height', function() {
-			it('should have the correct value', function() {
-				gearSpec.height.should.equal(gear.getHeight().getValue())
 			})
 		})
 

@@ -38,7 +38,7 @@ var ToothedComponent = require('../components/ToothedComponent.js').ToothedCompo
 var Rectangle = require('../../geometry/Rectangle.js').Rectangle
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var RackSupport = require('../components/RackSupport.js').RackSupport
-
+var RackSpecification = require('../interface/RackSpecification.js').RackSpecification
 module.exports.Rack = Rack 
 
 Rack.FACES = ["Front", "Back", "Left", "Right"]
@@ -69,6 +69,10 @@ function Rack() {
 	}
 
 	rack.getLinearPitch = function() {
+		if (linearPitch == null) {
+			checkCanCalculateLinearPitch()
+			calculateLinearPitch()
+		}
 		return linearPitch
 	}
 
@@ -97,9 +101,17 @@ function Rack() {
 		}
 		else if (rack.getNumberOfTeeth().isSet() 
 			  && rack.getLength().isSet()) { 
-			linearPitch = length.getValue() / rack.getNumberOfTeeth().getValue()
 			throw new Error("Circular pitch already set")
 		}
+	}
+
+	var checkCanCalculateLinearPitch = function() {
+		if (rack.getNumberOfTeeth().isNotSet()) throw new Error("Number of teeth not set")
+		if (length.isNotSet()) throw new Error("Length not set")
+	}
+
+	var calculateLinearPitch = function() {		
+			linearPitch = length.getValue() / rack.getNumberOfTeeth().getValue()
 	}
 
 	var calculateNumberOfTeethFromLength = function() {
@@ -213,6 +225,10 @@ function Rack() {
 
 	rack.generateAuxillaryComponents = function() {
 		return [rack.generateSupport()]
+	}
+
+	rack.toSpecification = function() {
+		return new RackSpecification(rack)
 	}
 
 	return rack
