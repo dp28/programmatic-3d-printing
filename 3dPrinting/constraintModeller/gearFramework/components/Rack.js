@@ -52,7 +52,7 @@ function Rack() {
 	const DEFAULT_TOOTH_FACE = Rack.FACES[0]
 
 	var rack = new ToothedComponent(Rectangle)
-	var linearPitch = new ConstrainableValue()
+	var linearPitch = null
 	var length = new ConstrainableValue()
 	var width = new ConstrainableValue()
 	var toothedFace = DEFAULT_TOOTH_FACE
@@ -63,8 +63,16 @@ function Rack() {
 	}
 
 	rack.setLinearPitch = function(pitch) {
-		linearPitch.setValue(pitch)
+		linearPitch = pitch
 		setShapeSizes()
+	}
+
+	rack.getCircularPitch = function() {
+		return linearPitch
+	}
+
+	rack.setCircularPitch = function(p) {
+		linearPitch = p
 	}
 
 	rack.getLinearPitch = function() {
@@ -91,7 +99,7 @@ function Rack() {
 	}
 
 	rack.getAddendum = function() {
-		return rack.getLinearPitch().getValue() / Math.PI
+		return linearPitch / Math.PI
 	}
 
 	rack.setToothedFace = function(face) {
@@ -167,7 +175,7 @@ function Rack() {
 	var checkFullySpecified = function() {
 		if(rack.getCentre().isNotFullyDefined()) throw "Point not fully defined"
 		if(rack.getHeight().isNotSet()) throw "Height not set"
-		if(rack.getLinearPitch().isNotSet()) throw "Linear pitch not set"
+		if(rack.getLinearPitch() == null) throw "Linear pitch not set"
 		if(rack.getLength().isNotSet()) throw "Length not set"
 		if(rack.getWidth().isNotSet()) throw "Width not set"
 	}

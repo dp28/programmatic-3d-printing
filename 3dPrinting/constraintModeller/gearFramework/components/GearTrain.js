@@ -25,14 +25,17 @@ function checkIfCreationIsLegal(circPitch) {
  * be specified so that all Gears in this GearTrain can have the same tooth 
  * size. This is necessary for the gears to mesh.
  */ 
-function GearTrain(circPitch) {
+function GearTrain(circPitch, presAngle) {
 	const DEFAULT_BASE_HEIGHT = 1
+	const DEFAULT_PRESSURE_ANGLE = 20
 	checkIfCreationIsLegal(circPitch)
 	var train = PlaceableComponentGroup()
 	var gears = train.getComponents() // rename for convenience
 	var circularPitch = circPitch
 	var generateBaseOnWrite = true
 	var baseFactory = new BaseFactory()
+	var pressureAngle = (presAngle == undefined) ? DEFAULT_PRESSURE_ANGLE 
+	                                             : presAngle
 
 	train.getTypeName = function() {
 		return "GearTrain"
@@ -40,29 +43,25 @@ function GearTrain(circPitch) {
 
 	train._componentGroupAddComponent = train.addComponent
 
-	train.addGear = function(gear) {
+	train.addToothedComponent = function(gear) {
 		checkIfGearCanBeAdded(gear)
-		train.changeGearToHaveSameCircularPitch(gear)
-		train.checkIfGearIsValid(gear)
+		gear.setCircularPitch(circularPitch)		
+		gear.checkIsValid()
 		train._componentGroupAddComponent(gear)
 	} 
 
+	train.getPressureAngle = function() {
+		return pressureAngle
+	}
+
 	var checkIfGearCanBeAdded = function(gear) {
 		checkPressureAngle(gear)
-		checkHasNumberOfTeethOrPitchCircleRadius(gear)
 		checkCircularPitchMatches(gear)
 	}
 
-	var checkPressureAngle= function(gear) {		
-		if (gears.length > 0 && gears[0].getPressureAngle().getValue() != gear.getPressureAngle().getValue())
-			throw new Error("Gear pressure angle does not match Gears in GearTrain")
-	}
-
-	var checkHasNumberOfTeethOrPitchCircleRadius = function(gear) {
-		if (gear.getNumberOfTeeth().isNotSet() 
-			  && gear.getPitchCircleRadius().isNotSet()) {
-			throw new Error("Number of teeth or pitch circle radius not set")
-		}
+	var checkPressureAngle = function(gear) {		
+		if (gear.getPressureAngle().getValue() != pressureAngle)
+			throw new Error("ToothedComponent pressure angle does not match GearTrain")
 	}
 
 	var checkCircularPitchMatches = function(gear)  {
@@ -75,36 +74,6 @@ function GearTrain(circPitch) {
 			return
 		}
 		throw new Error("Circular pitch of Gear does not match GearTrain")
-	}
-
-	train.checkIfGearIsValid = function(gear) {
-		if(train.calculateGearRootRadius(gear) <= gear.getCentreHoleRadius().getValue())
-			throw new Error("Invalid Gear - Centre hole radius bigger than root "
-				            + "circle radius:\n" + gear.toString())
-	}
-
-	train.calculateGearRootRadius = function(gear, gearTrain) {
-		return gear.getPitchCircleRadius().getValue() - gear.getAddendum() 
-		       - gear.getClearance().getValue()
-	}
-
-	train.changeGearToHaveSameCircularPitch = function(gear) {
-		if (gear.getNumberOfTeeth().isNotSet()) {
-			var numTeeth = calculateNumberOfTeethFromPitchCircleRadius(gear)
-			gear.setNumberOfTeeth(numTeeth)
-		}
-		else if (gear.getPitchCircleRadius().isNotSet()) {
-			var radius = calculatePitchCircleRadiusFromNumberOfTeeth(gear)
-			gear.setPitchCircleRadius(radius)
-		}
-	}
-
-	var calculateNumberOfTeethFromPitchCircleRadius = function(gear) {
-		return Math.PI * 2 * gear.getPitchCircleRadius().getValue() / circularPitch
-	}
-
-	var calculatePitchCircleRadiusFromNumberOfTeeth = function(gear) {
-		return circularPitch * gear.getNumberOfTeeth().getValue() / (2 * Math.PI)
 	}
 
 	train.getCircularPitch = function() {
@@ -122,7 +91,7 @@ function GearTrain(circPitch) {
 	train.createGear = function(numTeeth) {
 		var gear = new Gear()
 		gear.setNumberOfTeeth(numTeeth)
-		train.addGear(gear)
+		train.addToothedComponent(gear)
 		var boundRadius = gear.getPitchCircleRadius().getValue() + gear.getAddendum()
 		gear.getBoundingShape().setRadius(boundRadius)
 		return gear

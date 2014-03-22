@@ -47,12 +47,29 @@ function ToothedComponent(boundaryShapeType) {
 		pressureAngle.setValue(value)
 	}
 
+	toothed.getCircularPitch = function() {
+		throw new Error("Not implemented in this instance")
+	}
+
+	toothed.setCircularPitch = function(p) {
+		throw new Error("Not implemented in this instance")
+	}
+
 	toothed.getHeight = function() {
 		return height 
 	}
 
 	toothed.setHeight = function(h) {
 		height.setValue(h)
+	}
+
+	toothed.checkIsValid = function() {
+		if (!toothed.isValid())
+			throw new Error("Invalid " + toothed.getTypeName())
+	}
+
+	toothed.isValid = function() {
+		return true
 	}
 
 	// Height of tooth above pitch line

@@ -42,6 +42,39 @@ describe('ToothedComponent', function() {
 			}).should.throw("Not implemented in this instance")
 		})
 	})
+
+	describe('getCircularPitch', function() {
+		it('should only be implemented by subclasses', function() {
+			(function() {
+				toothed.getCircularPitch()
+			}).should.throw("Not implemented in this instance")
+		})
+	})
+
+	describe('setCircularPitch', function() {
+		it('should only be implemented by subclasses', function() {
+			(function() {
+				toothed.setCircularPitch()
+			}).should.throw("Not implemented in this instance")
+		})
+	})
+
+	describe('#isValid', function() {
+		it('return true, but can be overriden by subclasses', function() {
+			toothed.isValid().should.be.true
+		})
+	})
+
+	describe('#checkIsValid', function() {
+		it('should not throw an error if the ToothedComponent is valid', function() {
+			toothed.checkIsValid.should.not.throw()
+		})
+
+		it('should throw an error if the ToothedComponent is invalid', function() {
+			toothed.isValid = function() {return false}
+			toothed.checkIsValid.should.throw("Invalid ToothedComponent")
+		})
+	})
 })
 
 function shouldBehaveLikeToothedComponent(toothedType, 
@@ -105,6 +138,27 @@ function shouldBehaveLikeToothedComponent(toothedType,
 				
 				it('should return a number', function() {
 						toothed.getAddendum().should.be.a.Number
+				})
+			})
+
+			describe('getCircularPitch when fully specified', function() {
+				beforeEach(function() {
+					fullySpecify(toothed) 
+				})
+				
+				it('should return a number ', function() {
+					toothed.getCircularPitch().should.be.a.Number
+				})
+			})
+
+			describe('setCircularPitch when fully specified', function() {
+				beforeEach(function() {
+					fullySpecify(toothed) 
+					toothed.setCircularPitch(1)
+				})
+				
+				it('should change the circular pitch', function() {
+					toothed.getCircularPitch().should.equal(1)
 				})
 			})
 		}

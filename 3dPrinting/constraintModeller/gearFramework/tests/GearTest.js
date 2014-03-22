@@ -90,6 +90,19 @@ describe('Gear', function() {
 		})
 	})
 
+	describe('#isValid', function() {
+		beforeEach(function() {
+			gear.setCentreHoleRadius(100)
+			gear.setPitchCircleRadius(50)
+			gear.setNumberOfTeeth(5) 
+		})
+		
+		it('should be false if the centre hole radius is larger than the pitch '
+			 + 'radius', function() {
+			gear.isValid().should.be.false
+		})
+	})
+
 	var exampleDiameter = 20
 	var exampleNumTeeth = 5
 

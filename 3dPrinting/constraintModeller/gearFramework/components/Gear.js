@@ -28,14 +28,25 @@ function Gear() {
 	clearance.setValue(DEFAULT_CLEARANCE)	
 	var centreHoleRadius = new ConstrainableValue()
 	centreHoleRadius.setValue(DEFAULT_CENTRE_HOLE_RADIUS)
+	var circularPitch = null
 
 	gear.getPitchCircleRadius = function() {
 		return pitchCircleRadius
 	}
 
 	gear.setPitchCircleRadius = function(r) {
+		setPitchCircleRadius(r)
+	}
+
+	var setPitchCircleRadius = function(r) {
 		pitchCircleRadius.setValue(r)
-		gear.getPlacementShape().setRadius(r)
+		gear.getPlacementShape().setRadius(r)		
+	}
+
+	gear._toothedSetNumberOfTeeth = gear.setNumberOfTeeth 
+
+	gear.setNumberOfTeeth = function(n) {
+		gear._toothedSetNumberOfTeeth(n)
 	}
 
 	gear.getClearance = function() {
@@ -46,9 +57,44 @@ function Gear() {
 		return centreHoleRadius
 	}
 
+	gear.setCentreHoleRadius = function(c) {
+		centreHoleRadius.setValue(c)
+	}
+
+	gear.setCircularPitch = function(p) {
+		checkHasNumberOfTeethOrPitchCircleRadius()
+		circularPitch = p
+		if (gear.getNumberOfTeeth().isNotSet()) {
+			var numTeeth = calculateNumberOfTeethFromPitchCircleRadius(gear)
+			gear._toothedSetNumberOfTeeth(numTeeth)
+		}
+		else if (gear.getPitchCircleRadius().isNotSet()) {
+			var radius = calculatePitchCircleRadiusFromNumberOfTeeth(gear)
+			setPitchCircleRadius(radius)
+		}
+	}
+
+	var checkHasNumberOfTeethOrPitchCircleRadius = function() {
+		if (gear.getNumberOfTeeth().isNotSet() 
+			  && gear.getPitchCircleRadius().isNotSet()) {
+			throw new Error("Number of teeth or pitch circle radius not set")
+		}
+	}
+
+	var calculateNumberOfTeethFromPitchCircleRadius = function(gear) {
+		return Math.PI * 2 * gear.getPitchCircleRadius().getValue() / circularPitch
+	}
+
+	var calculatePitchCircleRadiusFromNumberOfTeeth = function(gear) {
+		return circularPitch * gear.getNumberOfTeeth().getValue() / (2 * Math.PI)
+	}
+
 	gear.getCircularPitch = function() {
-		checkIfCanCalculateCircularPitch()
-		return calculateCircularPitch()
+		if (circularPitch == null) {
+			checkIfCanCalculateCircularPitch()
+			circularPitch = calculateCircularPitch()
+		}
+		return circularPitch
 	}
 
 	// From http://www.cage-gear.com/spur_gear_calculations.htm
@@ -68,6 +114,22 @@ function Gear() {
 
 	gear.toSpecification = function() {
 		return new GearSpecification(gear)
+	}
+
+	gear.checkIsValid = function() {
+		if(!gear.isValid())
+			throw new Error("Invalid Gear - Centre hole radius bigger than root "
+				            + "circle radius:\n" + gear.toString())			
+	}
+
+	gear.isValid = function() {
+		return gear.calculateGearRootRadius() 
+		       > gear.getCentreHoleRadius().getValue()
+	}
+
+	gear.calculateGearRootRadius = function() {
+		return gear.getPitchCircleRadius().getValue() - gear.getAddendum() 
+		       - gear.getClearance().getValue()
 	}
 
 	gear.getTypeName = function() {
