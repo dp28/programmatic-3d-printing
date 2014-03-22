@@ -30,7 +30,7 @@ function GearTrain(circPitch, presAngle) {
 	const DEFAULT_PRESSURE_ANGLE = 20
 	checkIfCreationIsLegal(circPitch)
 	var train = PlaceableComponentGroup()
-	var gears = train.getComponents() // rename for convenience
+	var components = train.getComponents() // rename for convenience
 	var circularPitch = circPitch
 	var generateBaseOnWrite = true
 	var baseFactory = new BaseFactory()
@@ -41,39 +41,38 @@ function GearTrain(circPitch, presAngle) {
 		return "GearTrain"
 	}
 
-	train._componentGroupAddComponent = train.addComponent
-
-	train.addToothedComponent = function(gear) {
-		checkIfGearCanBeAdded(gear)
-		gear.setCircularPitch(circularPitch)		
-		gear.checkIsValid()
-		train._componentGroupAddComponent(gear)
-	} 
-
 	train.getPressureAngle = function() {
 		return pressureAngle
 	}
 
-	var checkIfGearCanBeAdded = function(gear) {
-		checkPressureAngle(gear)
-		checkCircularPitchMatches(gear)
+	train._componentGroupAddComponent = train.addComponent
+	train.addComponent = function(component) {
+		checkIfGearCanBeAdded(component)
+		component.setCircularPitch(circularPitch)		
+		component.checkIsValid()
+		train._componentGroupAddComponent(component)
+	} 
+
+	var checkIfGearCanBeAdded = function(component) {
+		checkPressureAngle(component)
+		checkCircularPitchMatches(component)
 	}
 
-	var checkPressureAngle = function(gear) {		
-		if (gear.getPressureAngle().getValue() != pressureAngle)
+	var checkPressureAngle = function(component) {		
+		if (component.getPressureAngle().getValue() != pressureAngle)
 			throw new Error("ToothedComponent pressure angle does not match GearTrain")
 	}
 
-	var checkCircularPitchMatches = function(gear)  {
+	var checkCircularPitchMatches = function(component)  {
 		try {
-			if (gear.getCircularPitch() == circularPitch) 
+			if (component.getCircularPitch() == circularPitch) 
 				return
 		}
 		catch(err) {
 			// error should be thrown as circular pitch should not be calculable
 			return
 		}
-		throw new Error("Circular pitch of Gear does not match GearTrain")
+		throw new Error("Circular pitch of ToothedComponent does not match GearTrain")
 	}
 
 	train.getCircularPitch = function() {
@@ -91,7 +90,7 @@ function GearTrain(circPitch, presAngle) {
 	train.createGear = function(numTeeth) {
 		var gear = new Gear()
 		gear.setNumberOfTeeth(numTeeth)
-		train.addToothedComponent(gear)
+		train.addComponent(gear)
 		var boundRadius = gear.getPitchCircleRadius().getValue() + gear.getAddendum()
 		gear.getBoundingShape().setRadius(boundRadius)
 		return gear
@@ -105,7 +104,7 @@ function GearTrain(circPitch, presAngle) {
 	}
 
 	train.generateBase = function() {
-		var base = baseFactory.makeBase(gears)
+		var base = baseFactory.makeBase(components)
 		base.setHeight(DEFAULT_BASE_HEIGHT)
 		return base
 	}

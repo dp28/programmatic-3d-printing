@@ -18,10 +18,10 @@ module.exports.createTestGearTrain = function() {
 	var train = new GearTrain(8) 
 	var firstGear = GearTest.createFullySpecifiedTestGear(10, 10, 1, 2, 3)
 	firstGear.setPitchCircleRadius(null)
-	train.addToothedComponent(firstGear)
+	train.addComponent(firstGear)
 	var secondGear = GearTest.createFullySpecifiedTestGear(20, 10, 50, 200, 3)
 	secondGear.setPitchCircleRadius(null)
-	train.addToothedComponent(secondGear)
+	train.addComponent(secondGear)
 	return train
 }
 
@@ -56,8 +56,15 @@ describe('GearTrain', function() {
 		train = new GearTrain(8) 
 	})
 
+	function exampleComponent() {
+		var component = new Rack()
+		component.setCircularPitch(8)
+		return component
+	}
+
 	it('should behave like a Component', function() {
-		PlaceableComponentGroupTest.shouldBehaveLikeComponentGroup(train, Gear)
+		PlaceableComponentGroupTest.shouldBehaveLikeComponentGroup(train,
+		                                                           exampleComponent)
 	})
 
 	describe('#getTypeName', function() {
@@ -107,7 +114,7 @@ describe('GearTrain', function() {
 		})
 	})
 
-	describe('#addToothedComponent', function() {
+	describe('#addComponent', function() {
 		var numberOfTeeth = 15
 		var pitchCircleRadius = 20
 
@@ -120,15 +127,16 @@ describe('GearTrain', function() {
 			train = new GearTrain(circularPitch)
 		})
 
-		describe.skip('adding a Rack', function() {
+		describe('adding a Rack', function() {
 			var rack 
 
 			beforeEach(function() {
 				rack = new Rack() 
+				rack.setCircularPitch(train.getCircularPitch())
 			})
 
 			it('should set the linear pitch of the Rack', function() {
-				train.addToothedComponent(rack)
+				train.addComponent(rack)
 				rack.getLinearPitch().should.equal(circularPitch)
 			})
 			
@@ -146,7 +154,7 @@ describe('GearTrain', function() {
 			it('should not be possible', function() {
 				var error = "ToothedComponent pressure angle does not match GearTrain";
 				(function() {
-					train.addToothedComponent(gear)
+					train.addComponent(gear)
 				}
 				).should.throw(error)
 			})
@@ -171,7 +179,7 @@ describe('GearTrain', function() {
 					var error = "Invalid Gear - Centre hole radius bigger than root circle"
 					            + " radius"
 					try {
-						train.addToothedComponent(gear).should.throw(error)
+						train.addComponent(gear).should.throw(error)
 					}
 					catch(err) {
 						err.message.should.contain(error)
@@ -184,7 +192,7 @@ describe('GearTrain', function() {
 				it ('should not be possible', function() {
 					var error = "Number of teeth or pitch circle radius not set"
 					try {
-						train.addToothedComponent(gear).should.throw(error)
+						train.addComponent(gear).should.throw(error)
 					}
 					catch(err) {
 						err.message.should.eql(error)
@@ -196,7 +204,7 @@ describe('GearTrain', function() {
 			         + ' not yet set', function() {
 				beforeEach(function() {
 					gear.setNumberOfTeeth(numberOfTeeth)
-					train.addToothedComponent(gear)
+					train.addComponent(gear)
 				})
 
 				it('should set the pitch circle radius of the Gear to the value '
@@ -209,7 +217,7 @@ describe('GearTrain', function() {
 				       + 'teeth not set', function() {
 				beforeEach(function() {
 					gear.setPitchCircleRadius(pitchCircleRadius)
-					train.addToothedComponent(gear)
+					train.addComponent(gear)
 				})
 
 				it('should set the pitch circle radius of the Gear to the value '
@@ -229,9 +237,9 @@ describe('GearTrain', function() {
 				it('should not be possible if the circular pitch of the Gear is different '
 					 + 'from that of the GearTrain', function() {
 					train = new GearTrain(circularPitch + 1)
-					var error = "Circular pitch of Gear does not match GearTrain";
+					var error = "Circular pitch of ToothedComponent does not match GearTrain";
 					(function() {
-						train.addToothedComponent(gear)
+						train.addComponent(gear)
 					}
 					).should.throw(error)
 				})
@@ -240,7 +248,7 @@ describe('GearTrain', function() {
 				   function() {
 					train = new GearTrain(circularPitch)
 					train.getComponents().length.should.equal(0)			
-					train.addToothedComponent(gear)
+					train.addComponent(gear)
 					train.getComponents().length.should.equal(1)			
 					train.getComponents()[0].getTypeName().should.equal("Gear")
 				})
@@ -249,7 +257,7 @@ describe('GearTrain', function() {
 			describe('successfully adding a Gear', function() {	
 				beforeEach(function() {
 					gear.setPitchCircleRadius(pitchCircleRadius)
-					train.addToothedComponent(gear)
+					train.addComponent(gear)
 				})			
 
 				it('should give the Gear an id', function() {
@@ -262,7 +270,7 @@ describe('GearTrain', function() {
 					beforeEach(function() {
 						secondGear = new Gear()
 						secondGear.setPitchCircleRadius(pitchCircleRadius)
-						train.addToothedComponent(secondGear)
+						train.addComponent(secondGear)
 					})
 					
 					it('should give the second Gear a different id', function() {
