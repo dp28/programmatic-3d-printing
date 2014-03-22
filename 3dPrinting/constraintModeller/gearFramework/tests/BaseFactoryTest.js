@@ -106,7 +106,10 @@ describe('BaseFactory', function() {
 			})
 
 			it('should contain a Spindle for each Gear', function() {
-				base.getSpindles().length.should.equal(3)
+				base.getParts().filter(function(part) {
+					return part.getTypeName != undefined
+			       && part.getTypeName() == 'Spindle'
+				}).length.should.equal(3)
 			})
 
 			it('should contain a Line between each meshing Gear', function() {

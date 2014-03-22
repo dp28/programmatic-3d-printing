@@ -32,13 +32,6 @@ function Base() {
 			return element instanceof Line
 		})
 	}
-	
-	base.getSpindles = function() {
-		return parts.filter(function(element) {
-			return element.getTypeName != undefined
-			       && element.getTypeName() == 'Spindle'
-		})
-	}
 
 	base.addPart = function(part) {
 		parts.push(part)
