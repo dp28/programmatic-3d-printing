@@ -12,9 +12,11 @@ var RackSupportSpecification = require('../interface/RackSupportSpecification.js
 module.exports.RackSupport = RackSupport
 
 function RackSupport() {
+	const DEFAULT_BASE_WIDTH = 1
 	var support = new Component(Rectangle)
 	var wallHeight = new ConstrainableValue()
 	var baseHeight = new ConstrainableValue()
+	baseHeight.setValue(DEFAULT_BASE_WIDTH)
 	var wall = new Rectangle()
 	wall.getLength().sameAs(support.getBoundingShape().getLength())
 	var wallCentre = wall.getCentre()

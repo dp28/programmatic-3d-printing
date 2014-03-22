@@ -50,6 +50,7 @@ describe('RackSupport', function() {
 
 		it('should not be possible if the base height has not been set', function() {
 			support.setLength(5)
+			support.setBaseHeight(null)
 			support.toSpecification.should.throw("Base height not set")
 		})
 

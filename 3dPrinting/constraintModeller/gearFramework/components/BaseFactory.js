@@ -1,7 +1,7 @@
 /*
  * author: Daniel Patterson
  *
- * Creates Base Components from an array of Gear Components
+ * Creates Base Components from an array of Component Components
  */
 var Base = require('../components/Base.js').Base
 var Line = require('../../geometry/Line.js').Line
@@ -11,16 +11,16 @@ var Circle = require('../../geometry/Circle.js').Circle
 module.exports.BaseFactory = BaseFactory
 
 function BaseFactory() {
-	var base, gears
+	var base, components
 
-	// The additional radius of a Gear's space on the base in addition to the 
-	// Gear's centre hole radius.
+	// The additional radius of a Component's space on the base in addition to the 
+	// Component's centre hole radius.
 	const GEAR_LIP = 3
 
-	this.makeBase = function(gearsToMakeFrom) {
-		gears = gearsToMakeFrom
+	this.makeBase = function(componentsToMakeFrom) {
+		components = componentsToMakeFrom
 		createBase()
-		addSupportingSpindlesToBase()
+		addSupportingAuxillaryComponentsToBase()
 		addSupportingCirclesToBase()
 		addSupportingLinesToBase()
 		return base
@@ -31,56 +31,60 @@ function BaseFactory() {
 		base.getCentre().setAt(0, 0, 0)
 	}
 
-	var addSupportingSpindlesToBase = function() {		
-		for (var i = 0; i < gears.length; i++) {
-			base.addPart(gears[i].generateSpindle())
+	var addSupportingAuxillaryComponentsToBase = function() {		
+		for (var i = 0; i < components.length; i++) {
+			components[i].generateAuxillaryComponents().forEach(function(component) {
+				base.addPart(component)
+			})
 		}
 	}
 
 	var addSupportingCirclesToBase = function() {		
-		for (var i = gears.length - 1; i >= 0; i--) {
-			var baseCentreZ = calculateBaseCentreZ(gears[i])
-			var circle = new Circle() 
-			circle.setRadius(gears[i].getCentreHoleRadius().getValue() + GEAR_LIP)
-			var point = new Point()
-			point.setAt(gears[i].getCentre().getX().getValue(),
-				          gears[i].getCentre().getY().getValue(),
-				          baseCentreZ)
-			circle.setCentre(point)
-			base.addPart(circle)
+		for (var i = components.length - 1; i >= 0; i--) {
+			if (components[i].getTypeName() == "Gear") {
+				var baseCentreZ = calculateBaseCentreZ(components[i])
+				var circle = new Circle() 
+				circle.setRadius(components[i].getCentreHoleRadius().getValue() + GEAR_LIP)
+				var point = new Point()
+				point.setAt(components[i].getCentre().getX().getValue(),
+					          components[i].getCentre().getY().getValue(),
+					          baseCentreZ)
+				circle.setCentre(point)
+				base.addPart(circle)
+			}
 		};
 	}
 
-	var calculateBaseCentreZ = function(gear) {
-		var gearCentreZ = gear.getCentre().getZ().getValue()
-		var gearHeight = gear.getHeight().getValue()
+	var calculateBaseCentreZ = function(component) {
+		var componentCentreZ = component.getCentre().getZ().getValue()
+		var componentHeight = component.getHeight().getValue()
 		var baseHeight = base.getHeight().getValue()
-		return gearCentreZ - (gearHeight / 2) - (baseHeight / 2)
+		return componentCentreZ - (componentHeight / 2) - (baseHeight / 2)
 	}
 
 	var addSupportingLinesToBase = function() {
-		for (var i = 0; i < gears.length; i++) {
-			for (var j = 0; j < gears.length && j != i; j++) {
-				if (gears[i].isAdjacentTo(gears[j]))
-					addSupportingLineBetween(gears[i], gears[j])
+		for (var i = 0; i < components.length; i++) {
+			for (var j = 0; j < components.length && j != i; j++) {
+				if (components[i].isAdjacentTo(components[j]))
+					addSupportingLineBetween(components[i], components[j])
 			}
 		}
 	}
 
-	var addSupportingLineBetween = function(startGear, endGear) {
-		var baseCentreZ = calculateBaseCentreZ(startGear)	
-		var startPoint = makePointBelow(startGear, baseCentreZ)
-		var endPoint = makePointBelow(endGear, baseCentreZ)
+	var addSupportingLineBetween = function(startComponent, endComponent) {
+		var baseCentreZ = calculateBaseCentreZ(startComponent)	
+		var startPoint = makePointBelow(startComponent, baseCentreZ)
+		var endPoint = makePointBelow(endComponent, baseCentreZ)
 		var line = new Line(startPoint, endPoint)
 		line.setWidth(GEAR_LIP)
 		base.addPart(line)
 	}
 
-	var makePointBelow = function(gear, baseCentreZ) {
+	var makePointBelow = function(component, baseCentreZ) {
 		var point = new Point()
-		var gearCentre = gear.getCentre()
-		var x = gearCentre.getX().getValue()
-		var y = gearCentre.getY().getValue()
+		var componentCentre = component.getCentre()
+		var x = componentCentre.getX().getValue()
+		var y = componentCentre.getY().getValue()
 		var z = baseCentreZ
 		point.setAt(x, y, z)
 		return point
