@@ -83,6 +83,10 @@ function Gear() {
 		return spindle
 	}
 
+	gear.generateAuxillaryComponents = function() {
+		return [gear.generateSpindle()]
+	}
+
 	gear.checkCanGenerateSpindle = function() {		
 		if (gear.getCentre().isNotFullyDefined()) throw "Point not fully defined"
 		if (gear.getHeight().isNotSet()) throw "Height not set"

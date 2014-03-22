@@ -46,9 +46,12 @@ describe('PlaceableComponent', function() {
 			placeable.getPlacementShape().setRadius(10)
 		}
 
+		function fullySpecify() {}
+
 		shouldBehaveLikePlaceableComponent(PlaceableComponent, 
 			                                 setupBoundaries, 
-			                                 Circle)
+			                                 Circle,
+			                                 fullySpecify)
 	})
 
 	describe('#getTypeName', function() {
@@ -60,7 +63,8 @@ describe('PlaceableComponent', function() {
 
 function shouldBehaveLikePlaceableComponent(Placeable, 
 	                                          setupBoundariesFunction,
-	                                          placementShapeType) {
+	                                          placementShapeType,
+	                                          fullySpecify) {
 	describe('Anything inheriting from PlaceableComponent', function() {
 		var placeable
 
@@ -156,6 +160,17 @@ function shouldBehaveLikePlaceableComponent(Placeable,
 
 		describe('#placeAtFrontOf', function() {
 			testPlacementFunction('placeAtFrontOf', 'Y', 'Front', 'Back')
+		})
+
+		describe('#generateAuxillaryComponents', function() {
+			beforeEach(function() {
+				fullySpecify(placeable) 
+			})
+			
+			it('should return an array of any auxillary components required by this '
+					  + 'PlaceableComponent', function() {
+				placeable.generateAuxillaryComponents().should.be.an.Array
+			})
 		})
 	})
 }

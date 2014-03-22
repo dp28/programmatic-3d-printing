@@ -23,7 +23,7 @@ describe('Rack', function() {
 
 		function fullySpecify(gear) {
 			rack.setNumberOfTeeth(10) 			
-			rack.setLinearPitch(10)
+			rack.setLinearPitch(4)
 		}
 
 		ToothedComponentTest.shouldBehaveLikeToothedComponent(Rack, 
@@ -167,19 +167,41 @@ describe('Rack', function() {
 		})		
 	})
 
-	describe('#generateSupport', function() {
-		it('should generate a RackSupport for the Rack', function() {
-			rack.generateSupport().getTypeName().should.equal("RackSupport")
+	describe('#generateAuxillaryComponents', function() {
+		beforeEach(function() {
+			rack = new Rack()
+			rack.setLength(1)
+			rack.setWidth(1)
+			rack.setLinearPitch(4)
 		})
 
-		describe('the generated RackSupport', function() {
-			var support 
+		it('should return an Array containing a single RackSupport', function() {
+			var support = rack.generateAuxillaryComponents()[0]
+			shouldBeAMatchingRackSupport(rack, support)
+		})
+	})
 
-			beforeEach(function() {
-				rack.setLength(1)
-				rack.setWidth(1)
-				rack.setLinearPitch(4)
-				support = rack.generateSupport() 
+	describe('#generateSupport', function() {
+		var support 
+
+		beforeEach(function() {
+			rack = new Rack()
+			rack.setLength(1)
+			rack.setWidth(1)
+			rack.setLinearPitch(4)
+			support = rack.generateSupport() 
+		})
+
+		it('should generate a RackSupport for the Rack', function() {
+			shouldBeAMatchingRackSupport(rack, support)
+		})
+	})
+
+	function shouldBeAMatchingRackSupport(rack, support) {
+		describe('the generated RackSupport', function() {
+
+			it('should be a RackSupport', function() {
+				support.getTypeName().should.equal("RackSupport")
 			})
 
 			it('should have the same length as the Rack', function() {
@@ -204,8 +226,7 @@ describe('Rack', function() {
 					support.getWallWidth().getValue().should.equal(rack.getAddendum())
 				})
 			})
-
 		})
-	})
+	}
 
 })

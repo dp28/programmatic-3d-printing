@@ -60,7 +60,8 @@ function shouldBehaveLikeToothedComponent(toothedType,
 		it('should behave like a PlaceableComponent', function() {
 			PlaceableComponentTest.shouldBehaveLikePlaceableComponent(toothedType, 
 				                                                        setupTestBoundaries, 
-				                                                        boundaryShape)
+				                                                        boundaryShape,
+				                                                        fullySpecify)
 		})
 
 		describe('#getNumberOfTeeth', function() {

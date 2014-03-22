@@ -163,5 +163,9 @@ function Rack() {
 		return support
 	}
 
+	rack.generateAuxillaryComponents = function() {
+		return [rack.generateSupport()]
+	}
+
 	return rack
 }

@@ -38,6 +38,10 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		return adjacentComponents
 	}
 
+	placeable.generateAuxillaryComponents = function() {
+		return []
+	}
+
 	placeable.isAdjacentTo = function(otherPlaceable) {
 		var place
 		return placementShape.isAdjacentTo(otherPlaceable.getPlacementShape())
