@@ -7,6 +7,7 @@
 var PlaceableComponentGroup = require('../../components/PlaceableComponentGroup.js').PlaceableComponentGroup
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var Gear = require('../components/Gear.js').Gear
+var Rack = require('../components/Rack.js').Rack
 var Base = require('../components/Base.js').Base
 var BaseFactory = require('../components/BaseFactory.js').BaseFactory
 var Utilities = require('../../Utilities.js')
@@ -99,6 +100,13 @@ function GearTrain(circPitch, presAngle) {
 		var boundRadius = gear.getPitchCircleRadius().getValue() + gear.getAddendum()
 		gear.getBoundingShape().setRadius(boundRadius)
 		return gear
+	}
+
+	train.createRack = function(numTeeth) {
+		var rack = new Rack()
+		rack.setNumberOfTeeth(numTeeth)
+		train.addComponent(rack)
+		return rack
 	}
 
 	train.getAuxillaryComponents = function() {

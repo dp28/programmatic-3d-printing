@@ -354,6 +354,32 @@ describe('GearTrain', function() {
 		})
 	})
 
+	describe('#createRack', function() {
+		var rack, numTeeth = 10
+
+		beforeEach(function() {
+			rack = train.createRack(numTeeth) 
+		})
+		
+		it('should return a Rack with the specified number of teeth', function() {
+			rack.getNumberOfTeeth().getValue().should.equal(numTeeth)
+		})
+
+		it('should attach the new Rack to the GearTrain', function() {
+			train.getComponents().should.contain(rack)
+		})
+
+		it('should give the new Rack the correct linear pitch', function() {
+			rack.getLinearPitch().should.equal(train.getCircularPitch())
+		})
+
+		it('should have a bounding Rectangle with a length equal to this ' 
+			 + 'GearTrain\'s circular pitch times the number of teeth', function() {
+			rack.getAddendum().should.be.greaterThan(0)
+			rack.getLength().getValue().should.equal(numTeeth * train.getCircularPitch())
+		})
+	})
+
 	describe('#onlyAdjacentComponentsTouching', function() {
 		it('should return false if the GearTrain contains Gears that are '
 			 + ' overlapping', function() {
