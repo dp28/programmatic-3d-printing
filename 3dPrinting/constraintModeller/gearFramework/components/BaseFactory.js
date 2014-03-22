@@ -29,7 +29,6 @@ function BaseFactory() {
 	var createBase = function() {		
 		base = new Base()
 		base.getCentre().setAt(0, 0, 0)
-		base.setHeight(1)
 	}
 
 	var addSupportingSpindlesToBase = function() {		

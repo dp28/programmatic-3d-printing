@@ -51,6 +51,10 @@ function ToothedComponent(boundaryShapeType) {
 		return height 
 	}
 
+	toothed.setHeight = function(h) {
+		height.setValue(h)
+	}
+
 	// Height of tooth above pitch line
 	toothed.getAddendum = function() {
 		throw new Error("Not implemented in this instance")

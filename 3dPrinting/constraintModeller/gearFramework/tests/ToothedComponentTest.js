@@ -85,7 +85,14 @@ function shouldBehaveLikeToothedComponent(toothedType,
 			})
 
 			it('should have a default value', function() {
-				toothed.getHeight().getValue().should.not.be.undefined
+				toothed.getHeight().getValue().should.not.be.null
+			})
+		})
+
+		describe('#setHeight', function() {
+			it('should set the height of the ToothedComponent', function() {
+				toothed.setHeight(1)
+				toothed.getHeight().getValue().should.equal(1)
 			})
 		})
 

@@ -37,6 +37,7 @@
 var ToothedComponent = require('../components/ToothedComponent.js').ToothedComponent
 var Rectangle = require('../../geometry/Rectangle.js').Rectangle
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
+var RackSupport = require('../components/RackSupport.js').RackSupport
 
 module.exports.Rack = Rack 
 
@@ -57,6 +58,10 @@ function Rack() {
 	var toothedFace = DEFAULT_TOOTH_FACE
 	var lengthAxis = Rack.FACE_TO_AXIS[toothedFace]
 
+	rack.getTypeName = function() {
+		return "Rack"
+	}
+
 	rack.setLinearPitch = function(pitch) {
 		linearPitch.setValue(pitch)
 		setShapeSizes()
@@ -64,6 +69,14 @@ function Rack() {
 
 	rack.getLinearPitch = function() {
 		return linearPitch
+	}
+
+	rack.getWidth = function() {
+		return width
+	}
+
+	rack.getLength = function() {
+		return length
 	}
 
 	// Length along tooth direction
@@ -136,6 +149,18 @@ function Rack() {
 
 	rack.getToothedFace = function() {
 		return toothedFace
+	}
+
+	rack.generateSupport = function() {
+		var support = new RackSupport()
+		support.setLength(length.getValue())
+		support.getLength().sameAs(length)
+		support.setWidth(width.getValue())
+		support.getWidth().sameAs(width)
+		support.setCentre(rack.getCentre())
+		support.setWallHeight(rack.getHeight())
+		support.setWallWidth(rack.getAddendum())
+		return support
 	}
 
 	return rack

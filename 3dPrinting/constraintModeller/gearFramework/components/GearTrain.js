@@ -26,6 +26,7 @@ function checkIfCreationIsLegal(circPitch) {
  * size. This is necessary for the gears to mesh.
  */ 
 function GearTrain(circPitch) {
+	const DEFAULT_BASE_HEIGHT = 1
 	checkIfCreationIsLegal(circPitch)
 	var train = PlaceableComponentGroup()
 	var gears = train.getComponents() // rename for convenience
@@ -135,7 +136,9 @@ function GearTrain(circPitch) {
 	}
 
 	train.generateBase = function() {
-		return baseFactory.makeBase(gears)
+		var base = baseFactory.makeBase(gears)
+		base.setHeight(DEFAULT_BASE_HEIGHT)
+		return base
 	}
 
 	return train

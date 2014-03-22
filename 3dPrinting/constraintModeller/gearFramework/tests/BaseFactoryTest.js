@@ -117,6 +117,7 @@ describe('BaseFactory', function() {
 			describe('#toSpecification', function() {
 				it('return a Specification that behaves like a BaseSpecification ' 
 					 + 'generated from this Base', function() {
+					 	base.setHeight(1)
 					var baseSpec = base.toSpecification()
 					BaseSpecificationTest.testBaseSpecification(baseSpec, base)
 				})

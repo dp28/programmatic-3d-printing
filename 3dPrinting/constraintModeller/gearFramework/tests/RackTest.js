@@ -32,6 +32,12 @@ describe('Rack', function() {
 			                                                    fullySpecify)
 	})
 
+	describe('#getTypeName', function() {
+		it('should return "Rack"', function() {
+			rack.getTypeName().should.equal("Rack")
+		})
+	})
+
 	describe('#getPlacementShape', function() {
 		var placementShape 
 
@@ -132,7 +138,7 @@ describe('Rack', function() {
 			beforeEach(function() {
 				rack.placeOnLeftOf(otherComponent)
 			})
-			
+
 			it('should set the Rack\'s toothed face to "Right"', function() {
 				rack.getToothedFace().should.equal("Right")
 			})
@@ -158,8 +164,48 @@ describe('Rack', function() {
 			it('should set the Rack\'s toothed face to "Back"', function() {
 				rack.getToothedFace().should.equal("Back")
 			})
+		})		
+	})
+
+	describe('#generateSupport', function() {
+		it('should generate a RackSupport for the Rack', function() {
+			rack.generateSupport().getTypeName().should.equal("RackSupport")
 		})
-		
+
+		describe('the generated RackSupport', function() {
+			var support 
+
+			beforeEach(function() {
+				rack.setLength(1)
+				rack.setWidth(1)
+				rack.setLinearPitch(4)
+				support = rack.generateSupport() 
+			})
+
+			it('should have the same length as the Rack', function() {
+				support.getLength().getValue().should.equal(rack.getLength().getValue())
+			})
+
+			it('should have the same width as the Rack', function() {
+				support.getWidth().getValue().should.equal(rack.getWidth().getValue())
+			})
+
+			it('should have the same centre as the Rack', function() {
+				support.getCentre().isAtSameLocationAs(rack.getCentre()).should.be.true
+			})	
+
+			describe('the wall of the support', function() {
+				it('should have the same height as the Rack', function() {
+					support.getWallHeight().getValue().should.equal(rack.getHeight())
+				})
+
+				it('should have a wall width the same as the addendum of the rack',
+				   function() {
+					support.getWallWidth().getValue().should.equal(rack.getAddendum())
+				})
+			})
+
+		})
 	})
 
 })
