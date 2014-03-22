@@ -179,8 +179,8 @@ describe('Rack', function() {
 	describe('#generateAuxillaryComponents', function() {
 		beforeEach(function() {
 			rack = new Rack()
-			rack.setLength(1)
-			rack.setWidth(1)
+			rack.setLength(10)
+			rack.setWidth(5)
 			rack.setLinearPitch(4)
 			rack.getCentre().setAt(0, 0, 0)
 		})
@@ -230,13 +230,17 @@ describe('Rack', function() {
 			} 
 		})
 
-		it('should generate a RackSupport for the Rack', function() {
-			rack.setLength(1)
-			rack.setWidth(1)
-			rack.setLinearPitch(4)
-			rack.getCentre().fixAt(0, 0, 0)
-			var support = rack.generateSupport() 
-			shouldBeAMatchingRackSupport(rack, support)
+		it('should generate a RackSupport for the Rack', function() {			
+			Rack.FACES.forEach(function(face) {
+				rack = new Rack()
+				rack.setToothedFace(face)
+				rack.setLength(10)
+				rack.setWidth(5)
+				rack.setLinearPitch(4)
+				rack.getCentre().fixAt(0, 0, 0)
+				var support = rack.generateSupport() 
+				shouldBeAMatchingRackSupport(rack, support)				
+			})
 		})
 	})
 
@@ -267,6 +271,18 @@ describe('Rack', function() {
 				it('should have a wall width the same as the addendum of the rack',
 				   function() {
 					support.getWallWidth().getValue().should.equal(rack.getAddendum())
+				})
+
+				it('should be centred at a distance of half the width of the Rack ' 
+					 + 'minus half its addendum from the centre of the rack nearest to ' 
+					 + 'the opposite face of the Rack\'s teeth', function() {
+					var wallCentre = support.getWallCentre()
+					var centre =  support.getCentre()
+					var distanceBetween = wallCentre.distanceToOnXYPlane(centre)
+					var width = support.getWidth().getValue()
+					var addendum = rack.getAddendum()
+					var distanceToWallCentre = width / 2 - addendum / 2
+					distanceBetween.should.equal(distanceToWallCentre)
 				})
 			})
 		})

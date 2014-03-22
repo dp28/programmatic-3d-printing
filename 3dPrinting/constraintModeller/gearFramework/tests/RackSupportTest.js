@@ -29,6 +29,5 @@ describe('RackSupport', function() {
 		it('should return a ConstrainableValue', function() {
 			support.getBaseHeight().should.be.an.instanceOf(ConstrainableValue)
 		})
-	})
-	
+	})	
 })

@@ -212,7 +212,35 @@ function Rack() {
 		support.setCentre(rack.getCentre())
 		support.setWallHeight(rack.getHeight())
 		support.setWallWidth(rack.getAddendum())
+		createWallCentre(support)
 		return support
+	}
+
+	var createWallCentre = function(support) {
+		var centre = rack.getCentre()
+		var width = rack.getWidth().getValue()
+		var z = centre.getZ().getValue()
+		var x, y
+		switch(toothedFace) {
+			case "Front":
+				x = centre.getX().getValue()
+				y = centre.getY().getValue() + width / 2 - rack.getAddendum() / 2
+				break;
+			case "Back":
+				x = centre.getX().getValue()
+				y = centre.getY().getValue() - width / 2 + rack.getAddendum() / 2
+				break;
+			case "Left":
+				y = centre.getY().getValue()
+				x = centre.getX().getValue() - width / 2 + rack.getAddendum() / 2
+				break;
+			case "Right":
+				y = centre.getY().getValue()
+				x = centre.getX().getValue() + width / 2 - rack.getAddendum() / 2
+				break;
+		}
+
+		support.setWallCentre(x, y, z)
 	}
 
 	var checkFullySpecified = function() {

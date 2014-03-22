@@ -5,6 +5,7 @@
  */
 var Component = require('../../components/Component.js').Component
 var Rectangle = require('../../geometry/Rectangle.js').Rectangle
+var Point = require('../../geometry/Point.js').Point
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 
 module.exports.RackSupport = RackSupport
@@ -15,6 +16,7 @@ function RackSupport() {
 	var baseHeight = new ConstrainableValue()
 	var wall = new Rectangle()
 	wall.getLength().sameAs(support.getBoundingShape().getLength())
+	var wallCentre = new Point()
 
 	support.getTypeName = function() {
 		return "RackSupport"
@@ -48,6 +50,14 @@ function RackSupport() {
 
 	support.setBaseHeight = function(h) {
 		baseHeight.setValue(h)
+	}
+
+	support.setWallCentre = function(x, y, z) {
+		wallCentre.setAt(x, y, z)
+	}
+
+	support.getWallCentre = function() {
+		return wallCentre
 	}
 	
 	return support
