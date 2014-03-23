@@ -6,6 +6,7 @@
 var should = require('should')
 var Point = require('../../geometry/Point.js').Point
 var Rack = require('../components/Rack.js').Rack
+var ToothedComponent = require('../components/ToothedComponent.js').ToothedComponent
 var PlaceableComponent = require('../../components/PlaceableComponent.js').PlaceableComponent
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
 var ToothedComponentTest = require('../tests/ToothedComponentTest.js')
@@ -126,8 +127,39 @@ describe('Rack', function() {
 	})
 
 	describe('#isValid', function() {
+		var toothed, otherToothed
+
+		beforeEach(function() {
+			toothed = new ToothedComponent() 
+			otherToothed = new ToothedComponent()
+		})
+		
 		it('should return true if the Rack has no adjacent components', function() {
 			rack.isValid().should.be.true
+		})
+
+		it('should return true if the Rack has one adjacent component', function() {
+			rack.placeOnLeftOf(toothed)
+			rack.isValid().should.be.true
+		})
+
+		it('should return false if the Rack has more than one adjacent component',
+		   function() {
+			toothed.placeOnLeftOf(rack)
+			otherToothed.placeAtBackOf(rack)
+			rack.isValid().should.be.false
+		})
+	})
+
+	describe('#checkIsValid', function() {
+		it('should throw an Error if the Rack is invalid', function() {
+			rack.placeOnLeftOf(new ToothedComponent())
+			rack.placeOnRightOf(new ToothedComponent())
+			try {
+				rack.checkIsValid()	
+			} catch(err) {
+				err.message.should.equal("Invalid Rack - only one adjacent component allowed")
+			}
 		})
 	})
 
@@ -180,7 +212,49 @@ describe('Rack', function() {
 			it('should set the Rack\'s toothed face to "Back"', function() {
 				rack.getToothedFace().should.equal("Back")
 			})
-		})		
+		})	
+
+		describe('placing other components with respect to the Rack', function() {
+			describe('#placeAtBackOf', function() {
+				beforeEach(function() {
+					otherComponent.placeAtBackOf(rack) 
+				})
+				
+				it('should set the Rack\'s tooth face to "Back"', function() {
+					rack.getToothedFace().should.equal("Back")
+				})
+			})
+
+			describe('#placeAtFrontOf', function() {
+				beforeEach(function() {
+					otherComponent.placeAtFrontOf(rack) 
+				})
+				
+				it('should set the Rack\'s tooth face to "Front"', function() {
+					rack.getToothedFace().should.equal("Front")
+				})
+			})
+
+			describe('#placeOnLeftOf', function() {
+				beforeEach(function() {
+					otherComponent.placeOnLeftOf(rack) 
+				})
+				
+				it('should set the Rack\'s tooth face to "Left"', function() {
+					rack.getToothedFace().should.equal("Left")
+				})
+			})
+
+			describe('#placeOnRightOf', function() {
+				beforeEach(function() {
+					otherComponent.placeOnRightOf(rack) 
+				})
+				
+				it('should set the Rack\'s tooth face to "Right"', function() {
+					rack.getToothedFace().should.equal("Right")
+				})
+			})			
+		})	
 	})
 
 	describe('#generateAuxillaryComponents', function() {

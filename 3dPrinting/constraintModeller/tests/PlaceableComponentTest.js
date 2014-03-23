@@ -172,5 +172,18 @@ function shouldBehaveLikePlaceableComponent(Placeable,
 				placeable.generateAuxillaryComponents().should.be.an.Array
 			})
 		})
+
+		describe('#addAdjacentComponent', function() {
+			var otherPlaceable	
+
+			beforeEach(function() {
+				otherPlaceable = new PlaceableComponent() 
+				placeable.addAdjacentComponent(otherPlaceable, "Right")
+			})
+			
+			it('should add a new PlaceableComponent to the adjacent components Array', function() {
+				placeable.getAdjacentComponents().should.contain(otherPlaceable)
+			})
+		})
 	})
 }

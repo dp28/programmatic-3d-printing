@@ -21,6 +21,7 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 	var placementShape = new placementShapeType()
 	placementShape.getCentre().sameAs(placeable.getBoundingShape().getCentre())
 	var adjacentComponents = []
+	var positions = new Object()
 
 	placeable.getTypeName = function() {
 		return "PlaceableComponent"
@@ -30,12 +31,16 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		return placementShape
 	}
 
-	placeable.addAdjacentComponent = function(placeableComponent) {
+	placeable.addAdjacentComponent = function(placeableComponent, position) {
 		adjacentComponents.push(placeableComponent)
 	}
 
 	placeable.getAdjacentComponents = function() {
 		return adjacentComponents
+	}
+
+	placeable.getPositions = function() {
+		return positions
 	}
 
 	placeable.generateAuxillaryComponents = function() {
@@ -67,6 +72,7 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		                                   axis, 
 		                                   directionThisToOther,
 		                                   directionOtherToThis) {
+		otherPlaceable.addAdjacentComponent(placeable, directionThisToOther)
 		var offset = calculateOffsetToMakeComponentsAdjacent(otherPlaceable,
 											                                   directionThisToOther,
 											                                   directionOtherToThis)
@@ -76,7 +82,6 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		centre.offsetOnAxis(otherPlaceableCentre, axis, offset)
 		centre.samePointOnAxes(otherPlaceableCentre, axes)
 		adjacentComponents.push(otherPlaceable)
-		otherPlaceable.addAdjacentComponent(placeable)
 	}
 
 	var calculateOffsetToMakeComponentsAdjacent = function(otherPlaceable, 

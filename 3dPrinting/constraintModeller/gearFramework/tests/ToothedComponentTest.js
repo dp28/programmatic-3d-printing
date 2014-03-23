@@ -159,6 +159,18 @@ function shouldBehaveLikeToothedComponent(toothedType,
 				toothed.toSpecification.should.throw("Number of teeth not set")
 			})
 
+			it('should not be possible if the ToothedComponent is invalid', function() {
+				toothed.isValid = function() {return false}
+ 				toothed.setNumberOfTeeth(10)
+ 				fullySpecify(toothed)
+ 				try {
+					toothed.toSpecification()
+				}
+				catch(err) {
+					err.message.should.contain("Invalid")
+				}
+			})
+
 			describe('the returned ToothedComponentSpecification', function() {
 				var spec 
 

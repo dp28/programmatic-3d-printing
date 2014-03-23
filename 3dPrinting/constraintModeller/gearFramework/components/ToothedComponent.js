@@ -79,6 +79,7 @@ function ToothedComponent(boundaryShapeType) {
 
 	toothed.toSpecification = function() {
 		checkFullySpecified()
+		toothed.checkIsValid()
 		return new ToothedComponentSpecification(toothed)
 	}
 

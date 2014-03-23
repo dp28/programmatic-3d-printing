@@ -8,11 +8,12 @@ var DrawerInterface = require('../constraintModeller/interface/DrawerInterface.j
 
 var gearTrain = new GearTrain(10)
 var rack = gearTrain.createRack(10)
+// var otherRack = gearTrain.createRack(10)
 var pinion = gearTrain.createGear(20)
 var gear = gearTrain.createGear(8)
 
 pinion.placeOnLeftOf(rack)
-gear.placeAtBackOf(rack)
+gear.placeAtBackOf(pinion)
 
 pinion.getCentre().setAt(0, 0, 0)
 var controller = new DrawerInterface()

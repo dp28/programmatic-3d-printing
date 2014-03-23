@@ -153,6 +153,15 @@ function Rack() {
 		setShapeSizes()
 	}
 
+	rack.isValid = function() {
+		return rack.getAdjacentComponents().length <= 1
+	}
+
+	rack.checkIsValid = function() {
+		if (!rack.isValid())
+			throw new Error("Invalid Rack - only one adjacent component allowed")
+	}
+
 	rack._placeablePlaceAtFrontOf = rack.placeAtFrontOf
 
 	rack.placeAtFrontOf = function(placeableComponent) {
@@ -179,6 +188,12 @@ function Rack() {
 	rack.placeOnRightOf = function(placeableComponent) {
 		rack.setToothedFace("Left")
 		rack._placeablePlaceOnRightOf(placeableComponent)
+	}
+
+	rack._placeableAddAjacentComponent = rack.addAdjacentComponent
+	rack.addAdjacentComponent = function(component, position) {
+		rack.setToothedFace(position)
+		rack._placeableAddAjacentComponent(component)
 	}
 
 	var setShapeSizes = function() {
@@ -256,6 +271,7 @@ function Rack() {
 	}
 
 	rack.toSpecification = function() {
+		rack.checkIsValid()
 		return new RackSpecification(rack)
 	}
 
