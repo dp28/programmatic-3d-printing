@@ -125,6 +125,12 @@ describe('Rack', function() {
 		})
 	})
 
+	describe('#isValid', function() {
+		it('should return true if the Rack has no adjacent components', function() {
+			rack.isValid().should.be.true
+		})
+	})
+
 	describe('placement methods', function() {
 		var otherToothed
 

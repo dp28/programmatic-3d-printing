@@ -2,14 +2,14 @@ GearUtilities = function() {}
 
 GearUtilities.rotateToFace = function(object, face) {
 	switch(face) {
-		case "Front":
+		case "Back":
 			return object
 		case "Left":
-			return object.rotateZ(90)
-		case "Back":
-			return object.rotateZ(180)
+			return object.rotateZ(-90)
+		case "Front":
+			return object.rotateZ(-180)
 		case "Right":
-			return object.rotateZ(270)
+			return object.rotateZ(-270)
 	}
 };
 
