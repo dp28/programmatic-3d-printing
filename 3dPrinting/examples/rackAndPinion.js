@@ -7,15 +7,20 @@ var Gear = require('../constraintModeller/gearFramework/components/Gear.js').Gea
 var DrawerInterface = require('../constraintModeller/interface/DrawerInterface.js').DrawerInterface
 
 var gearTrain = new GearTrain(10)
-var rack = gearTrain.createRack(10)
-// var otherRack = gearTrain.createRack(10)
-var pinion = gearTrain.createGear(20)
-var gear = gearTrain.createGear(8)
+var firstRack = gearTrain.createRack(5)
+var secondRack = gearTrain.createRack(15)
+var firstPinion = gearTrain.createGear(20)
+var secondPinion = gearTrain.createGear(15)
+var firstGear = gearTrain.createGear(10)
+var secondGear = gearTrain.createGear(15)
 
-pinion.placeOnLeftOf(rack)
-gear.placeAtBackOf(pinion)
+firstRack.placeAtBackOf(firstGear)
+secondPinion.placeAtBackOf(secondRack)
+firstGear.placeAtBackOf(secondGear)
+secondGear.placeOnLeftOf(firstPinion)
+firstPinion.placeAtBackOf(secondPinion)
 
-pinion.getCentre().setAt(0, 0, 0)
+firstGear.getCentre().setAt(0, 0, 4)
 var controller = new DrawerInterface()
 controller.addComponentGroup(gearTrain)
 controller.translateTo3dDrawer()

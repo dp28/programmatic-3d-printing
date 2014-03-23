@@ -10,7 +10,7 @@ ComponentFactory.makeComponent = function(componentSpec, params) {
   	component = addID(component, componentSpec, params)
   component = component.translate([componentSpec.centreX,
   																 componentSpec.centreY,
-  																 componentSpec.centreZ]);  
+  																 componentSpec.centreZ ]);  
   component = addColour(component, componentType)
   return component
 };

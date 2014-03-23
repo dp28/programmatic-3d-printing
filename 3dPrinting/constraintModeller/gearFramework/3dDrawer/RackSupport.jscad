@@ -17,7 +17,7 @@ function makeBase(specification, params) {
 	baseSpec.height = specification.baseHeight
 	var base = Rectangle.make(baseSpec, params)
 	base = GearUtilities.rotateToFace(base, specification.toothedFace)
-	return base.translate([0, 0, -specification.wallHeight / 2 -baseSpec.height / 2])
+	return base.translate([0, 0, -specification.wallHeight / 2])
 }
 
 function makeWall(specification, params) {
