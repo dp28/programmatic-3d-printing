@@ -27,7 +27,7 @@ function Line(point1, point2) {
 	var zDifference = endZ - startZ
 
 	var centre = new Point()
-	const DEFAULT_WIDTH = 1
+	const DEFAULT_WIDTH = 4
 	var width = DEFAULT_WIDTH
 	centre.setAt(startX + xDifference / 2,
 	             startY + yDifference / 2,

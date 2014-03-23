@@ -50,7 +50,7 @@ Rack.FACE_TO_AXIS.Right = "Y"
 
 function Rack() {
 	const DEFAULT_TOOTH_FACE = Rack.FACES[0]
-	const DEFAULT_WIDTH = 10
+	const DEFAULT_WIDTH = 15
 
 	var rack = new ToothedComponent(Rectangle)
 	var linearPitch = null
@@ -210,33 +210,33 @@ function Rack() {
 		support.setWidth(width.getValue())
 		support.getWidth().sameAs(width)
 		support.setCentre(rack.getCentre())
-		support.setWallHeight(rack.getHeight())
+		support.setWallHeight(rack.getHeight().getValue())
 		support.setWallWidth(rack.getAddendum())
+		support.setToothedFace(toothedFace)
 		createWallCentre(support)
 		return support
 	}
 
 	var createWallCentre = function(support) {
-		var centre = rack.getCentre()
 		var width = rack.getWidth().getValue()
-		var z = centre.getZ().getValue()
+		var z = 0
 		var x, y
 		switch(toothedFace) {
 			case "Front":
-				x = centre.getX().getValue()
-				y = centre.getY().getValue() + width / 2 - rack.getAddendum() / 2
+				x = 0
+				y = width / 2 - rack.getAddendum() / 2
 				break;
 			case "Back":
-				x = centre.getX().getValue()
-				y = centre.getY().getValue() - width / 2 + rack.getAddendum() / 2
+				x = 0
+				y = - width / 2 + rack.getAddendum() / 2
 				break;
 			case "Left":
-				y = centre.getY().getValue()
-				x = centre.getX().getValue() - width / 2 + rack.getAddendum() / 2
+				y = 0
+				x = - width / 2 + rack.getAddendum() / 2
 				break;
 			case "Right":
-				y = centre.getY().getValue()
-				x = centre.getX().getValue() + width / 2 - rack.getAddendum() / 2
+				y = 0
+				x = width / 2 - rack.getAddendum() / 2
 				break;
 		}
 

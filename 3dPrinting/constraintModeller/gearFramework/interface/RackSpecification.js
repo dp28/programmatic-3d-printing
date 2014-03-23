@@ -13,5 +13,6 @@ function RackSpecification(rack) {
 	spec.linearPitch = rack.getLinearPitch()
 	spec.length = rack.getLength().getValue()
 	spec.width = rack.getWidth().getValue()
+	spec.toothedFace = rack.getToothedFace()
 	return spec
 }

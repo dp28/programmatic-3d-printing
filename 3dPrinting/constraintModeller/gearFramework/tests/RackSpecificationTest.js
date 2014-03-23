@@ -36,5 +36,11 @@ function testRackSpecification(rackSpec, rack) {
 				rackSpec.width.should.equal(rack.getWidth().getValue())
 			})
 		})
+
+		describe('#toothedFace', function() {
+			it('should have the correct value', function() {
+				rackSpec.toothedFace.should.equal(rack.getToothedFace())
+			})
+		})
 	})
 }

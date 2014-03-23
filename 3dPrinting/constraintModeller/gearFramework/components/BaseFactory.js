@@ -76,7 +76,7 @@ function BaseFactory() {
 		var startPoint = makePointBelow(startComponent, baseCentreZ)
 		var endPoint = makePointBelow(endComponent, baseCentreZ)
 		var line = new Line(startPoint, endPoint)
-		line.setWidth(GEAR_LIP)
+		line.setWidth(GEAR_LIP * 2)
 		base.addPart(line)
 	}
 

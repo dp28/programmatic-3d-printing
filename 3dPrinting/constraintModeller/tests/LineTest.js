@@ -65,8 +65,8 @@ describe('Line', function() {
 	})
 
 	describe('#getWidth', function() {
-		it('should have a default value of 1', function() {
-			line.getWidth().should.equal(1)
+		it('should have a default value of 4', function() {
+			line.getWidth().should.equal(4)
 		})
 	})
 

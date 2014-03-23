@@ -4,6 +4,7 @@
  * Tests a Rack component (part of a rack and pinion)
  */
 var should = require('should')
+var Point = require('../../geometry/Point.js').Point
 var Rack = require('../components/Rack.js').Rack
 var PlaceableComponent = require('../../components/PlaceableComponent.js').PlaceableComponent
 var ConstrainableValue = require('../../constraints/ConstrainableValue.js').ConstrainableValue
@@ -42,8 +43,8 @@ describe('Rack', function() {
 	})
 
 	describe('#getWidth', function() {
-		it('should have a default value of 10', function() {
-			rack.getWidth().getValue().should.equal(10)
+		it('should have a default value of 15', function() {
+			rack.getWidth().getValue().should.equal(15)
 		})
 	})
 
@@ -255,6 +256,10 @@ describe('Rack', function() {
 				support.getLength().getValue().should.equal(rack.getLength().getValue())
 			})
 
+			it('should have the same toothed face as the Rack', function() {
+				support.getToothedFace().should.equal(rack.getToothedFace())
+			})
+
 			it('should have the same width as the Rack', function() {
 				support.getWidth().getValue().should.equal(rack.getWidth().getValue())
 			})
@@ -265,7 +270,7 @@ describe('Rack', function() {
 
 			describe('the wall of the support', function() {
 				it('should have the same height as the Rack', function() {
-					support.getWallHeight().getValue().should.equal(rack.getHeight())
+					support.getWallHeight().getValue().should.equal(rack.getHeight().getValue())
 				})
 
 				it('should have a wall width the same as the addendum of the rack',
@@ -274,15 +279,16 @@ describe('Rack', function() {
 				})
 
 				it('should be centred at a distance of half the width of the Rack ' 
-					 + 'minus half its addendum from the centre of the rack nearest to ' 
-					 + 'the opposite face of the Rack\'s teeth', function() {
+					 + 'minus half its addendum relative to the centre of the rack ' 
+					 + 'nearest to the opposite face of the Rack\'s teeth', function() {
+					var origin = new Point()
+					origin.setAt(0, 0, 0)
 					var wallCentre = support.getWallCentre()
-					var centre =  support.getCentre()
-					var distanceBetween = wallCentre.distanceToOnXYPlane(centre)
+					var distanceBetween = origin.distanceToOnXYPlane(wallCentre)
 					var width = support.getWidth().getValue()
 					var addendum = rack.getAddendum()
-					var distanceToWallCentre = width / 2 - addendum / 2
-					distanceBetween.should.equal(distanceToWallCentre)
+					var distanceFromOrigin = width / 2 - addendum / 2
+					distanceBetween.should.equal(distanceFromOrigin)
 				})
 			})
 		})
@@ -311,8 +317,7 @@ describe('Rack', function() {
 			rack.toSpecification.should.throw("Length not set")
 		})
 
-		it('should be possible if both the number of teeth and length are '
-			 + 'set', function() {
+		it('should be possible if it is fully specified', function() {
 			rack.setLength(10)
 			rack.setNumberOfTeeth(5)
 			rack.toSpecification.should.not.throw()

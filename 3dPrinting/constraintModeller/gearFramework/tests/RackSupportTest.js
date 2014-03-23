@@ -60,11 +60,29 @@ describe('RackSupport', function() {
 			support.toSpecification.should.throw("Wall height not set")
 		})
 
+		it('should not be possible if the wall width has not been set', function() {
+			support.setLength(5)
+			support.setBaseHeight(1)
+			support.setWallHeight(1)
+			support.setWallWidth(null)
+			support.toSpecification.should.throw("Wall width not set")
+		})
+
 		it('should not be possible if the wall centre has not been set', function() {
 			support.setLength(5)
 			support.setBaseHeight(1)
-				support.setWallHeight(1)
+			support.setWallHeight(1)
+			support.setWallWidth(1)
 			support.toSpecification.should.throw("Wall centre not fully defined")
+		})
+
+		it('should not be possible if the toothed face has not been set', function() {
+			support.setLength(5)
+			support.setBaseHeight(1)
+			support.setWallHeight(1)
+			support.setWallWidth(1)
+			support.setWallCentre(1, 2, 3)
+			support.toSpecification.should.throw("Toothed face not set")
 		})
 
 		describe('the returned RackSupportSpecification', function() {
@@ -74,7 +92,9 @@ describe('RackSupport', function() {
 				support.setLength(5)
 				support.setBaseHeight(1)
 				support.setWallHeight(1)
+				support.setWallWidth(1)
 				support.setWallCentre(1, 2, 3)
+				support.setToothedFace("Front")
 				spec = support.toSpecification() 
 			})
 			

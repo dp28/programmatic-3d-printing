@@ -41,6 +41,16 @@ function testRackSupportSpecification(supportSpec, support) {
 			it('should have the correct value', function() {
 				supportSpec.wallHeight.should.equal(support.getWallHeight().getValue())
 			})
+
+			it('should be a number', function() {
+				supportSpec.wallHeight.should.be.a.Number
+			})
+		})
+
+		describe('#wallWidth', function() {
+			it('should have the correct value', function() {
+				supportSpec.wallWidth.should.equal(support.getWallWidth().getValue())
+			})
 		})
 
 		describe('#wallCentreX', function() {
@@ -58,6 +68,12 @@ function testRackSupportSpecification(supportSpec, support) {
 		describe('#wallCentreZ', function() {
 			it('should have the correct value', function() {
 				supportSpec.wallCentreZ.should.equal(support.getCentre().getZ().getValue())
+			})
+		})
+
+		describe('#toothedFace', function() {
+			it('should have the correct value', function() {
+				supportSpec.toothedFace.should.equal(support.getToothedFace())
 			})
 		})
 	})

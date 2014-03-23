@@ -15,8 +15,10 @@ function RackSupportSpecification(support) {
 	spec.width = support.getWidth().getValue()
 	spec.wallHeight = support.getWallHeight().getValue()
 	spec.baseHeight = support.getBaseHeight().getValue()
+	spec.wallWidth = support.getWallWidth().getValue()
 	spec.wallCentreX = wallCentre.getX().getValue()
 	spec.wallCentreY = wallCentre.getY().getValue()
 	spec.wallCentreZ = wallCentre.getZ().getValue()
+	spec.toothedFace = support.getToothedFace()
 	return spec
 }
