@@ -60,8 +60,8 @@ function Component(boundaryShape) {
 		},
 
 		toString: function() {
-			var string = this.getTypeName() + ' { ID: ' + id + '\n'
-			string += 'Centre point: ' + this.getCentre().toString() + '\n'
+			var string = this.getTypeName() + ' { \n\tID: ' + id + '\n'
+			string += '\tCentre point: ' + this.getCentre().toString() + '\n'
 			string += '}'
 			return string
 		}

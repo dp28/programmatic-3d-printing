@@ -153,7 +153,7 @@ function Gear() {
 
 	gear.toString = function() {
 		var string = gear._componentToString().replace('}', '')
-		string += 'Number of teeth: ' + gear.getNumberOfTeeth().getValue() + '\n\t'
+		string += '\tNumber of teeth: ' + gear.getNumberOfTeeth().getValue() + '\n\t'
 		string += 'Pitch circle radius: ' + pitchCircleRadius.getValue() + '\n\t'
 		string += 'Bounding circle radius: ' 
 		string += gear.getBoundingShape().getRadius().getValue() + '\n\t'

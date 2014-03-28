@@ -418,4 +418,62 @@ describe('Rack', function() {
 			})
 		})
 	})
+
+
+
+	describe('#toString', function() {
+		var numTeeth = 10
+		var width = 15
+		var length = 18
+		var centreX = 1
+		var centreY = 2
+		var centreZ = 3
+		beforeEach(function() {
+			rack.setWidth(width)
+			rack.setLength(length)
+			rack.setNumberOfTeeth(numTeeth)
+			rack.getCentre().setAt(centreX, centreY, centreZ)
+		})
+
+		it('should return a string', function() {
+			rack.toString().should.be.type('string')
+		})
+
+		describe('the returned string', function() {
+			var string 
+
+			beforeEach(function() {
+				string = rack.toString() 
+			})
+
+			it('should contain the id', function() {
+				string.should.contain('ID: ')
+			})
+			
+			it('should contain the number of teeth', function() {
+				string.should.contain('Number of teeth: ' + numTeeth)
+			})
+			
+			it('should contain the centre point', function() {
+				string.should.contain('Centre point: (' + centreX + ', ' + centreY 
+					                    + ', ' + centreZ + ')')
+			})
+
+			it('should describe the height', function() {
+				string.should.contain('Height: ')
+			})
+
+			it('should describe the width', function() {
+				string.should.contain('Width: ')
+			})
+
+			it('should describe the pressure angle', function() {
+				string.should.contain('Pressure angle: ')
+			})
+
+			it('should describe the length', function() {
+				string.should.contain('Length: ')
+			})
+		})		
+	})
 })

@@ -275,5 +275,19 @@ function Rack() {
 		return new RackSpecification(rack)
 	}
 
+	rack._componentToString = rack.toString
+
+	rack.toString = function() {
+		var string = rack._componentToString().replace('}', '')
+		string += '\tNumber of teeth: ' + rack.getNumberOfTeeth().getValue() + '\n\t'
+		string += 'Height: ' + rack.getHeight().getValue() + '\n\t'
+		string += 'Width: ' + width.getValue() + '\n\t'
+		string += 'Length: ' + length.getValue() + '\n\t'
+		string += 'Pressure angle: ' + rack.getPressureAngle().getValue() + '\n\t'
+		string += 'Centre point: ' + rack.getCentre().toString() + '\n'
+		string += '}'
+		return string
+	}
+
 	return rack
 }
