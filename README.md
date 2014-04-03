@@ -1,5 +1,3 @@
-<link href="https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/readme_styles.css" rel="stylesheet"></link>
-
 # Programmatic 3D Printing
 ## Introduction
 This project provides an abstract component framework designed to allow minimal specifications of component layouts, specified in JavaScript, to be printed using a 3D printer. The component specifications are translated into OpenJSCAD files, which in turn can be used to form STL files using http://openjscad.org/.
