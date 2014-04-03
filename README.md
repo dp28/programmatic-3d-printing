@@ -2,7 +2,7 @@
 ## Introduction
 This project provides an abstract component framework designed to allow minimal specifications of component layouts, specified in JavaScript, to be printed using a 3D printer. The component specifications are translated into OpenJSCAD files, which in turn can be used to form STL files using http://openjscad.org/.
 
-<img style="display: block; margin-left: auto; margin-right: auto;" height="500" alt="example" src="https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/firstExample.png" />
+![]("https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/firstExample.png")
 
 In addition, a concrete extension has been developed that allows gear and rack and pinion components to be placed relative to one another and printed.
 
@@ -105,7 +105,7 @@ This is a set of components which build upon the functionality of the component 
 
 A brief graphical overview of gear terminology is given in the image below and a full explanation of gear terminology is given [here][gear_terminology].
 
-<img style="display: block; margin-left: auto; margin-right: auto;" height="500" alt="gear terminology" src="https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/gearTerminology.png" />
+![]("https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/gearTerminology.png")
 ##### Gear
 Inherits from `PlaceableComponent`.
 - construction
@@ -188,7 +188,7 @@ controller.translateTo3dDrawer()
 #### Example Output
 This is a screenshot of the output from the example above copied into http://openjscad.org/.
 
-<img style="display: block; margin-left: auto; margin-right: auto;" height="400" alt="simple example" src="https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/rackExample.png" />
+![]("https://bitbucket.org/dp28/programmatic-3d-printing/raw/master/README_images/rackExample.png")
 
 #### Order of Program
 1. Create components.
